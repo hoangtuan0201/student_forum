@@ -67,7 +67,7 @@ class AuthController {
 
     public function logout() {
         session_destroy();
-        header("Location: ../public/index.php");
+        header("Location: ../../public/index.php");
         exit;
     }
 }

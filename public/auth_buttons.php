@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,8 +36,13 @@
 <!-- 🔹 Navigation Bar -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <button class="btn btn-outline-light mr-2" data-toggle="modal" data-target="#loginModal">Login</button>
-        <button class="btn btn-light" data-toggle="modal" data-target="#registerModal">Register</button>
+        <?php if (isset($_SESSION['username'])): ?>
+            <span class="navbar-text mr-3">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+            <a href="../app/controllers/AuthController.php?action=logout" class="btn btn-outline-light">Logout</a>
+        <?php else: ?>
+            <button class="btn btn-outline-light mr-2" data-toggle="modal" data-target="#loginModal">Login</button>
+            <button class="btn btn-light" data-toggle="modal" data-target="#registerModal">Register</button>
+        <?php endif; ?>
     </div>
 </nav>
 
@@ -66,7 +75,6 @@
         </div>
     </div>
 </div>
-
 
 <!-- 🔹 Register Modal -->
 <div class="modal fade" id="registerModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -101,7 +109,6 @@
         </div>
     </div>
 </div>
-
 
 <script>
     function togglePassword(id) {
