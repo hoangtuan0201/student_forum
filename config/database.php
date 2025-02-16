@@ -19,14 +19,11 @@ class Database {
             ];
 
             $this->conn = new PDO($dsn, $this->username, $this->password, $options);
+            return $this->conn;
         } catch (PDOException $e) {
-            die("Database connection failed: " . $e->getMessage());
-        }//If connection fails, it will stop execution (die()) and display an error message.
-
-
-        return $this->conn;
-        //If everything is successful, the function returns the $conn object, which can be used for queries.
-
+            error_log("Database Connection Error: " . $e->getMessage(), 0);
+            throw new Exception("Connection failed. Please try again later.");
+        }
     }
 }
 ?>

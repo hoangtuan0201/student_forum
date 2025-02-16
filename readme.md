@@ -1,76 +1,53 @@
-Student Forum - PHP/MySQL CRUD System
-
-Project Overview
-
-This project is a Student Forum System where students can post questions related to coursework. The system is built using PHP (PDO), MySQL, and MVC architecture.
-
-Features
-
-User Authentication: Students can register, log in, and manage their accounts.
-
-Post Management: Users can create, edit, delete, and view questions.
-
-Module Assignment: Each post is linked to a module.
-
-Image Upload: Students can upload screenshots or images with their posts.
-
-Comment System: Users can comment on posts.
-
-Admin Features: Admins can manage users, posts, and modules.
-
-Folder Structure
-
-project-folder/
+student_forum/
 │── app/
-│   ├── controllers/   # Handles requests
-│   ├── models/        # Database logic
-│   ├── views/         # HTML templates
-│── config/
-│   ├── database.php   # Database connection
-│── public/
-│   ├── assets/        # CSS, JS, images
-│── index.php          # Entry point
-│── README.md          # Project documentation
+│   ├── controllers/       # Xử lý logic (PHP)
+│   │   ├── AuthController.php
+│   │   ├── PostController.php
+│   │   ├── CommentController.php
+│   │   ├── ModuleController.php
+│   │   ├── MessageController.php
+│   │   ├── UserController.php
+│   ├── models/            # Tương tác với Database (PHP)
+│   │   ├── User.php
+│   │   ├── Post.php
+│   │   ├── Comment.php
+│   │   ├── Module.php
+│   │   ├── Message.php
+│   ├── views/             # Giao diện (HTML, PHP)
+│   │   ├── layout/        # Template chung
+│   │   │   ├── header.php
+│   │   │   ├── footer.php
+│   │   ├── auth/          # Đăng nhập & Đăng ký
+│   │   │   ├── login.php
+│   │   │   ├── register.php
+│   │   ├── posts/         # Trang bài viết
+│   │   │   ├── index.php  # Danh sách bài viết
+│   │   │   ├── create.php # Form đăng bài
+│   │   │   ├── edit.php   # Chỉnh sửa bài viết
+│   │   │   ├── show.php   # Xem bài viết
+│   │   ├── comments/      # Quản lý bình luận
+│   │   │   ├── list.php
+│   │   │   ├── add.php
+│   │   ├── modules/       # Danh mục học tập
+│   │   │   ├── index.php
+│   │   │   ├── create.php
+│   │   ├── messages/      # Hệ thống tin nhắn
+│   │   │   ├── inbox.php
+│   │   │   ├── send.php
+│── config/ 
 
-Installation Guide
 
-Install XAMPP or MAMP (for local development).
+📌 Giải thích Folder Structure
+1️⃣ app/ - Xử lý logic
+controllers/ → Xử lý request từ người dùng.
+models/ → Tương tác với Database.
+views/ → Chứa giao diện trang web.
+2️⃣ config/ - Cấu hình
+database.php → Kết nối MySQL bằng PDO.
+config.php → Các biến môi trường (base URL, tên site...).
 
-Clone this repository into your server directory (htdocs or www).
-
-Import the student_forum.sql file into MySQL.
-
-Update config/database.php with your database credentials.
-
-Start Apache and MySQL, then open http://localhost/project-folder/ in your browser.
-
-Database Schema
-
-users: Stores user details.
-
-modules: Stores module names.
-
-posts: Stores student questions.
-
-comments: Stores comments on posts.
-
-messages: store messages.
-
-Technologies Used
-
-PHP (PDO for secure database interaction)
-
-MySQL
-
-HTML, CSS, JavaScript
-
-Bootstrap (for UI design)
-
-License
-
-This project is for educational purposes only. Feel free to modify and improve it.
-
-Contact
-
-For any issues, contact your-email@example.com.
-
+4️⃣ public/ - File có thể truy cập từ trình duyệt
+index.php → Điểm vào của ứng dụng (Front Controller).
+assets/ → Chứa hình ảnh, CSS, JS.
+5️⃣ routes/ - Điều hướng URL
+web.php → Define các route, ví dụ:
