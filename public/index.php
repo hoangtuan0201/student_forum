@@ -24,7 +24,7 @@
         <div class="inner-sidebar">
             <!-- Inner sidebar header -->
             <div class="inner-sidebar-header justify-content-center">
-                <button class="btn btn-primary has-icon btn-block" type="button" data-toggle="modal" data-target="#threadModal">
+                <button class="btn btn-primary has-icon btn-block" type="button" data-toggle="modal" data-target="#questionModal">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-2">
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -44,7 +44,7 @@
                                 <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
                                     <div class="simplebar-content" style="padding: 16px;">
                                         <nav class="nav nav-pills nav-gap-y-1 flex-column">
-                                            <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon active">All Threads</a>
+                                            <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon active">All questions</a>
                                             <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Popular this week</a>
                                             <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Popular all time</a>
                                             <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Solved</a>
@@ -210,21 +210,22 @@
         <!-- /Inner main -->
     </div>
 
-    <!-- New Thread Modal -->
-    <div class="modal fade" id="threadModal" tabindex="-1" role="dialog" aria-labelledby="threadModalLabel" aria-hidden="true">
+
+    <!-- New Questions Modal -->
+    <div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
-                <form action="/create-thread" method="POST" enctype="multipart/form-data">
+                <form action="/create-question" method="POST" enctype="multipart/form-data">
                     <div class="modal-header d-flex align-items-center bg-primary text-white">
-                        <h6 class="modal-title mb-0" id="threadModalLabel">New Discussion</h6>
+                        <h6 class="modal-title mb-0" id="questionModalLabel">New Discussion</h6>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">×</span>
                         </button>
                     </div>
                     <div class="modal-body">
                         <div class="form-group">
-                            <label for="threadTitle">Title</label>
-                            <input type="text" class="form-control" id="threadTitle" placeholder="Enter title" autofocus="" />
+                            <label for="questionTitle">Title</label>
+                            <input type="text" class="form-control" id="questionTitle" placeholder="Enter title" autofocus="" />
                         </div>
                         <textarea class="form-control summernote" style="display: none;"></textarea>
 

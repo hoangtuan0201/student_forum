@@ -14,26 +14,7 @@ student_forum/
 │   │   ├── Module.php
 │   │   ├── Message.php
 │   ├── views/             # Giao diện (HTML, PHP)
-│   │   ├── layout/        # Template chung
-│   │   │   ├── header.php
-│   │   │   ├── footer.php
-│   │   ├── auth/          # Đăng nhập & Đăng ký
-│   │   │   ├── login.php
-│   │   │   ├── register.php
-│   │   ├── posts/         # Trang bài viết
-│   │   │   ├── index.php  # Danh sách bài viết
-│   │   │   ├── create.php # Form đăng bài
-│   │   │   ├── edit.php   # Chỉnh sửa bài viết
-│   │   │   ├── show.php   # Xem bài viết
-│   │   ├── comments/      # Quản lý bình luận
-│   │   │   ├── list.php
-│   │   │   ├── add.php
-│   │   ├── modules/       # Danh mục học tập
-│   │   │   ├── index.php
-│   │   │   ├── create.php
-│   │   ├── messages/      # Hệ thống tin nhắn
-│   │   │   ├── inbox.php
-│   │   │   ├── send.php
+│   │
 │── config/ 
 
 
