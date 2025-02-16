@@ -46,8 +46,13 @@ session_start();
     </div>
 </nav>
 
+
+
 <!-- 🔹 Login Modal -->
-<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-hidden="true">
+<!-- The show class is used by Bootstrap to display the modal. -->
+<div class="modal fade <?php if (isset($_SESSION['login_error'])) echo 'show'; ?>" 
+id="loginModal" tabindex="-1" role="dialog" aria-hidden="true" style="<?php if (isset($_SESSION['login_error'])) echo 'display: block;'; ?>">
+
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -71,6 +76,12 @@ session_start();
                     </div>
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
                 </form>
+                <!-- Display error message if exists -->
+                <?php if (isset($_SESSION['login_error'])): ?>
+                    <div class="alert alert-danger mt-3" role="alert">
+                        <?php echo $_SESSION['login_error']; unset($_SESSION['login_error']); ?>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

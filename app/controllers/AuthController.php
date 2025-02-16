@@ -60,7 +60,9 @@ class AuthController {
                 header("Location: ../../public/index.php");
                 exit;
             } else {
-                die("Invalid email or password.");
+                $_SESSION["login_error"] = "Invalid email or password.";
+                header("Location: ../../public/index.php#loginModal");
+                exit;
             }
         }
     }
