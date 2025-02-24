@@ -6,18 +6,17 @@
     <link rel="stylesheet" href="../public/assets/css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
 </head>
 <body>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous">
-<nav class="navbar navbar-expand-lg">
-    <div class="container">
-        <a class="navbar-brand" href="#">Student Forum</a>
-        <?php include 'auth_buttons.php'; ?>
-    </div>
-</nav>
+
+
+<!-- nav bar -->
+<?php include 'header.php'; ?>
+    
 
 <div class="container">
-    
 <div class="main-body p-0">
     <div class="inner-wrapper">
         <!-- Inner sidebar -->
@@ -246,9 +245,7 @@
 </div>
 
 
-<footer class="bg-primary text-white text-center p-3 mt-4">
-        © 2025 Student Forum. All rights reserved.
-</footer>
+<?php include 'footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
 	
