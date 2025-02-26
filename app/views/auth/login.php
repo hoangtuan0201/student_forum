@@ -40,12 +40,20 @@ session_start();
                         <?php echo $_SESSION['login_error']; unset($_SESSION['login_error']); ?>
                     </div>
                 <?php endif; ?>
+                
+                <?php if (isset($_SESSION['post_error'])): ?>
+                    <div class="alert alert-danger mt-3">
+                        <?php echo $_SESSION['post_error']; unset($_SESSION['post_error']); ?>
+                    </div>
+                <?php endif; ?>
+
 
                 <p class="mt-3 text-center">Don't have an account? <a href="register.php">Register here</a></p>
             </div>
         </div>
     </div>
-<?php include '../../views/includes/footer.php'; ?>
+
+<?php include_once '../../views/includes/footer.php'; ?>
 
 </body>
 </html>

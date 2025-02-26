@@ -16,6 +16,9 @@
 <?php include '../app/views/includes/header.php'; ?>
     
 
+<!-- question modal after clicked new discussion -->
+<?php include '../app/views/post/new_post.php' ?>
+
 <div class="container">
 <div class="main-body p-0">
     <div class="inner-wrapper">
@@ -31,6 +34,11 @@
                     NEW DISCUSSION
                 </button>
             </div>
+
+            
+
+
+
             <!-- /Inner sidebar header -->
 
             <!-- Inner sidebar body -->
@@ -83,63 +91,56 @@
             <!-- Inner main body -->
 
             <!-- Forum List -->
+            
+            
             <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
-                <div class="card mb-2">
-                    <div class="card-body p-2 p-sm-3">
-                        <div class="media forum-item">
-                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                            <div class="media-body">
-                                <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">Realtime fetching data</a></h6>
-                                <p class="text-secondary">
-                                    lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet
-                                </p>
-                                <p class="text-muted"><a href="javascript:void(0)">drewdan</a> replied <span class="text-secondary font-weight-bold">13 minutes ago</span></p>
-                            </div>
-                            <div class="text-muted small text-center align-self-center">
-                                <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 19</span>
-                                <span><i class="far fa-comment ml-2"></i> 3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-2">
-                    <div class="card-body p-2 p-sm-3">
-                        <div class="media forum-item">
-                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                            <div class="media-body">
-                                <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">Laravel 7 database backup</a></h6>
-                                <p class="text-secondary">
-                                    lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet
-                                </p>
-                                <p class="text-muted"><a href="javascript:void(0)">jlrdw</a> replied <span class="text-secondary font-weight-bold">3 hours ago</span></p>
-                            </div>
-                            <div class="text-muted small text-center align-self-center">
-                                <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 18</span>
-                                <span><i class="far fa-comment ml-2"></i> 1</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-2">
-                    <div class="card-body p-2 p-sm-3">
-                        <div class="media forum-item">
-                            <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="https://bootdey.com/img/Content/avatar/avatar3.png" class="mr-3 rounded-circle" width="50" alt="User" /></a>
-                            <div class="media-body">
-                                <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">Http client post raw content</a></h6>
-                                <p class="text-secondary">
-                                    lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet
-                                </p>
-                                <p class="text-muted"><a href="javascript:void(0)">ciungulete</a> replied <span class="text-secondary font-weight-bold">7 hours ago</span></p>
-                            </div>
-                            <div class="text-muted small text-center align-self-center">
-                                <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 32</span>
-                                <span><i class="far fa-comment ml-2"></i> 2</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-               
-         
+                <?php
+                include_once "../config/database.php";
+                include_once "../app/models/Post.php";
+                include_once "../app/controllers/PostController.php";
+
+                $database = new Database();
+                $pdo = $database->connect();
+                $postModel = new Post($pdo);
+                $postController = new PostController($postModel);
+
+                // Fetch and display posts
+                $posts = $postController->displayPosts();
+
+                if (count($posts) > 0) {
+                    foreach ($posts as $post) {
+                        echo '<div class="card mb-2">';
+                        echo '<div class="card-body p-2 p-sm-3">';
+                        echo '<div class="media forum-item">';
+
+                        echo '<div class="media-body">';
+                        echo '<h6><a href="#" class="text-body font-weight-bold">' . htmlspecialchars($post["title"]) . '</a></h6>';
+                        echo '<p class="text-secondary">' . nl2br(htmlspecialchars($post["content"])) . '</p>';
+
+                        if (!empty($post["image"])) {
+                            echo '<div class="mt-3">';
+                            echo '<img src="/student_forum/' . htmlspecialchars($post["image"]) . '" class="img-fluid rounded" alt="Post Image">';
+                            echo '</div>';
+                        }
+
+                        echo '<p class="text-muted mt-2">';
+                        echo '<a href="#" class="font-weight-bold">' . htmlspecialchars($post["username"]) . '</a> posted in <strong>' . htmlspecialchars($post["module_name"]) . '</strong>';
+                        echo ' <span class="text-secondary font-weight-bold">' . date('F j, Y, g:i a', strtotime($post["created_at"])) . '</span>';
+                        echo '</p>';
+
+                        echo '</div>'; // end media-body
+                        echo '</div>'; // end media forum-item
+                        echo '</div>'; // end card-body
+                        echo '</div>'; // end card
+                    }
+                } else {
+                    echo '<div class="alert alert-info">No posts available.</div>';
+                }
+                ?>
+            </div>
+           
+
+                
                 <ul class="pagination pagination-sm pagination-circle justify-content-center mb-0">
                     <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a></li>
                     <li class="page-item active"><span class="page-link">2</span></li>
@@ -151,58 +152,6 @@
             </div>
             <!-- /Forum List -->
 
-            <!-- Forum Detail -->
-            <div class="inner-main-body p-2 p-sm-3 collapse forum-content">
-                <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-toggle="collapse" data-target=".forum-content"><i class="fa fa-arrow-left mr-2"></i>Back</a>
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <div class="media forum-item">
-                            <a href="javascript:void(0)" class="card-link">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="rounded-circle" width="50" alt="User" />
-                                <small class="d-block text-center text-muted">Newbie</small>
-                            </a>
-                            <div class="media-body ml-3">
-                                <a href="javascript:void(0)" class="text-secondary">Mokrani</a>
-                                <small class="text-muted ml-2">1 hour ago</small>
-                                <h5 class="mt-1">Realtime fetching data</h5>
-                                <div class="mt-3 font-size-sm">
-                                    <p>Hellooo :)</p>
-                                    <p>
-                                        I'm newbie with laravel and i want to fetch data from database in realtime for my dashboard anaytics and i found a solution with ajax but it dosen't work if any one have a simple solution it will be
-                                        helpful
-                                    </p>
-                                    <p>Thank</p>
-                                </div>
-                            </div>
-                            <div class="text-muted small text-center">
-                                <span class="d-none d-sm-inline-block"><i class="far fa-eye"></i> 19</span>
-                                <span><i class="far fa-comment ml-2"></i> 3</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card mb-2">
-                    <div class="card-body">
-                        <div class="media forum-item">
-                            <a href="javascript:void(0)" class="card-link">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle" width="50" alt="User" />
-                                <small class="d-block text-center text-muted">Pro</small>
-                            </a>
-                            <div class="media-body ml-3">
-                                <a href="javascript:void(0)" class="text-secondary">drewdan</a>
-                                <small class="text-muted ml-2">1 hour ago</small>
-                                <div class="mt-3 font-size-sm">
-                                    <p>What exactly doesn't work with your ajax calls?</p>
-                                    <p>Also, WebSockets are a great solution for realtime data on a dashboard. Laravel offers this out of the box using broadcasting</p>
-                                </div>
-                                <button class="btn btn-xs text-muted has-icon"><i class="fa fa-heart" aria-hidden="true"></i>1</button>
-                                <a href="javascript:void(0)" class="text-muted small">Reply</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- /Forum Detail -->
 
             <!-- /Inner main body -->
         </div>
@@ -210,42 +159,9 @@
     </div>
 
 
-    <!-- New Questions Modal -->
-    <div class="modal fade" id="questionModal" tabindex="-1" role="dialog" aria-labelledby="questionModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-lg" role="document">
-            <div class="modal-content">
-                <form action="/create-question" method="POST" enctype="multipart/form-data">
-                    <div class="modal-header d-flex align-items-center bg-primary text-white">
-                        <h6 class="modal-title mb-0" id="questionModalLabel">New Discussion</h6>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">×</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="questionTitle">Title</label>
-                            <input type="text" class="form-control" id="questionTitle" placeholder="Enter title" autofocus="" />
-                        </div>
-                        <textarea class="form-control summernote" style="display: none;"></textarea>
-
-                        <div class="custom-file form-control-sm mt-3" style="max-width: 300px;">
-                            <input type="file" class="custom-file-input" id="customFile" multiple="" />
-                            <label class="custom-file-label" for="customFile">Attachment</label>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-primary">Post</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-</div>
 
 
-<?php include '../app/views/includes/footer.php'; ?>
+<?php include_once '../app/views/includes/footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
 	

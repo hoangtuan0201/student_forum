@@ -1,15 +1,21 @@
 <?php
+
 class Database {
     private $host = "localhost";  // Change if needed
     private $db_name = "student_forum";  // Your database name
     private $username = "root";  // Change if needed
     private $password = "";  // Change if you have a password
-    private $conn;
+    public $conn;
 
     public function connect() {
         $this->conn = null;
 
         try {
+            // Check if PDO is available
+            if (!class_exists('PDO')) {
+                throw new Exception("PDO extension is not installed.");
+            }
+
             $dsn = "mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8mb4";
             //$dsn (Data Source Name): Defines the database type (mysql), host, database name, and charset (utf8mb4 for better Unicode support).
             $options = [
@@ -23,6 +29,9 @@ class Database {
         } catch (PDOException $e) {
             error_log("Database Connection Error: " . $e->getMessage(), 0);
             throw new Exception("Connection failed. Please try again later.");
+        } catch (Exception $e) {
+            error_log("General Error: " . $e->getMessage(), 0);
+            throw new Exception("An error occurred. Please try again later.");
         }
     }
 }
