@@ -1,21 +1,43 @@
 student_forum/
 │── app/
-│   ├── controllers/       # Xử lý logic (PHP)
-│   │   ├── AuthController.php
-│   │   ├── PostController.php
-│   │   ├── CommentController.php
-│   │   ├── ModuleController.php
-│   │   ├── MessageController.php
-│   │   ├── UserController.php
-│   ├── models/            # Tương tác với Database (PHP)
-│   │   ├── User.php
-│   │   ├── Post.php
-│   │   ├── Comment.php
-│   │   ├── Module.php
-│   │   ├── Message.php
-│   ├── views/             # Giao diện (HTML, PHP)
-│   │
-│── config/ 
+│   ├── controllers/          # Handles requests
+│   │   ├── AuthController.php  # Handles login, register, logout
+│   │   ├── PostController.php  # Handles post creation, update, delete
+│   │   ├── CommentController.php  # Manages comments on posts
+│   ├── models/               # Business logic & database interactions
+│   │   ├── User.php          # User model (authentication, registration)
+│   │   ├── Post.php          # Post model (CRUD operations)
+│   │   ├── Comment.php       # Comment model (CRUD operations)
+│   ├── views/                # HTML templates for rendering
+│   │   ├── includes/         # Reusable components (header, footer, navbar)
+│   │   │   ├── header.php    
+│   │   │   ├── footer.php    
+│   │   │   ├── navbar.php    
+│   │   ├── auth/             # Authentication pages
+│   │   │   ├── login.php     
+│   │   │   ├── register.php  
+│   │   ├── posts/            # Forum post pages
+│   │   │   ├── new_post.php  
+│   │   │   ├── edit_post.php 
+│   │   │   ├── delete_post.php  
+│   │   ├── comments/         # Comments system
+│   │   │   ├── add_comment.php  
+│   │   │   ├── delete_comment.php  
+│   │   ├── home.php          # Main forum page (list posts)
+│── config/
+│   ├── database.php          # Database connection using PDO
+│── public/
+│   ├── assets/               # Static files (CSS, JS, images)
+│   │   ├── css/              # Stylesheets
+│   │   │   ├── styles.css    
+│   │   ├── js/               # JavaScript files
+│   │   │   ├── script.js    
+│   │   ├── images/           # Uploaded images
+│   ├── uploads/              # User-uploaded files (post images)
+│   ├── index.php             # Main entry point (loads home.php)
+│── .htaccess                 # URL rewriting (optional)
+│── README.md                 # Project documentation
+
 
 
 📌 Giải thích Folder Structure

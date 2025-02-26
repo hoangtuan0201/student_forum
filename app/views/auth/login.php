@@ -21,12 +21,8 @@ session_start();
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <h3 class="text-center">Register</h3>
-                <form action="../controllers/AuthController.php?action=register" method="POST">
-                    <div class="form-group">
-                        <label>Full Name</label>
-                        <input type="text" name="username" class="form-control" required>
-                    </div>
+                <h3 class="text-center">Login</h3>
+                <form action="../../controllers/AuthController.php?action=login" method="POST">
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" name="email" class="form-control" required>
@@ -35,21 +31,21 @@ session_start();
                         <label>Password</label>
                         <input type="password" name="password" class="form-control" required>
                     </div>
-                    <button type="submit" class="btn btn-primary btn-block">Register</button>
+                    <button type="submit" class="btn btn-primary btn-block">Login</button>
                 </form>
 
-                <!-- Display registration errors -->
-                <?php if (isset($_SESSION['register_error'])): ?>
+                <!-- Display login errors -->
+                <?php if (isset($_SESSION['login_error'])): ?>
                     <div class="alert alert-danger mt-3">
-                        <?php echo $_SESSION['register_error']; unset($_SESSION['register_error']); ?>
+                        <?php echo $_SESSION['login_error']; unset($_SESSION['login_error']); ?>
                     </div>
                 <?php endif; ?>
 
-                <p class="mt-3 text-center">Already have an account? <a href="login.php">Login here</a></p>
+                <p class="mt-3 text-center">Don't have an account? <a href="register.php">Register here</a></p>
             </div>
         </div>
     </div>
-    <?php include '../../public/footer.php'; ?>
+<?php include '../../views/includes/footer.php'; ?>
 
 </body>
 </html>

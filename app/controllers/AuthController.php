@@ -22,19 +22,19 @@ class AuthController {
             // Validate inputs
             if (empty($username) || empty($email) || empty($password)) {
                 $_SESSION["register_error"] = "All fields are required.";
-                header("Location: ../../app/views/register.php");
+                header("Location: ../../app/views/auth/register.php");
                 exit;
             }
 
             if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $_SESSION["register_error"] = "Invalid email format.";
-                header("Location: ../../app/views/register.php");
+                header("Location: ../../app/views/auth/register.php");
                 exit;
             }
 
             if (strlen($password) < 6) {
                 $_SESSION["register_error"] = "Password must be at least 6 characters.";
-                header("Location: ../../app/views/register.php");
+                header("Location: ../../app/views/auth/register.php");
                 exit;
             }
 
@@ -43,7 +43,7 @@ class AuthController {
             $stmt->execute([$username, $email]);
             if ($stmt->fetch()) {
                 $_SESSION["register_error"] = "Username or email already exists.";
-                header("Location: ../../app/views/register.php");
+                header("Location: ../../app/views/auth/register.php");
                 exit;
             }
 
@@ -60,7 +60,7 @@ class AuthController {
                 exit;
             } else {
                 $_SESSION["register_error"] = "Registration failed. Please try again.";
-                header("Location: ../../app/views/register.php");
+                header("Location: ../../app/views/auth/register.php");
                 exit;
             }
         }
@@ -74,7 +74,7 @@ class AuthController {
             // Validate inputs
             if (empty($email) || empty($password)) {
                 $_SESSION["login_error"] = "All fields are required.";
-                header("Location: ../../app/views/login.php");
+                header("Location: ../../app/views/auth/login.php");
                 exit;
             }
 
@@ -92,7 +92,7 @@ class AuthController {
                 exit;
             } else {
                 $_SESSION["login_error"] = "Invalid email or password.";
-                header("Location: ../../app/views/login.php");
+                header("Location: ../../app/views/auth/login.php");
                 exit;
             }
         }

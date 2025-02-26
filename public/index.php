@@ -13,7 +13,7 @@
 
 
 <!-- nav bar -->
-<?php include 'header.php'; ?>
+<?php include '../app/views/includes/header.php'; ?>
     
 
 <div class="container">
@@ -245,7 +245,7 @@
 </div>
 
 
-<?php include 'footer.php'; ?>
+<?php include '../app/views/includes/footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
 	
