@@ -1,28 +1,20 @@
-
-<?php 
-
+<?php
 if (session_status() === PHP_SESSION_NONE) {
-    session_start(); 
+    session_start();
 }
-
-include_once __DIR__ . '/../../config/database.php'; // Use __DIR__ to ensure the correct path
-include_once __DIR__ . '/../models/Post.php'; // Use __DIR__ to ensure the correct path
-
-$database = new Database(); // No namespace needed
-$pdo = $database->connect(); // Connect to the database
-$postModel = new Post($pdo); // Create an instance of the Post model
+require_once __DIR__ . '/../models/Post.php';
 
 class PostController {
     private $postModel;
 
-    public function __construct($postModel) {
-        $this->postModel = $postModel;
+    public function __construct() {
+        $this->postModel = new Post();
     }
 
     public function create_post() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!isset($_SESSION["user_id"])) {
-                $_SESSION["post_error"] = "You have to login first to post Question.";
+                $_SESSION["post_error"] = "You have to login first to post a question.";
                 header("Location: ../../app/views/auth/login.php");
                 exit;
             }
@@ -33,8 +25,12 @@ class PostController {
             $module_id = $_POST["module_id"];
             $image_path = null;
 
-            // Debugging: Check if form data is received
-            error_log("Form Data: User ID: $user_id, Title: $title, Content: $content, Module ID: $module_id");
+            // Validate inputs
+            if (empty($title) || empty($content) || empty($module_id)) {
+                $_SESSION["post_error"] = "All fields are required.";
+                header("Location: ../../app/views/post/create.php");
+                exit;
+            }
 
             // Handle Image Upload
             if (!empty($_FILES["image"]["name"])) {
@@ -47,28 +43,32 @@ class PostController {
                 }
             }
 
-            // Create the post using the model
+            // Gọi model để tạo bài post
             if ($this->postModel->createPost($user_id, $module_id, $title, $content, $image_path)) {
                 header("Location: ../../public/index.php");
                 exit;
             } else {
                 $_SESSION["post_error"] = "Error creating post.";
-                header("Location: ../../public/new_post.php");
+                header("Location: ../../app/views/post/create.php");
                 exit;
             }
         }
     }
 
-    public function displayPosts() {
+    public function getAllPosts() {
         return $this->postModel->getAllPosts();
+    }
+
+    public function getPostById($post_id) {
+        return $this->postModel->getPostById($post_id);
     }
 }
 
-// Instantiate the controller
-$postController = new PostController($postModel);
+$postController = new PostController();
 
-if (isset($_GET["action"]) && $_GET["action"] == "create_post") {
-    $postController->create_post();
+if (isset($_GET["action"])) {
+    if ($_GET["action"] == "create_post") {
+        $postController->create_post();
+    }
 }
 ?>
-

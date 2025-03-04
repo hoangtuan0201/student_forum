@@ -8,21 +8,21 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="../../public/assets/css/styles.css">
+    <link rel="stylesheet" href="/student_forum/public/assets/css/styles.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
    
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-        <a class="navbar-brand" href="../../public/index.php">Student Forum</a>
+        <a class="navbar-brand" href="/student_forum/public/index.php">Student Forum</a>
     </div>
 </nav>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <h3 class="text-center">Login</h3>
-                <form action="../../controllers/AuthController.php?action=login" method="POST">
+                <form action="/student_forum/app/controllers/AuthController.php?action=login" method="POST">
                     <div class="form-group">
                         <label>Email</label>
                         <input type="email" name="email" class="form-control" required>
@@ -53,7 +53,6 @@ session_start();
         </div>
     </div>
 
-<?php include_once '../../views/includes/footer.php'; ?>
 
 </body>
 </html>

@@ -52,6 +52,7 @@
                                     <div class="simplebar-content" style="padding: 16px;">
                                         <nav class="nav nav-pills nav-gap-y-1 flex-column">
                                             <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon active">All questions</a>
+                                            <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">My question</a>
                                             <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Popular this week</a>
                                             <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Popular all time</a>
                                             <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Solved</a>
@@ -95,17 +96,13 @@
             
             <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                 <?php
-                include_once "../config/database.php";
-                include_once "../app/models/Post.php";
-                include_once "../app/controllers/PostController.php";
+                require_once __DIR__ . '/../app/models/Post.php';
+                require_once __DIR__ . '/../app/controllers/PostController.php';
 
-                $database = new Database();
-                $pdo = $database->connect();
-                $postModel = new Post($pdo);
-                $postController = new PostController($postModel);
+                $postController = new PostController();
 
                 // Fetch and display posts
-                $posts = $postController->displayPosts();
+                $posts = $postController->getAllPosts();
 
                 if (count($posts) > 0) {
                     foreach ($posts as $post) {
@@ -125,7 +122,7 @@
 
                         echo '<p class="text-muted mt-2">';
                         echo '<a href="#" class="font-weight-bold">' . htmlspecialchars($post["username"]) . '</a> posted in <strong>' . htmlspecialchars($post["module_name"]) . '</strong>';
-                        echo ' <span class="text-secondary font-weight-bold">' . date('F j, Y, g:i a', strtotime($post["created_at"])) . '</span>';
+                        echo ' <span class="text-secondary font-weight-bold">' . 'at' . date('F j, Y, g:i a', strtotime($post["created_at"])) . '</span>';
                         echo '</p>';
 
                         echo '</div>'; // end media-body
@@ -156,12 +153,12 @@
             <!-- /Inner main body -->
         </div>
         <!-- /Inner main -->
+         
     </div>
 
 
 
 
-<?php include_once '../app/views/includes/footer.php'; ?>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
 	

@@ -54,3 +54,6 @@ index.php → Điểm vào của ứng dụng (Front Controller).
 assets/ → Chứa hình ảnh, CSS, JS.
 5️⃣ routes/ - Điều hướng URL
 web.php → Define các route, ví dụ:
+
+
+Using __DIR__ to get the current directory

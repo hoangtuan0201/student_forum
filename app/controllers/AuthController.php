@@ -1,15 +1,12 @@
 <?php
 session_start();
-include '../../config/database.php';
-
-$database = new Database();
-$pdo = $database->connect(); // Now $pdo is properly initialized
+require_once __DIR__ . '/../models/User.php';
 
 class AuthController {
-    private $pdo;
+    private $userModel;
 
-    public function __construct($pdo) {
-        $this->pdo = $pdo;
+    public function __construct() {
+        $this->userModel = new User();
     }
 
     public function register() {
@@ -39,9 +36,7 @@ class AuthController {
             }
 
             // Check if the username or email already exists
-            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
-            $stmt->execute([$username, $email]);
-            if ($stmt->fetch()) {
+            if ($this->userModel->findByUsernameOrEmail($username, $email)) {
                 $_SESSION["register_error"] = "Username or email already exists.";
                 header("Location: ../../app/views/auth/register.php");
                 exit;
@@ -51,9 +46,8 @@ class AuthController {
             $hashed_password = password_hash($password, PASSWORD_BCRYPT);
 
             // Insert new user
-            $stmt = $this->pdo->prepare("INSERT INTO users (username, email, password, role, created_at) VALUES (?, ?, ?, ?, NOW())");
-            if ($stmt->execute([$username, $email, $hashed_password, $role])) {
-                $_SESSION["user_id"] = $this->pdo->lastInsertId();
+            if ($this->userModel->createUser($username, $email, $hashed_password)) {
+                $_SESSION["user_id"] = $this->userModel->findByEmail($email)['user_id'];
                 $_SESSION["username"] = $username;
                 $_SESSION["role"] = $role;
                 header("Location: ../../public/index.php");
@@ -77,13 +71,8 @@ class AuthController {
                 header("Location: ../../app/views/auth/login.php");
                 exit;
             }
-
-            // Check if the user exists
-            $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
-            $stmt->execute([$email]);
-            $user = $stmt->fetch();
-
             // Verify password
+            $user = $this->userModel->findByEmail($email);
             if ($user && password_verify($password, $user["password"])) {
                 $_SESSION["user_id"] = $user["user_id"];
                 $_SESSION["username"] = $user["username"];
@@ -94,7 +83,7 @@ class AuthController {
                 $_SESSION["login_error"] = "Invalid email or password.";
                 header("Location: ../../app/views/auth/login.php");
                 exit;
-            }
+            }               
         }
     }
 
@@ -105,8 +94,7 @@ class AuthController {
     }
 }
 
-// Handle actions from URLs
-$authController = new AuthController($pdo);
+$authController = new AuthController();
 
 if (isset($_GET['action'])) {
     if ($_GET['action'] == 'register') {
