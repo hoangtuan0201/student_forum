@@ -34,11 +34,6 @@
                     NEW DISCUSSION
                 </button>
             </div>
-
-            
-
-
-
             <!-- /Inner sidebar header -->
 
             <!-- Inner sidebar body -->
@@ -100,42 +95,43 @@
                 require_once __DIR__ . '/../app/controllers/PostController.php';
 
                 $postController = new PostController();
-
-                // Fetch and display posts
                 $posts = $postController->getAllPosts();
 
-                if (count($posts) > 0) {
+                if (!empty($posts)) {
                     foreach ($posts as $post) {
-                        echo '<div class="card mb-2">';
-                        echo '<div class="card-body p-2 p-sm-3">';
-                        echo '<div class="media forum-item">';
+                        ?>
+                        <div class="card mb-2 shadow-sm">
+                            <div class="card-body p-2 p-sm-3">
+                                <div class="media forum-item">
+                                    <div class="media-body">
+                                        <h6>
+                                            <a href="#" class="text-body font-weight-bold"><?= htmlspecialchars($post["title"]); ?></a>
+                                        </h6>
+                                        <p class="text-secondary"><?= nl2br(htmlspecialchars($post["content"])); ?></p>
 
-                        echo '<div class="media-body">';
-                        echo '<h6><a href="#" class="text-body font-weight-bold">' . htmlspecialchars($post["title"]) . '</a></h6>';
-                        echo '<p class="text-secondary">' . nl2br(htmlspecialchars($post["content"])) . '</p>';
+                                        <?php if (!empty($post["image"])): ?>
+                                            <div class="mt-3">
+                                                <img src="/student_forum/<?= htmlspecialchars($post["image"]); ?>" class="img-fluid rounded" alt="Post Image">
+                                            </div>
+                                        <?php endif; ?>
 
-                        if (!empty($post["image"])) {
-                            echo '<div class="mt-3">';
-                            echo '<img src="/student_forum/' . htmlspecialchars($post["image"]) . '" class="img-fluid rounded" alt="Post Image">';
-                            echo '</div>';
-                        }
-
-                        echo '<p class="text-muted mt-2">';
-                        echo '<a href="#" class="font-weight-bold">' . htmlspecialchars($post["username"]) . '</a> posted in <strong>' . htmlspecialchars($post["module_name"]) . '</strong>';
-                        echo ' <span class="text-secondary font-weight-bold">' . 'at' . date('F j, Y, g:i a', strtotime($post["created_at"])) . '</span>';
-                        echo '</p>';
-
-                        echo '</div>'; // end media-body
-                        echo '</div>'; // end media forum-item
-                        echo '</div>'; // end card-body
-                        echo '</div>'; // end card
+                                        <p class="text-muted mt-2">
+                                            <a href="#" class="font-weight-bold"><?= htmlspecialchars($post["username"]); ?></a> 
+                                            posted in <strong><?= htmlspecialchars($post["module_name"]); ?></strong>
+                                            <span class="text-secondary font-weight-bold"> at <?= date('F j, Y, g:i a', strtotime($post["created_at"])); ?></span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
                     }
                 } else {
-                    echo '<div class="alert alert-info">No posts available.</div>';
+                    echo '<div class="alert alert-info text-center">No posts available.</div>';
                 }
                 ?>
             </div>
-           
+
 
                 
                 <ul class="pagination pagination-sm pagination-circle justify-content-center mb-0">
