@@ -50,5 +50,10 @@ class Post {
         $stmt = $this->pdo->prepare("DELETE FROM posts WHERE post_id = ? AND user_id = ?");
         return $stmt->execute([$post_id, $user_id]);
     }
+    
+    public function countAllPosts() {
+        $stmt = $this->pdo->query("SELECT COUNT(*) FROM posts");
+        return $stmt->fetchColumn();
+    }
 }
 ?>

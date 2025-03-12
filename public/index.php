@@ -65,9 +65,9 @@
             <!-- /Inner sidebar body -->
         </div>
         <!-- /Inner sidebar -->
-
         <!-- Inner main -->
         <div class="inner-main">
+            
             <!-- Inner main header -->
             <div class="inner-main-header">
                 <a class="nav-link nav-icon rounded-circle nav-link-faded mr-3 d-md-none" href="#" data-toggle="inner-sidebar"><i class="material-icons">arrow_forward_ios</i></a>
@@ -78,6 +78,18 @@
                     <option value="3">Unsolved</option>
                     <option value="3">No Replies Yet</option>
                 </select>
+
+                <span class="post-count ml-3"> 
+                    <?php 
+                        if (!isset($postController)) {
+                            require_once __DIR__ . '/../app/controllers/PostController.php';
+                            $postController = new PostController();
+                        }
+                        $posts = $postController->countAllPosts();
+                        echo "$posts posts" 
+                    ?>
+                </span>
+
                 <span class="input-icon input-icon-sm ml-auto w-auto">
                     <input type="text" class="form-control form-control-sm bg-gray-200 border-gray-200 shadow-none mb-4 mt-4" placeholder="Search forum" />
                 </span>
@@ -91,49 +103,24 @@
             
             <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                 <?php
-                require_once __DIR__ . '/../app/models/Post.php';
-                require_once __DIR__ . '/../app/controllers/PostController.php';
-
-                $postController = new PostController();
+                if (!isset($postController)) {
+                    require_once __DIR__ . '/../app/controllers/PostController.php';
+                    $postController = new PostController();
+                }
                 $posts = $postController->getAllPosts();
 
                 if (!empty($posts)) {
                     foreach ($posts as $post) {
-                        ?>
-                        <div class="card mb-2 shadow-sm">
-                            <div class="card-body p-2 p-sm-3">
-                                <div class="media forum-item">
-                                    <div class="media-body">
-                                        <h6>
-                                            <a href="#" class="text-body font-weight-bold"><?= htmlspecialchars($post["title"]); ?></a>
-                                        </h6>
-                                        <p class="text-secondary"><?= nl2br(htmlspecialchars($post["content"])); ?></p>
-
-                                        <?php if (!empty($post["image"])): ?>
-                                            <div class="mt-3">
-                                                <img src="/student_forum/<?= htmlspecialchars($post["image"]); ?>" class="img-fluid rounded" alt="Post Image">
-                                            </div>
-                                        <?php endif; ?>
-
-                                        <p class="text-muted mt-2">
-                                            <a href="#" class="font-weight-bold"><?= htmlspecialchars($post["username"]); ?></a> 
-                                            posted in <strong><?= htmlspecialchars($post["module_name"]); ?></strong>
-                                            <span class="text-secondary font-weight-bold"> at <?= date('F j, Y, g:i a', strtotime($post["created_at"])); ?></span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <?php
+                        include '../app/views/post/post_item.php';
                     }
                 } else {
                     echo '<div class="alert alert-info text-center">No posts available.</div>';
                 }
                 ?>
+
+
+
             </div>
-
-
-                
                 <ul class="pagination pagination-sm pagination-circle justify-content-center mb-0">
                     <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a></li>
                     <li class="page-item active"><span class="page-link">2</span></li>

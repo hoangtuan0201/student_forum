@@ -1,5 +1,15 @@
 <?php
 
+// // Tại sao cần dùng Namespace?
+// Tránh xung đột tên – Khi có nhiều thư viện khác nhau có thể có các class hoặc function trùng tên.
+// Tổ chức code tốt hơn – Giúp quản lý mã nguồn dễ dàng hơn.
+// Tạo code dễ bảo trì – Giúp phân loại các thành phần theo module.
+
+// namespace Config;
+// use PDO;
+// use PDOException;
+// use Exception;
+
 class Database {
     private $host = "localhost";  // Change if needed
     private $db_name = "student_forum";  // Your database name

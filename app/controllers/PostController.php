@@ -62,6 +62,12 @@ class PostController {
     public function getPostById($post_id) {
         return $this->postModel->getPostById($post_id);
     }
+
+    public function countAllPosts() {
+        return $this->postModel->countAllPosts();
+    }
+
+
 }
 
 $postController = new PostController();
