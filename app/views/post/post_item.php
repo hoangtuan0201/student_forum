@@ -3,7 +3,7 @@
         <div class="media forum-item">
             <div class="media-body">
                 <h6>
-                    <a href="post_detail.php?id=<?= $post['post_id']; ?>" class="text-body font-weight-bold"><?= htmlspecialchars($post["title"]); ?></a>
+                    <a href="/student_forum/app/views/post/post_detail.php?id=<?= $post['post_id']; ?>" class="text-body font-weight-bold"><?= htmlspecialchars($post["title"]); ?></a>
                 </h6>
                 <p class="text-secondary">
                     <?= htmlspecialchars(substr($post["content"], 0, 50)) . (strlen($post["content"]) > 50 ? '...' : ''); ?>
@@ -13,6 +13,16 @@
                     <a href="#" class="font-weight-bold"><?= htmlspecialchars($post["username"]); ?></a> 
                     posted in <strong><?= htmlspecialchars($post["module_name"]); ?></strong>
                     <span class="text-secondary"> · <?= date('M j, Y', strtotime($post["created_at"])); ?></span>
+                </p>
+                
+                <?php
+                // Đếm số lượng comment cho bài viết này
+                require_once __DIR__ . '/../../controllers/CommentController.php';
+                $commentController = new CommentController();
+                $commentCount = $commentController->countCommentsByPostId($post['post_id']);
+                ?>
+                <p class="text-muted small">
+                    <i class="far fa-comment-alt"></i> <?= $commentCount ?> comments
                 </p>
                 
                 <div class="text-right">
