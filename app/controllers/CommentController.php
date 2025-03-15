@@ -75,6 +75,39 @@ class CommentController {
     public function countCommentsByPostId($post_id) {
         return $this->commentModel->countCommentsByPostId($post_id);
     }
+    
+    public function editComment() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            // Kiểm tra người dùng đã đăng nhập
+            if (!isset($_SESSION["user_id"])) {
+                $_SESSION["error"] = "You must be logged in to edit a comment.";
+                header("Location: /student_forum/app/views/auth/login.php");
+                exit;
+            }
+            
+            $user_id = $_SESSION["user_id"];
+            $comment_id = $_POST["comment_id"];
+            $post_id = $_POST["post_id"];
+            $content = htmlspecialchars(trim($_POST["content"]));
+            
+            // Validate
+            if (empty($content)) {
+                $_SESSION["error"] = "Comment cannot be empty.";
+                header("Location: /student_forum/app/views/post/post_detail.php?id=$post_id");
+                exit;
+            }
+            
+            // Cập nhật comment
+            if ($this->commentModel->updateComment($comment_id, $user_id, $content)) {
+                $_SESSION["success"] = "Comment updated successfully.";
+            } else {
+                $_SESSION["error"] = "Failed to update comment.";
+            }
+            
+            header("Location: /student_forum/app/views/post/post_detail.php?id=$post_id");
+            exit;
+        }
+    }
 }
 
 // Khởi tạo controller
@@ -88,6 +121,9 @@ if (isset($_GET["action"])) {
             break;
         case "delete":
             $commentController->deleteComment();
+            break;
+        case "edit":
+            $commentController->editComment();
             break;
     }
 }

@@ -36,4 +36,9 @@ class Comment {
         return $stmt->fetchColumn();
     }
     
+    public function updateComment($comment_id, $user_id, $content) {
+        $stmt = $this->pdo->prepare("UPDATE comments SET content = ? WHERE comment_id = ? AND user_id = ?");
+        return $stmt->execute([$content, $comment_id, $user_id]);
+    }
+    
 }
