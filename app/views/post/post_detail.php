@@ -89,8 +89,7 @@ include '../includes/header.php';
                                         </div>
                                         <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $comment['user_id']): ?>
                                             <div>
-                                                <form action="/student_forum/app/comment_handler.php" method="post" class="d-inline">
-                                                    <input type="hidden" name="action" value="delete">
+                                                <form action="/student_forum/app/controllers/CommentController.php?action=delete" method="post" class="d-inline">
                                                     <input type="hidden" name="comment_id" value="<?= $comment['comment_id']; ?>">
                                                     <input type="hidden" name="post_id" value="<?= $post_id; ?>">
                                                     <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure you want to delete this comment?')">Delete</button>
@@ -111,8 +110,7 @@ include '../includes/header.php';
                         <?php if (isset($_SESSION['user_id'])): ?>
                             <div class="comment-form mt-4">
                                 <h6>Add a Comment</h6>
-                                <form action="/student_forum/app/comment_handler.php" method="post">
-                                    <input type="hidden" name="action" value="create">
+                                <form action="/student_forum/app/controllers/CommentController.php?action=create" method="post">
                                     <input type="hidden" name="post_id" value="<?= $post_id; ?>">
                                     <div class="form-group">
                                         <textarea class="form-control" name="content" rows="3" placeholder="Write your comment here..." required></textarea>
@@ -122,7 +120,7 @@ include '../includes/header.php';
                             </div>
                         <?php else: ?>
                             <div class="alert alert-info mt-4">
-                                Please <a href="/student_forum/login.php">login</a> to comment.
+                                Please <a href="/student_forum/app/views/auth/login.php">login</a> to comment.
                             </div>
                         <?php endif; ?>
                     </div>
