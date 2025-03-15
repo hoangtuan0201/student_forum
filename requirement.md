@@ -1,58 +1,84 @@
-Phân tích yêu cầu và đề xuất cải tiến:
-1. Chức năng cơ bản (65% điểm cho phần hệ thống):
-Từ code bạn đã chia sẻ, tôi thấy bạn đã triển khai:
-Hiển thị danh sách bài đăng
-Chức năng comment
-Xác thực người dùng (login)
-Để đảm bảo đáp ứng đầy đủ yêu cầu cơ bản, bạn cần kiểm tra:
-CRUD cho bài đăng: Thêm, sửa, xóa bài đăng
-CRUD cho người dùng: Quản lý thông tin người dùng
-CRUD cho module: Quản lý danh sách module
-Form liên hệ: Cho phép gửi email đến admin
-2. Chức năng nâng cao (để đạt điểm cao hơn 70%):
-Bạn đã có hệ thống đăng nhập, đây là một điểm cộng. Các tính năng khác có thể thêm:
-Khu vực Admin: Tạo dashboard riêng cho admin
-Hệ thống đăng ký: Cho phép người dùng tự tạo tài khoản
-Mã hóa mật khẩu: Đảm bảo bảo mật
-Validation: Kiểm tra dữ liệu đầu vào cả phía client và server
-Thiết kế giao diện xuất sắc: Cải thiện UI/UX
-Phân trang: Cho danh sách bài đăng và comment
-Tìm kiếm: Cho phép tìm kiếm bài đăng
-Thông báo: Hiển thị thông báo khi có hành động thành công/thất bại
-
-
-Thiết kế hệ thống:
-Sơ đồ cơ sở dữ liệu (ERD)
-Cấu trúc thư mục và mô hình MVC
-Wireframes hoặc mockups cho giao diện người dùng
-3. Công nghệ sử dụng:
-HTML5, CSS, JavaScript
-PHP PDO
-MySQL
-Bootstrap (nếu sử dụng)
-Giải thích lý do chọn các công nghệ này
-Vấn đề pháp lý, xã hội và đạo đức:
-GDPR và bảo vệ dữ liệu cá nhân
-Accessibility (WCAG 2.1)
-Bảo mật web (XSS, CSRF, SQL Injection)
-Quyền sở hữu nội dung và trách nhiệm pháp lý
-Tổng quan hệ thống:
-Screenshots có chú thích cho mỗi tính năng
-Giải thích cách sử dụng từng tính năng
-Kiểm thử:
-Bảng kiểm thử chức năng
-Kiểm thử validation
-Kiểm thử trên các trình duyệt khác nhau
-Kiểm thử bảo mật
-Kết luận và đề xuất tương lai:
-Tóm tắt những gì đã đạt được
-Đề xuất cải tiến trong tương lai (ví dụ: tính năng tìm kiếm nâng cao, thông báo thời gian thực, v.v.)
-Lời khuyên cuối cùng:
-1. Hoàn thiện tất cả chức năng cơ bản trước khi thêm tính năng nâng cao.
-Đảm bảo bảo mật: Sử dụng prepared statements, validate input, sanitize output.
-3. Thiết kế responsive: Đảm bảo trang web hoạt động tốt trên cả desktop và mobile.
-Kiểm thử kỹ lưỡng: Tạo bảng kiểm thử chi tiết và ghi lại kết quả.
-Viết báo cáo song song với phát triển: Không để đến phút cuối.
-6. Tham khảo đúng cách: Sử dụng Harvard Referencing cho mọi nguồn tham khảo.
-Đảm bảo accessibility: Kiểm tra với các công cụ như WAVE hoặc Lighthouse.
-Với những đề xuất này, tôi tin rằng bạn có thể đạt được điểm số xuất sắc cho coursework của mình. Nếu bạn cần hỗ trợ cụ thể cho bất kỳ phần nào, đừng ngần ngại hỏi thêm!
+Student Forum - Web Programming Project
+Overview
+This project is a prototype system where students can post questions amongst themselves to get help with their coursework. It functions as a simple self-contained student version of Stack Overflow.
+Features
+Core Features (Implemented)
+User Authentication: Login system for students
+Post Management: Create, read, update, and delete posts
+Comment System: Add, edit, and delete comments on posts
+Module Organization: Posts categorized by modules/courses
+Planned Features
+User Management: Complete CRUD operations for user accounts
+Module Management: Admin interface for managing course modules
+Contact Form: Email functionality to contact administrators
+Admin Dashboard: Special interface for administrators
+Registration System: Allow students to create accounts
+Password Encryption: Enhanced security for user credentials
+Input Validation: Client and server-side validation
+UI/UX Improvements: Enhanced user interface design
+Pagination: For post and comment listings
+Search Functionality: Find posts by keywords
+Notifications: Success/error messages for user actions
+Technical Implementation
+Architecture
+Model-View-Controller (MVC) pattern for clean code organization
+PHP PDO for database operations with prepared statements
+MySQL relational database for data storage
+Responsive Design using Bootstrap framework
+Database Structure
+Users: Store user information and credentials
+Posts: Store questions/discussions created by users
+Comments: Store responses to posts
+Modules: Store course/module information
+Security Measures
+Prepared statements to prevent SQL injection
+Input sanitization to prevent XSS attacks
+Authentication checks for protected operations
+Form validation for data integrity
+Installation and Setup
+Clone the repository to your web server directory
+Import the database schema from database/schema.sql
+Configure database connection in config/database.php
+4. Ensure your web server has PHP 7.4+ and MySQL 5.7+
+Usage
+For Students
+Login with your credentials
+Browse questions by module
+Post new questions
+Comment on existing questions
+Edit or delete your own posts and comments
+For Administrators
+Manage users, posts, and modules
+Monitor system activity
+Respond to contact form submissions
+Development Roadmap
+Phase 1 (Current)
+Core authentication
+Basic CRUD for posts and comments
+Simple UI implementation
+Phase 2 (Next Steps)
+Complete user management
+Module management
+Contact form implementation
+Enhanced security features
+Phase 3 (Future Enhancements)
+Advanced search functionality
+Real-time notifications
+User profile customization
+Performance optimizations
+Testing
+Functional testing for all CRUD operations
+Cross-browser compatibility testing
+Mobile responsiveness testing
+Security vulnerability testing
+Legal and Ethical Considerations
+GDPR compliance for user data
+Accessibility standards (WCAG 2.1)
+Content ownership policies
+Code of conduct for user interactions
+Contributors
+[Your Name] - Lead Developer
+License
+This project is developed as part of COMP1841 Web Programming coursework and is not licensed for public distribution.
+---
+This README serves as documentation for the Student Forum project developed for COMP1841 Web Programming coursework (2023/24).
