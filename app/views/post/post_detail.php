@@ -7,6 +7,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     
+    <style>
+        .post-content img {
+            width: 688px;
+            height: 474px;
+            object-fit: contain;
+            max-width: 100%;
+        }
+    </style>
 </head>
 <?php
 
@@ -59,7 +67,7 @@ include '../includes/header.php';
                         
                         <?php if (!empty($post["image"])): ?>
                             <div class="mt-3">
-                                <img src="/student_forum/<?= htmlspecialchars($post["image"]); ?>" class="img-fluid rounded" alt="Post Image">
+                                <img width="688" height="474" src="/student_forum/<?= htmlspecialchars($post["image"]); ?>" class="img-fluid rounded" alt="Post Image">
                             </div>
                         <?php endif; ?>
                     </div>
