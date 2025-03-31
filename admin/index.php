@@ -83,40 +83,7 @@ $stats = $adminController->getDashboardStats();
             </div>
         </div>
         
-        <div class="row">
-            <div class="col-12">
-                <div class="card mb-4">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">Quick Actions</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-md-3">
-                                <a href="users.php" class="btn btn-outline-primary btn-block mb-3">
-                                    <i class="fas fa-user-plus"></i> Manage Users
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="posts.php" class="btn btn-outline-success btn-block mb-3">
-                                    <i class="fas fa-edit"></i> Manage Posts
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="modules.php" class="btn btn-outline-info btn-block mb-3">
-                                    <i class="fas fa-book"></i> Manage Modules
-                                </a>
-                            </div>
-                            <div class="col-md-3">
-                                <a href="../public/index.php" class="btn btn-outline-secondary btn-block mb-3">
-                                    <i class="fas fa-home"></i> View Forum
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+       <?php include 'includes/quick_action.php' ?>
     
     
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
