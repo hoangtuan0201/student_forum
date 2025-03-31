@@ -12,13 +12,21 @@ class User {
     public function findByEmail($email) {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = ?");
         $stmt->execute([$email]);
+<<<<<<< HEAD
         return $stmt->fetch();
+=======
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
     }
 
     public function findByUsernameOrEmail($username, $email) {
         $stmt = $this->pdo->prepare("SELECT * FROM users WHERE username = ? OR email = ?");
         $stmt->execute([$username, $email]);
+<<<<<<< HEAD
         return $stmt->fetch();
+=======
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
     }
 
     public function createUser($username, $email, $password, $role = 'student') {

@@ -17,7 +17,11 @@ class CommentController {
     
     public function createComment() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+<<<<<<< HEAD
             // check if user login already
+=======
+            // Kiểm tra người dùng đã đăng nhập
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
             if (!isset($_SESSION["user_id"])) {
                 $_SESSION["error"] = "You must be logged in to comment.";
                 header("Location: /student_forum/app/views/auth/login.php");
@@ -26,7 +30,11 @@ class CommentController {
             
             $user_id = $_SESSION["user_id"];
             $post_id = $_POST["post_id"];
+<<<<<<< HEAD
             $content = trim($_POST["content"]);
+=======
+            $content = htmlspecialchars(trim($_POST["content"]));
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
             
             // Validate
             if (empty($content)) {
@@ -35,7 +43,11 @@ class CommentController {
                 exit;
             }
             
+<<<<<<< HEAD
             // submit comment
+=======
+            // Lưu comment
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
             if ($this->commentModel->createComment($user_id, $post_id, $content)) {
                 $_SESSION["success"] = "Comment added successfully.";
             } else {
@@ -78,7 +90,10 @@ class CommentController {
     
     public function editComment() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+<<<<<<< HEAD
 
+=======
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
             // Kiểm tra người dùng đã đăng nhập
             if (!isset($_SESSION["user_id"])) {
                 $_SESSION["error"] = "You must be logged in to edit a comment.";
@@ -89,7 +104,11 @@ class CommentController {
             $user_id = $_SESSION["user_id"];
             $comment_id = $_POST["comment_id"];
             $post_id = $_POST["post_id"];
+<<<<<<< HEAD
             $content = trim($_POST["content"]);
+=======
+            $content = htmlspecialchars(trim($_POST["content"]));
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
             
             // Validate
             if (empty($content)) {
@@ -98,7 +117,11 @@ class CommentController {
                 exit;
             }
             
+<<<<<<< HEAD
             // comment
+=======
+            // Cập nhật comment
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
             if ($this->commentModel->updateComment($comment_id, $user_id, $content)) {
                 $_SESSION["success"] = "Comment updated successfully.";
             } else {
@@ -111,8 +134,15 @@ class CommentController {
     }
 }
 
+<<<<<<< HEAD
 $commentController = new CommentController();
 
+=======
+// Khởi tạo controller
+$commentController = new CommentController();
+
+// Xử lý các action thông qua GET parameter
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
 if (isset($_GET["action"])) {
     switch ($_GET["action"]) {
         case "create":

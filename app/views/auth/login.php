@@ -41,7 +41,10 @@ session_start();
                     </div>
                 <?php endif; ?>
                 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
                 <?php if (isset($_SESSION['post_error'])): ?>
                     <div class="alert alert-danger mt-3">
                         <?php echo $_SESSION['post_error']; unset($_SESSION['post_error']); ?>

@@ -10,18 +10,31 @@ This project is a prototype system where students can post questions amongst the
 - **Post Management**: Create, read, update, and delete posts.
 - **Comment System**: Add, edit, and delete comments on posts.
 - **Module Organization**: Posts categorized by modules/courses.
+<<<<<<< HEAD
 - **Registration System**: Allow students to create accounts.
 - **Password Encryption**: Enhanced security for user credentials.
 
+=======
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
 
 ### Planned Features
 - **User Management**: Complete CRUD operations for user accounts.
 - **Module Management**: Admin interface for managing course modules.
 - **Contact Form**: Email functionality to contact administrators.
 - **Admin Dashboard**: Special interface for administrators.
+<<<<<<< HEAD
 - **Input Validation**: Client and server-side validation.
 - **Pagination**: For post and comment listings.
 - **Search Functionality**: Find posts by keywords.
+=======
+- **Registration System**: Allow students to create accounts.
+- **Password Encryption**: Enhanced security for user credentials.
+- **Input Validation**: Client and server-side validation.
+- **UI/UX Improvements**: Enhanced user interface design.
+- **Pagination**: For post and comment listings.
+- **Search Functionality**: Find posts by keywords.
+- **Notifications**: Success/error messages for user actions.
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
 
 ## Technical Implementation
 - **Architecture**: Model-View-Controller (MVC) pattern for clean code organization.

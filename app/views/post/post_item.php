@@ -26,6 +26,7 @@
                 </p>
                 
                 <div class="text-right">
+<<<<<<< HEAD
                 <a href="/student_forum/app/views/post/post_detail.php?id=<?= $post['post_id']; ?>" class="btn btn-sm btn-outline-primary">Read more</a>
 
                     <?php if (isset($_SESSION["user_id"]) && $_SESSION["user_id"] == $post["user_id"]) : ?>
@@ -39,6 +40,9 @@
                         
                     <?php endif ?>
                     
+=======
+                    <a href="/student_forum/app/views/post/post_detail.php?id=<?= $post['post_id']; ?>" class="btn btn-sm btn-outline-primary">Read more</a>
+>>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
                 </div>
             </div>
         </div>
