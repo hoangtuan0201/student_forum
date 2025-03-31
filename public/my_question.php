@@ -28,12 +28,25 @@
 
 <!-- nav bar -->
 <?php include '../app/views/includes/header.php'; ?>
+<!-- question modal after clicked new discussion -->
+<?php include '../app/views/post/new_post.php' ?>
+
 <div class="container">
 <div class="main-body p-0">
     <div class="inner-wrapper">
         <!-- Inner sidebar -->
         <div class="inner-sidebar">
-          
+          <!-- Inner sidebar header -->
+          <div class="inner-sidebar-header justify-content-center">
+                <button class="btn btn-primary has-icon btn-block" type="button" data-toggle="modal" data-target="#questionModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-2">
+                        <line x1="12" y1="5" x2="12" y2="19"></line>
+                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                    </svg>
+                    NEW DISCUSSION
+                </button>
+            </div>
+            <!-- /Inner sidebar header -->
 
             <!-- Inner sidebar body -->
             <div class="inner-sidebar-body p-0">
@@ -72,13 +85,26 @@
                   
                 </select>
 
+                <span class="post-count ml-3"> 
+                    <?php 
+                        if (!isset($postController)) {
+                            require_once __DIR__ . '/../app/controllers/PostController.php';
+                            $postController = new PostController();
+                        }
+                        $posts = $postController->countAllPostsByUser($_SESSION['user_id']);
+                        echo "$posts posts" 
+                    ?>
+                </span>
+
 
 
                 <span class="input-icon input-icon-sm ml-auto w-auto">
                     <input type="text" class="form-control form-control-sm bg-gray-200 border-gray-200 shadow-none mb-4 mt-4" placeholder="Search forum" />
                 </span>
             </div>
+            
             <!-- /Inner main header -->
+             
 
             <!-- Inner main body -->
 

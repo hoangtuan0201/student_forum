@@ -57,3 +57,16 @@ web.php → Define các route, ví dụ:
 
 
 Using __DIR__ to get the current directory
+
+
+student_forum/
+│── admin/
+│   │── index.php  (Admin Dashboard)
+│   │── users.php  (Manage Users)
+│   │── posts.php  (Manage Posts)
+│   │── modules.php  (Manage Modules)
+│   │── styles.css  (Admin Dashboard Styling)
+│── app/
+│── public/
+│── config/
+│── ...

@@ -86,6 +86,9 @@ class PostController {
     public function countAllPosts() {
         return $this->postModel->countAllPosts();
     }
+    public function countAllPostsByUser($user_id) {
+        return $this->postModel->countAllPostsByUser($user_id);
+    }
 
 
 }

@@ -37,7 +37,7 @@ class Post {
         return $stmt->fetchAll();
     }
         
-
+    // this is for user CRUD
     public function createPost($user_id, $module_id, $title, $content, $image = null) {
         $stmt = $this->pdo->prepare("INSERT INTO posts (user_id, module_id, title, content, image, created_at) 
                                      VALUES (?, ?, ?, ?, ?, NOW())");
@@ -50,7 +50,7 @@ class Post {
         return $stmt->execute([$title, $content, $module_id, $image_path, $post_id, $user_id]);
     }
 
-
+    
     public function deletePost($post_id, $user_id) {
         $stmt = $this->pdo->prepare("DELETE FROM posts WHERE post_id = ? AND user_id = ?");
         return $stmt->execute([$post_id, $user_id]);
@@ -62,5 +62,18 @@ class Post {
         $stmt = $this->pdo->query("SELECT COUNT(*) FROM posts");
         return $stmt->fetchColumn();
     }
+
+    public function countAllPostsByUser($user_id) {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE user_id = ?");
+        $stmt->execute([$user_id]);
+        return $stmt->fetchColumn();
+    }
+    
+    // THIS IS FOR admin Crud
+    public function deletePostFromAdmin($post_id) {
+        $stmt = $this->pdo->prepare("DELETE FROM posts WHERE post_id = ?");
+        return $stmt->execute([$post_id]);
+    }
+
 }
 ?>
