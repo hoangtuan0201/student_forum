@@ -24,7 +24,7 @@ $users = $adminController->getAllUsers();
             <div class="alert alert-success">
                 <?= $_SESSION['success']; ?>
                 <?php unset($_SESSION['success']); ?>
-            </div>
+            </div> 
         <?php endif; ?>
         
         <?php if (isset($_SESSION['error'])): ?>
@@ -109,6 +109,7 @@ $users = $adminController->getAllUsers();
                 </div>
             </div>
         </div>
+        <?php include "includes/quick_action.php"?>
     </div>
     
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

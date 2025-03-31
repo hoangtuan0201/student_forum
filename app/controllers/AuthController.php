@@ -96,7 +96,6 @@ class AuthController {
     public function isAdmin() {
         return isset($_SESSION["role"]) && $_SESSION['role'] === 'admin';
     }
-    
     // Admin authentication middleware
     public function requireAdmin() {
         if (!$this->isAdmin()) {
