@@ -70,14 +70,7 @@
                 <a class="nav-link nav-icon rounded-circle nav-link-faded mr-3 d-md-none" href="#" data-toggle="inner-sidebar"><i class="material-icons">arrow_forward_ios</i></a>
                 <select class="custom-select custom-select-sm w-auto mr-1">
                     <option selected="">Latest</option>
-<<<<<<< HEAD
                   
-=======
-                    <option value="1">Popular</option>
-                    <option value="3">Solved</option>
-                    <option value="3">Unsolved</option>
-                    <option value="3">No Replies Yet</option>
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
                 </select>
 
                 <span class="post-count ml-3"> 
@@ -121,11 +114,7 @@
 
 
 
-<<<<<<< HEAD
             <!-- </div>
-=======
-            </div>
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
                 <ul class="pagination pagination-sm pagination-circle justify-content-center mb-0">
                     <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a></li>
                     <li class="page-item active"><span class="page-link">2</span></li>
@@ -134,11 +123,7 @@
                         <a class="page-link has-icon" href="javascript:void(0)"><i class="material-icons">next</i></a>
                     </li>
                 </ul>
-<<<<<<< HEAD
             </div> -->
-=======
-            </div>
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
             <!-- /Forum List -->
 
 
