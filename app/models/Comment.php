@@ -16,11 +16,7 @@ class Comment {
                                      WHERE comments.post_id = ? 
                                      ORDER BY comments.created_at ASC");
         $stmt->execute([$post_id]);
-<<<<<<< HEAD
         return $stmt->fetchAll();
-=======
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
     }
     
     public function createComment($user_id, $post_id, $content) {

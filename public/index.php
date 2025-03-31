@@ -46,16 +46,8 @@
                                 <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
                                     <div class="simplebar-content" style="padding: 16px;">
                                         <nav class="nav nav-pills nav-gap-y-1 flex-column">
-<<<<<<< HEAD
                                             <a href="index.php" class="nav-link nav-link-faded has-icon active">All questions</a>
                                             <a href="/student_forum/public/my_question.php" class="nav-link nav-link-faded has-icon">My question</a>
-=======
-                                            <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon active">All questions</a>
-                                            <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">My question</a>
-                                            <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Popular this week</a>
-                                            <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Popular all time</a>
-                                            <a href="javascript:void(0)" class="nav-link nav-link-faded has-icon">Solved</a>
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
                                         </nav>
                                     </div>
                                 </div>

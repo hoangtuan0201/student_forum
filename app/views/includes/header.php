@@ -7,11 +7,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
-<<<<<<< HEAD
         <a class="navbar-brand" href="/student_forum/public/index.php">Student Forum</a>
-=======
-        <a class="navbar-brand" href="index.php">Student Forum</a>
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
         <div>
             <?php if (isset($_SESSION['username'])): ?>
                 <span class="navbar-text mr-3">Welcome, <?php echo htmlspecialchars($_SESSION['username']); ?></span>

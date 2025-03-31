@@ -54,7 +54,6 @@ class PostController {
             }
         }
     }
-<<<<<<< HEAD
     public function deletePost() {
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["post_id"])) {
             $post_id = $_POST["post_id"];
@@ -69,8 +68,6 @@ class PostController {
         }
     }
     
-=======
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
 
     public function getAllPosts() {
         return $this->postModel->getAllPosts();
@@ -80,15 +77,12 @@ class PostController {
         return $this->postModel->getPostById($post_id);
     }
 
-<<<<<<< HEAD
     public function getUserPost() {
         return $this->postModel->getUserPost($_SESSION["user_id"]);
         
     }
     
 
-=======
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
     public function countAllPosts() {
         return $this->postModel->countAllPosts();
     }
@@ -101,11 +95,8 @@ $postController = new PostController();
 if (isset($_GET["action"])) {
     if ($_GET["action"] == "create_post") {
         $postController->create_post();
-<<<<<<< HEAD
     }else if ($_GET["action"] == "delete_post") {
         $postController->deletePost();
-=======
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
     }
 }
 ?>

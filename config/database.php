@@ -1,18 +1,4 @@
 <?php
-<<<<<<< HEAD
-=======
-
-// // Tại sao cần dùng Namespace?
-// Tránh xung đột tên – Khi có nhiều thư viện khác nhau có thể có các class hoặc function trùng tên.
-// Tổ chức code tốt hơn – Giúp quản lý mã nguồn dễ dàng hơn.
-// Tạo code dễ bảo trì – Giúp phân loại các thành phần theo module.
-
-// namespace Config;
-// use PDO;
-// use PDOException;
-// use Exception;
-
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
 class Database {
     private $host = "localhost";  // Change if needed
     private $db_name = "student_forum";  // Your database name
@@ -24,14 +10,6 @@ class Database {
         $this->conn = null;
 
         try {
-<<<<<<< HEAD
-=======
-            // Check if PDO is available
-            if (!class_exists('PDO')) {
-                throw new Exception("PDO extension is not installed.");
-            }
-
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
             $dsn = "mysql:host=" . $this->host . ";dbname=" . $this->db_name . ";charset=utf8mb4";
             //$dsn (Data Source Name): Defines the database type (mysql), host, database name, and charset (utf8mb4 for better Unicode support).
             $options = [

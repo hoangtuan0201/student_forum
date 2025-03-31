@@ -104,9 +104,5 @@ if (isset($_GET['action'])) {
     } elseif ($_GET['action'] == 'logout') {
         $authController->logout();
     }
-<<<<<<< HEAD
 }   
-=======
-}
->>>>>>> e4d2bd746c442ec95dbf71609c8a27b97cdcac32
 ?>
