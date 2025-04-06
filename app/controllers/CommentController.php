@@ -26,7 +26,7 @@ class CommentController {
             
             $user_id = $_SESSION["user_id"];
             $post_id = $_POST["post_id"];
-            $content = trim($_POST["content"]);
+            $content = htmlspecialchars(trim($_POST["content"]));
             
             // Validate
             if (empty($content)) {
@@ -88,7 +88,7 @@ class CommentController {
             $user_id = $_SESSION["user_id"];
             $comment_id = $_POST["comment_id"];
             $post_id = $_POST["post_id"];
-            $content = trim($_POST["content"]);
+            $content = htmlspecialchars(trim($_POST["content"]));
             
             // Validate
             if (empty($content)) {

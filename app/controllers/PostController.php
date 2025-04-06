@@ -43,7 +43,7 @@ class PostController {
                 }
             }
 
-            // Gọi model để tạo bài post
+            // Call the model to create post
             if ($this->postModel->createPost($user_id, $module_id, $title, $content, $image_path)) {
                 header("Location: ../../public/index.php");
                 exit;
@@ -54,6 +54,78 @@ class PostController {
             }
         }
     }
+    
+    public function updatePost() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            if (!isset($_SESSION["user_id"])) {
+                $_SESSION["post_error"] = "You have to login first to edit a post.";
+                header("Location: ../../app/views/auth/login.php");
+                exit;
+            }
+
+            $user_id = $_SESSION["user_id"];
+            $post_id = $_POST["post_id"];
+            $title = htmlspecialchars(trim($_POST["title"]));
+            $content = htmlspecialchars(trim($_POST["content"]));
+            $module_id = $_POST["module_id"];
+            
+            // Get current post data
+            $current_post = $this->postModel->getPostById($post_id);
+            
+            // Validate that the post belongs to this user
+            if (!$current_post || $current_post["user_id"] != $user_id) {
+                $_SESSION["post_error"] = "You can only edit your own posts.";
+                header("Location: ../../public/my_question.php");
+                exit;
+            }
+            
+            // Validate inputs
+            if (empty($title) || empty($content) || empty($module_id)) {
+                $_SESSION["post_error"] = "All fields are required.";
+                header("Location: ../../app/views/post/edit_post.php?id=" . $post_id);
+                exit;
+            }
+
+            // Initialize image path with current one
+            $image_path = $current_post["image"];
+            
+            // Check if remove image is checked
+            if (isset($_POST["remove_image"]) && $_POST["remove_image"] == 1) {
+                // If physical file exists, delete it
+                if (!empty($image_path) && file_exists("../../" . $image_path)) {
+                    unlink("../../" . $image_path);
+                }
+                $image_path = null;
+            }
+            
+            // Handle New Image Upload
+            if (!empty($_FILES["image"]["name"])) {
+                $target_dir = "../../public/uploads/";
+                $image_name = time() . "_" . basename($_FILES["image"]["name"]);
+                $target_file = $target_dir . $image_name;
+
+                // If there's already an image and we're uploading a new one, delete the old one
+                if (!empty($current_post["image"]) && file_exists("../../" . $current_post["image"])) {
+                    unlink("../../" . $current_post["image"]);
+                }
+
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                    $image_path = "public/uploads/" . $image_name;
+                }
+            }
+
+            // Call model to update the post
+            if ($this->postModel->updatePost($post_id, $title, $content, $module_id, $image_path, $user_id)) {
+                header("Location: ../../app/views/post/post_detail.php?id=" . $post_id);
+                exit;
+            } else {
+                $_SESSION["post_error"] = "Error updating post.";
+                header("Location: ../../app/views/post/edit_post.php?id=" . $post_id);
+                exit;
+            }
+        }
+    }
+    
     public function deletePost() {
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["post_id"])) {
             $post_id = $_POST["post_id"];
@@ -98,8 +170,10 @@ $postController = new PostController();
 if (isset($_GET["action"])) {
     if ($_GET["action"] == "create_post") {
         $postController->create_post();
-    }else if ($_GET["action"] == "delete_post") {
+    } else if ($_GET["action"] == "delete_post") {
         $postController->deletePost();
+    } else if ($_GET["action"] == "update_post") {
+        $postController->updatePost();
     }
 }
 ?>

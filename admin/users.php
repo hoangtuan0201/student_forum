@@ -52,8 +52,8 @@ $users = $adminController->getAllUsers();
                             <?php foreach ($users as $user): ?>
                                 <tr>
                                     <td><?= $user['user_id']; ?></td>
-                                    <td><?= htmlspecialchars($user['username']); ?></td>
-                                    <td><?= htmlspecialchars($user['email']); ?></td>
+                                    <td><?= $user['username']; ?></td>
+                                    <td><?= $user['email']; ?></td>
                                     <td>
                                         <form action="/student_forum/app/controllers/AdminController.php?action=updateUserRole" method="post" class="d-inline">
                                             <input type="hidden" name="user_id" value="<?= $user['user_id']; ?>">
@@ -87,7 +87,7 @@ $users = $adminController->getAllUsers();
                                                         </div>
                                                         <div class="modal-body">
                                                             <p>Are you sure you want to delete this user?</p>
-                                                            <p><strong>Username:</strong> <?= htmlspecialchars($user['username']); ?></p>
+                                                            <p><strong>Username:</strong> <?= $user['username']; ?></p>
                                                             <p class="text-danger">This action cannot be undone. All posts and comments by this user will also be deleted.</p>
                                                         </div>
                                                         <div class="modal-footer">

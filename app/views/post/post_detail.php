@@ -1,29 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="/student_forum/public/assets/css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    
-    <style>
-        .post-content img {
-            width: 688px;
-            height: 474px;
-            object-fit: contain;
-            max-width: 100%;
-        }
-    </style>
-</head>
 <?php
-
 require_once __DIR__ . '/../../controllers/PostController.php';
 require_once __DIR__ . '/../../controllers/CommentController.php';
 
 // Kiểm tra ID bài viết
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
-    header('Location: /');  
+    header('Location: /student_forum/public/my_question.php');  
     exit();
 }
 
@@ -33,7 +14,7 @@ $post = $postController->getPostById($post_id);
 
 // Kiểm tra bài viết tồn tại
 if (!$post) {
-    header('Location: /');
+    header('Location: /student_forum/public/my_question.php');
     exit();
 }
 
@@ -45,29 +26,44 @@ $comments = $commentController->getCommentsByPostId($post_id);
 include '../includes/header.php';
 ?>
 
+<style>
+    .post-content img {
+        width: 688px;
+        height: 474px;
+        object-fit: contain;
+        max-width: 100%;
+    }
+</style>
+
 <div class="container mt-4">
     <div class="row">
         <div class="col-md-8 offset-md-2">
             <div class="card shadow-sm">
                 <div class="card-body">
-                    <h3 class="card-title"><?= htmlspecialchars($post["title"]); ?></h3>
+                    <h3 class="card-title"><?= $post["title"]; ?></h3>
                     
                     <div class="d-flex align-items-center mb-3">
                         <div>
                             <span class="text-muted">Posted by </span>
-                            <a href="#" class="font-weight-bold"><?= htmlspecialchars($post["username"]); ?></a>
+                            <a href="#" class="font-weight-bold"><?= $post["username"]; ?></a>
                             <span class="text-muted"> in </span>
-                            <span class="badge badge-secondary"><?= htmlspecialchars($post["module_name"]); ?></span>
+                            <span class="badge badge-secondary"><?= $post["module_name"]; ?></span>
                             <span class="text-muted"> · <?= date('F j, Y, g:i a', strtotime($post["created_at"])); ?></span>
                         </div>
+                        
+                        <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $post['user_id']): ?>
+                        <div class="ml-auto">
+                            <a href="/student_forum/app/views/post/edit_post.php?id=<?= $post_id ?>" class="btn btn-sm btn-outline-primary">Edit Post</a>
+                        </div>
+                        <?php endif; ?>
                     </div>
                     
                     <div class="post-content mb-4">
-                        <p><?= nl2br(htmlspecialchars($post["content"])); ?></p>
+                        <p><?= nl2br($post["content"]); ?></p>
                         
                         <?php if (!empty($post["image"])): ?>
                             <div class="mt-3">
-                                <img width="688" height="474" src="/student_forum/<?= htmlspecialchars($post["image"]); ?>" class="img-fluid rounded" alt="Post Image">
+                                <img width="688" height="474" src="/student_forum/<?= $post["image"]; ?>" class="img-fluid rounded" alt="Post Image">
                             </div>
                         <?php endif; ?>
                     </div>
@@ -85,7 +81,10 @@ include '../includes/header.php';
                                     <div class="card-body">
                                         <div class="d-flex justify-content-between">
                                             <h6 class="card-subtitle mb-2 text-muted">
-                                                <?= htmlspecialchars($comment["username"]); ?> 
+                                                <?= $comment["username"]
+                                                
+                                                
+                                                ; ?> 
                                                 <small><?= date('M j, Y g:i a', strtotime($comment["created_at"])); ?></small>
                                             </h6>
                                             
@@ -108,7 +107,7 @@ include '../includes/header.php';
                                         
                                         <!-- Phần nội dung comment -->
                                         <div id="comment-content-<?= $comment['comment_id']; ?>">
-                                            <p class="card-text mt-2"><?= nl2br(htmlspecialchars($comment["content"])); ?></p>
+                                            <p class="card-text mt-2"><?= nl2br($comment["content"]); ?></p>
                                         </div>
                                         
                                         <!-- Form chỉnh sửa comment (ẩn mặc định) -->
@@ -118,7 +117,7 @@ include '../includes/header.php';
                                                     <input type="hidden" name="comment_id" value="<?= $comment['comment_id']; ?>">
                                                     <input type="hidden" name="post_id" value="<?= $post_id; ?>">
                                                     <div class="form-group">
-                                                        <textarea class="form-control" name="content" rows="3" required><?= htmlspecialchars($comment['content']); ?></textarea>
+                                                        <textarea class="form-control" name="content" rows="3" required><?= $comment['content'] ?></textarea>
                                                     </div>
                                                     <div class="mt-2">
                                                         <button type="submit" class="btn btn-sm btn-primary">Update</button>
@@ -165,7 +164,7 @@ include '../includes/header.php';
     </div>
 </div>
 
-<!-- JavaScript để xử lý chỉnh sửa comment -->
+<!-- JavaScript to handle comment editing -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const editButtons = document.querySelectorAll('.edit-comment-btn');
@@ -192,4 +191,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+
+<?php include '../includes/footer.php'; ?>
 
