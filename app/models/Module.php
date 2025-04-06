@@ -10,39 +10,39 @@ class Module {
     }
     
     public function getAllModules() {
-        $stmt = $this->pdo->prepare("SELECT * FROM modules ORDER BY name ASC");
+        $stmt = $this->pdo->prepare("SELECT * FROM modules ORDER BY module_name ASC");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
     
-    public function getModuleById($id) {
-        $stmt = $this->pdo->prepare("SELECT * FROM modules WHERE id = ?");
-        $stmt->execute([$id]);
+    public function getModuleById($module_id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM modules WHERE module_id = ?");
+        $stmt->execute([$module_id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
     
-    public function createModule($name) {
-        $stmt = $this->pdo->prepare("INSERT INTO modules (name) VALUES (?)");
-        return $stmt->execute([$name]);
+    public function createModule($module_name) {
+        $stmt = $this->pdo->prepare("INSERT INTO modules (module_name) VALUES (?)");
+        return $stmt->execute([$module_name]);
     }
     
-    public function updateModule($id, $name) {
-        $stmt = $this->pdo->prepare("UPDATE modules SET name = ? WHERE id = ?");
-        return $stmt->execute([$name, $id]);
+    public function updateModule($module_id, $module_name) {
+        $stmt = $this->pdo->prepare("UPDATE modules SET module_name = ? WHERE module_id = ?");
+        return $stmt->execute([$module_name, $module_id]);
     }
     
-    public function deleteModule($id) {
+    public function deleteModule($module_id) {
         // First, check if there are any posts in this module
         $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE module_id = ?");
-        $stmt->execute([$id]);
+        $stmt->execute([$module_id]);
         $count = $stmt->fetchColumn();
         
         if ($count > 0) {
             return false; // Cannot delete module with existing posts
         }
         
-        $stmt = $this->pdo->prepare("DELETE FROM modules WHERE id = ?");
-        return $stmt->execute([$id]);
+        $stmt = $this->pdo->prepare("DELETE FROM modules WHERE module_id = ?");
+        return $stmt->execute([$module_id]);
     }
     
     public function countModules() {

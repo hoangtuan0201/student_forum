@@ -18,6 +18,17 @@ class Post {
         return $stmt->fetchAll();
     }
 
+    public function getPostsByModule($module_id) {
+        $stmt = $this->pdo->prepare("SELECT posts.*, users.username, modules.module_name 
+                                    FROM posts 
+                                    JOIN users ON posts.user_id = users.user_id 
+                                    JOIN modules ON posts.module_id = modules.module_id 
+                                    WHERE posts.module_id = ?
+                                    ORDER BY posts.created_at DESC");
+        $stmt->execute([$module_id]);
+        return $stmt->fetchAll();
+    }
+
     public function getPostById($post_id) {
         $stmt = $this->pdo->prepare("SELECT posts.*, users.username, modules.module_name 
                                      FROM posts 
@@ -69,10 +80,29 @@ class Post {
         return $stmt->fetchColumn();
     }
     
+    public function countPostsByModule($module_id) {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE module_id = ?");
+        $stmt->execute([$module_id]);
+        return $stmt->fetchColumn();
+    }
+    
     // THIS IS FOR admin Crud
     public function deletePostFromAdmin($post_id) {
         $stmt = $this->pdo->prepare("DELETE FROM posts WHERE post_id = ?");
         return $stmt->execute([$post_id]);
+    }
+
+    public function searchPosts($search) {
+        $searchTerm = '%' . $search . '%';
+        $query = "SELECT posts.*, users.username, modules.module_name 
+                FROM posts 
+                JOIN users ON posts.user_id = users.user_id 
+                JOIN modules ON posts.module_id = modules.module_id 
+                WHERE posts.title LIKE ? OR posts.content LIKE ?
+                ORDER BY posts.created_at DESC";
+        $stmt = $this->pdo->prepare($query);
+        $stmt->execute([$searchTerm, $searchTerm]);
+        return $stmt->fetchAll();
     }
 
 }

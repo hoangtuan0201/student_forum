@@ -27,6 +27,34 @@ class AdminController {
         return $this->userModel->getAllUsers();
     }
     
+    // Post Management Methods
+    public function getAllPosts() {
+        return $this->postModel->getAllPosts();
+    }
+    
+    public function getPostsByModule($module_id) {
+        return $this->postModel->getPostsByModule($module_id);
+    }
+    
+    public function searchPosts($search) {
+        return $this->postModel->searchPosts($search);
+    }
+    
+    public function deletePost() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["post_id"])) {
+            $post_id = $_POST["post_id"];
+            
+            if ($this->postModel->deletePostFromAdmin($post_id)) {
+                $_SESSION["success"] = "Post deleted successfully.";
+            } else {
+                $_SESSION["error"] = "Failed to delete post.";
+            }
+            
+            header("Location: /student_forum/admin/posts.php");
+            exit;
+        }
+    }
+    
     public function deleteUser() {
         if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["user_id"])) {
             $user_id = $_POST["user_id"];
@@ -89,6 +117,81 @@ class AdminController {
         
         return $stats;
     }
+    
+    // Module Management Methods
+    public function getAllModules() {
+        return $this->moduleModel->getAllModules();
+    }
+    
+    public function getPostCountByModule($module_id) {
+        // Use the Post model to count posts in a module
+        return $this->postModel->countPostsByModule($module_id);
+    }
+    
+    public function addModule() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["module_name"])) {
+            $module_name = trim($_POST["module_name"]);
+            
+            if (empty($module_name)) {
+                $_SESSION["error"] = "Module name cannot be empty.";
+                header("Location: /student_forum/admin/modules.php");
+                exit;
+            }
+            
+            if ($this->moduleModel->createModule($module_name)) {
+                $_SESSION["success"] = "Module created successfully.";
+            } else {
+                $_SESSION["error"] = "Failed to create module.";
+            }
+            
+            header("Location: /student_forum/admin/modules.php");
+            exit;
+        }
+    }
+    
+    public function updateModule() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["module_id"]) && isset($_POST["module_name"])) {
+            $module_id = $_POST["module_id"];
+            $module_name = trim($_POST["module_name"]);
+            
+            if (empty($module_name)) {
+                $_SESSION["error"] = "Module name cannot be empty.";
+                header("Location: /student_forum/admin/modules.php");
+                exit;
+            }
+            
+            if ($this->moduleModel->updateModule($module_id, $module_name)) {
+                $_SESSION["success"] = "Module updated successfully.";
+            } else {
+                $_SESSION["error"] = "Failed to update module.";
+            }
+            
+            header("Location: /student_forum/admin/modules.php");
+            exit;
+        }
+    }
+    
+    public function deleteModule() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["module_id"])) {
+            $module_id = $_POST["module_id"];
+            
+            // Check if there are posts in this module
+            if ($this->getPostCountByModule($module_id) > 0) {
+                $_SESSION["error"] = "Cannot delete module with existing posts. Please delete or reassign posts first.";
+                header("Location: /student_forum/admin/modules.php");
+                exit;
+            }
+            
+            if ($this->moduleModel->deleteModule($module_id)) {
+                $_SESSION["success"] = "Module deleted successfully.";
+            } else {
+                $_SESSION["error"] = "Failed to delete module.";
+            }
+            
+            header("Location: /student_forum/admin/modules.php");
+            exit;
+        }
+    }
 }
 
 // Handle admin actions
@@ -102,8 +205,20 @@ if (isset($_GET['action'])) {
         case 'updateUserRole':
             $adminController->updateUserRole();
             break;
+        case 'deletePost':
+            $adminController->deletePost();
+            break;
+        case 'addModule':
+            $adminController->addModule();
+            break;
+        case 'updateModule':
+            $adminController->updateModule();
+            break;
+        case 'deleteModule':
+            $adminController->deleteModule();
+            break;
         default:
-            header("Location: /student_forum/admin/users.php");
+            header("Location: /student_forum/admin/index.php");
             exit;
     }
 }

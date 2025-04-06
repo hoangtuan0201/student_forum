@@ -4,17 +4,7 @@ $adminController = new AdminController();
 $users = $adminController->getAllUsers();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manage Users - Student Forum</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
-    <link rel="stylesheet" href="/student_forum/public/assets/css/styles.css">
-</head>
-<body>
+
     <?php include '../app/views/includes/header.php'; ?>
     
     <div class="container">
@@ -112,7 +102,4 @@ $users = $adminController->getAllUsers();
         <?php include "includes/quick_action.php"?>
     </div>
     
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html> 
+    <?php include '../app/views/includes/footer.php'; ?>
