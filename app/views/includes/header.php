@@ -18,13 +18,19 @@ if (session_status() === PHP_SESSION_NONE) {
     <div class="container">
         <a class="navbar-brand" href="/student_forum/public/index.php">Student Forum</a>
         
-        <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav mr-auto">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="/student_forum/public/contact.php">
+                        <i class="fas fa-question-circle"></i> Contact Admin
+                    </a>
+                </li>
+                
+                <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="/student_forum/admin/index.php">
                             <i class="fas fa-tachometer-alt"></i> Dashboard
@@ -45,9 +51,9 @@ if (session_status() === PHP_SESSION_NONE) {
                             <i class="fas fa-book"></i> Modules
                         </a>
                     </li>
-                </ul>
-            </div>
-        <?php endif; ?>
+                <?php endif; ?>
+            </ul>
+        </div>
 
         <div>
             <?php if (isset($_SESSION['username'])): ?>
