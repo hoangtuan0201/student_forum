@@ -14,7 +14,7 @@ class PostController {
     public function create_post() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!isset($_SESSION["user_id"])) {
-                $_SESSION["post_error"] = "You have to login first to post a question.";
+                $_SESSION["login_error"] = "You have to login first to post a question.";
                 header("Location: ../../app/views/auth/login.php");
                 exit;
             }
@@ -58,7 +58,7 @@ class PostController {
     public function updatePost() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!isset($_SESSION["user_id"])) {
-                $_SESSION["post_error"] = "You have to login first to edit a post.";
+                $_SESSION["login_error"] = "You have to login first to edit a post.";
                 header("Location: ../../app/views/auth/login.php");
                 exit;
             }

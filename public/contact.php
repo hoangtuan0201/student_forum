@@ -2,8 +2,21 @@
 session_start();
 require_once '../app/models/Email.php';
 
-$errors = [];
-$success = false;
+// Clear previous messages
+if(isset($_SESSION['email_error'])) {
+    unset($_SESSION['email_error']);
+}
+if(isset($_SESSION['email_success'])) {
+    unset($_SESSION['email_success']);
+}
+if(!isset($_SESSION['user_id'])){
+    $_SESSION["login_error"] = "You have to login to send email.";       
+    header('Location: /student_forum/app/views/auth/login.php');
+    exit;
+    
+}
+
+
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate inputs
@@ -12,26 +25,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $subject = trim($_POST['subject'] ?? '');
     $message = trim($_POST['message'] ?? '');
     
+    $_SESSION['email_error'] = [];
+    
     if (empty($name)) {
-        $errors[] = "Name is required";
+        $_SESSION['email_error'][] = "Name is required";
     }
     
     if (empty($email)) {
-        $errors[] = "Email is required";
+        $_SESSION['email_error'] = "Email is required";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $errors[] = "Please enter a valid email address";
+        $_SESSION['email_error'] = "Please enter a valid email address";
     }
     
     if (empty($subject)) {
-        $errors[] = "Subject is required";
+        $_SESSION['email_error'] = "Subject is required";
     }
     
     if (empty($message)) {
-        $errors[] = "Message is required";
+        $_SESSION['email_error'] = "Message is required";
     }
     
     // If no errors, send email
-    if (empty($errors)) {
+    if (empty($_SESSION['email_error'])) {
         $emailer = new Email();
         
         $htmlMessage = "
@@ -46,11 +61,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sendTo = 'tuanthhgcs230462@fpt.edu.vn'; // Admin email
         
         if ($emailer->sendContactEmail($sendTo, "Student Question: " . ($subject), $htmlMessage, $email, $name)) {
-            $success = true;
+            $_SESSION['email_success'] = "Your question has been sent! We'll respond to you as soon as possible.";
             // Reset form data after successful submission
             $name = $email = $subject = $message = '';
         } else {
-            $errors[] = "Failed to send email. Please try again later.";
+            $_SESSION['email_error'] = ["Failed to send email. Please try again later."];
         }
     }
 }
@@ -125,16 +140,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="container">
     <h1 class="h2 mb-4 mt-3">Contact Us</h1>
         
-        <?php if ($success): ?>
+        <?php if (isset($_SESSION['email_success'])): ?>
             <div class="alert alert-success">
-                Your question has been sent! We'll respond to you as soon as possible.
+                <?php echo $_SESSION['email_success']; ?>
             </div>
         <?php endif; ?>
         
-        <?php if (!empty($errors)): ?>
+        <?php if (isset($_SESSION['email_error'])): ?>
             <div class="alert alert-danger">
                 <ul>
-                    <?php foreach ($errors as $error): ?>
+                    <?php foreach ($_SESSION['email_error'] as $error): ?>
                         <li><?php echo htmlspecialchars($error); ?></li>
                     <?php endforeach; ?>
                 </ul>

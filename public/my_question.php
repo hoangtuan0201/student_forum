@@ -3,7 +3,7 @@
         session_start();
     }
     if(!isset($_SESSION['user_id'])){
-        $_SESSION["post_error"] = "You have to login to view question.";       
+        $_SESSION["login_error"] = "You have to login to view question.";       
         header('Location: /student_forum/app/views/auth/login.php');
         exit;
     }
@@ -111,22 +111,6 @@
                     echo '<div class="alert alert-info text-center">No posts available.</div>';
                 }
                 ?>
-
-
-
-            <!-- </div>
-                <ul class="pagination pagination-sm pagination-circle justify-content-center mb-0">
-                    <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a></li>
-                    <li class="page-item active"><span class="page-link">2</span></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link has-icon" href="javascript:void(0)"><i class="material-icons">next</i></a>
-                    </li>
-                </ul>
-            </div> -->
-            <!-- /Forum List -->
-
-
 
 
             <!-- /Inner main body -->
