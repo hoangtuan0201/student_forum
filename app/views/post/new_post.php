@@ -45,12 +45,10 @@ $pdo = $database->connect();
 
                     <!-- File Upload -->
                     <div class="form-group">
-                        <label for="customFile">Attachment</label>
-                        <input type="file" class="form-control-file" id="customFile" name="image">
+                        <input type="file" class="form-control-file" name="image" accept="image/jpeg,image/jpg,image/png">
+                        <small class="form-text text-muted">Only JPG, JPEG, and PNG files are allowed.</small>
                     </div>
                 </div>
-                
-               
 
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>

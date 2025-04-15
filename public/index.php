@@ -89,6 +89,16 @@
             </div>
             <!-- /Inner main header -->
 
+            <!-- Error Display Section -->
+            <?php if (isset($_SESSION['post_error'])): ?>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <?php echo $_SESSION['post_error']; unset($_SESSION['post_error']); ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php endif; ?>
+
             <!-- Inner main body -->
 
             <!-- Forum List -->
@@ -110,29 +120,13 @@
                     echo '<div class="alert alert-info text-center">No posts available.</div>';
                 }
                 ?>
-
-
-
-            <!-- </div>
-                <ul class="pagination pagination-sm pagination-circle justify-content-center mb-0">
-                    <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a></li>
-                    <li class="page-item active"><span class="page-link">2</span></li>
-                    <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link has-icon" href="javascript:void(0)"><i class="material-icons">next</i></a>
-                    </li>
-                </ul>
-            </div> -->
+            </div>
             <!-- /Forum List -->
-
 
             <!-- /Inner main body -->
         </div>
         <!-- /Inner main -->
          
     </div>
-
-
-
 
     <?php include '../app/views/includes/footer.php'; ?>

@@ -2,15 +2,8 @@
 session_start();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
-    <link rel="stylesheet" href="/student_forum/public/assets/css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<?php include '../includes/header.php'; ?>
+
     <style>
         .password-container {
             position: relative;
@@ -23,8 +16,7 @@ session_start();
             z-index: 10;
         }
     </style>
-</head>
-<body>
+
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="/student_forum/public/index.php">Student Forum</a>
@@ -53,14 +45,20 @@ session_start();
 
                 <!-- Display login errors -->
                 <?php if (isset($_SESSION['login_error'])): ?>
-                    <div class="alert alert-danger mt-3">
+                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
                         <?php echo $_SESSION['login_error']; unset($_SESSION['login_error']); ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                 <?php endif; ?>
                 
                 <?php if (isset($_SESSION['post_error'])): ?>
-                    <div class="alert alert-danger mt-3">
+                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
                         <?php echo $_SESSION['post_error']; unset($_SESSION['post_error']); ?>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
                     </div>
                 <?php endif; ?>
 
@@ -86,5 +84,4 @@ session_start();
             }
         }
     </script>
-</body>
-</html>
+    <?php include '../includes/footer.php'; ?>

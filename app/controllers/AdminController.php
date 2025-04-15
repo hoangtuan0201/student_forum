@@ -29,7 +29,7 @@ class AdminController {
     
     // Post Management Methods
     public function getAllPosts() {
-        return $this->postModel->getAllPosts();
+        return $this->postModel->getAllPosts(); 
     }
     
     public function getPostsByModule($module_id) {
@@ -68,7 +68,7 @@ class AdminController {
             
             if ($this->userModel->deleteUser($user_id)) {
                 $_SESSION["success"] = "User deleted successfully.";
-            } else {
+            } else {    
                 $_SESSION["error"] = "Failed to delete user.";
             }
             

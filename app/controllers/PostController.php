@@ -3,6 +3,7 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 require_once __DIR__ . '/../models/Post.php';
+require_once __DIR__ . '/../models/User.php';
 
 class PostController {
     private $postModel;
@@ -15,7 +16,7 @@ class PostController {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!isset($_SESSION["user_id"])) {
                 $_SESSION["login_error"] = "You have to login first to post a question.";
-                header("Location: ../../app/views/auth/login.php");
+                header("Location: /student_forum/app/views/auth/login.php");
                 exit;
             }
 
@@ -25,15 +26,33 @@ class PostController {
             $module_id = $_POST["module_id"];
             $image_path = null;
 
+            // Verify user exists
+            $userModel = new User();
+            if (!$userModel->getUserById($user_id)) {
+                $_SESSION["post_error"] = "User not found. Please login again.";
+                header("Location: /student_forum/app/views/auth/login.php");
+                exit;
+            }
+
             // Validate inputs
             if (empty($title) || empty($content) || empty($module_id)) {
                 $_SESSION["post_error"] = "All fields are required.";
-                header("Location: ../../app/views/post/create.php");
+                header("Location: /student_forum/public/index.php");
                 exit;
             }
 
             // Handle Image Upload
             if (!empty($_FILES["image"]["name"])) {
+                // Validate file type
+                $allowed_types = ['image/jpeg', 'image/jpg', 'image/png'];
+                $file_type = $_FILES["image"]["type"];
+                
+                if (!in_array($file_type, $allowed_types)) {
+                    $_SESSION["post_error"] = "Only JPG, JPEG, and PNG files are allowed.";
+                    header("Location: /student_forum/public/index.php");
+                    exit;
+                }
+                
                 $target_dir = "../../public/uploads/";
                 $image_name = time() . "_" . basename($_FILES["image"]["name"]);
                 $target_file = $target_dir . $image_name;
@@ -45,11 +64,11 @@ class PostController {
 
             // Call the model to create post
             if ($this->postModel->createPost($user_id, $module_id, $title, $content, $image_path)) {
-                header("Location: ../../public/index.php");
+                header("Location: /student_forum/public/index.php");
                 exit;
             } else {
                 $_SESSION["post_error"] = "Error creating post.";
-                header("Location: ../../app/views/post/create.php");
+                header("Location: /student_forum/public/index.php");
                 exit;
             }
         }
@@ -59,7 +78,7 @@ class PostController {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!isset($_SESSION["user_id"])) {
                 $_SESSION["login_error"] = "You have to login first to edit a post.";
-                header("Location: ../../app/views/auth/login.php");
+                header("Location: /student_forum/app/views/auth/login.php");
                 exit;
             }
 
@@ -75,14 +94,14 @@ class PostController {
             // Validate that the post belongs to this user
             if (!$current_post || $current_post["user_id"] != $user_id) {
                 $_SESSION["post_error"] = "You can only edit your own posts.";
-                header("Location: ../../public/my_question.php");
+                header("Location: /student_forum/public/my_question.php");
                 exit;
             }
             
             // Validate inputs
             if (empty($title) || empty($content) || empty($module_id)) {
                 $_SESSION["post_error"] = "All fields are required.";
-                header("Location: ../../app/views/post/edit_post.php?id=" . $post_id);
+                header("Location: /student_forum/app/views/post/edit_post.php?id=" . $post_id);
                 exit;
             }
 
@@ -100,6 +119,16 @@ class PostController {
             
             // Handle New Image Upload
             if (!empty($_FILES["image"]["name"])) {
+                // Validate file type
+                $allowed_types = ['image/jpeg', 'image/jpg', 'image/png'];
+                $file_type = $_FILES["image"]["type"];
+                
+                if (!in_array($file_type, $allowed_types)) {
+                    $_SESSION["post_error"] = "Only JPG, JPEG, and PNG files are allowed.";
+                    header("Location: /student_forum/app/views/post/edit_post.php?id=" . $post_id);
+                    exit;
+                }
+                
                 $target_dir = "../../public/uploads/";
                 $image_name = time() . "_" . basename($_FILES["image"]["name"]);
                 $target_file = $target_dir . $image_name;
@@ -116,11 +145,11 @@ class PostController {
 
             // Call model to update the post
             if ($this->postModel->updatePost($post_id, $title, $content, $module_id, $image_path, $user_id)) {
-                header("Location: ../../app/views/post/post_detail.php?id=" . $post_id);
+                header("Location: /student_forum/app/views/post/post_detail.php?id=" . $post_id);
                 exit;
             } else {
                 $_SESSION["post_error"] = "Error updating post.";
-                header("Location: ../../app/views/post/edit_post.php?id=" . $post_id);
+                header("Location: /student_forum/app/views/post/edit_post.php?id=" . $post_id);
                 exit;
             }
         }

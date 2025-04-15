@@ -45,9 +45,11 @@ include '../includes/header.php';
                 </div>
                 <div class="card-body">
                     <?php if (isset($_SESSION["post_error"])): ?>
-                        <div class="alert alert-danger">
-                            <?= $_SESSION["post_error"]; ?>
-                            <?php unset($_SESSION["post_error"]); ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?php echo $_SESSION['post_error']; unset($_SESSION['post_error']); ?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
                         </div>
                     <?php endif; ?>
                     

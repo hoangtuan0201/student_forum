@@ -60,7 +60,7 @@ class CommentController {
             $comment_id = $_POST["comment_id"];
             $post_id = $_POST["post_id"];
             
-            // Xóa comment
+            // delete comment
             if ($this->commentModel->deleteComment($comment_id, $user_id)) {
                 $_SESSION["success"] = "Comment deleted successfully.";
             } else {
