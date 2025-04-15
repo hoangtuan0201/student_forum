@@ -17,11 +17,6 @@ session_start();
         }
     </style>
 
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <a class="navbar-brand" href="/student_forum/public/index.php">Student Forum</a>
-    </div>
-</nav>
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">

@@ -115,6 +115,16 @@
                 </div>
             <?php endif; ?>
 
+            <!-- Success Display Section -->
+            <?php if (isset($_SESSION['register_success'])): ?>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <?php echo $_SESSION['register_success']; unset($_SESSION['register_success']); ?>
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            <?php endif; ?>
+
             <!-- Inner main body -->
 
             <!-- Forum List -->

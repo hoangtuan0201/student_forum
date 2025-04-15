@@ -1,12 +1,15 @@
 <?php
 session_start();
 require_once __DIR__ . '/../models/User.php';
+require_once __DIR__ . '/../models/Email.php';
 
 class AuthController {
     private $userModel;
+    private $emailModel;
 
     public function __construct() {
         $this->userModel = new User();
+        $this->emailModel = new Email();
     }
 
     public function register() {
@@ -47,9 +50,22 @@ class AuthController {
 
             // Insert new user
             if ($this->userModel->createUser($username, $email, $hashed_password)) {
+                // Set session data 
                 $_SESSION["user_id"] = $this->userModel->findByEmail($email)['user_id'];
                 $_SESSION["username"] = $username;
                 $_SESSION["role"] = $role;
+                
+                // Send welcome email
+                $emailSent = $this->emailModel->sendRegistrationEmail($email, $username);
+                
+                if ($emailSent) {
+                    $_SESSION["register_success"] = "Registration successful! Welcome to Student Forum. A welcome email has been sent to your address.";
+                } else {
+                    // Registration succeeded but email failed
+                    $_SESSION["register_success"] = "Registration successful! Welcome to Student Forum. (Note: Welcome email could not be sent)";
+                    error_log("Failed to send welcome email to {$email}: " . $this->emailModel->getLastError());
+                }
+                
                 header("Location: ../../public/index.php");
                 exit;
             } else {

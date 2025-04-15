@@ -5,11 +5,15 @@ use PHPMailer\PHPMailer\Exception;
 
 class Email {
     private $mailer;
-    private $config;
+    private $config; // $config: Stores SMTP configuration (loaded from a separate email.php config file).
+    private $lastError; //$lastError: Stores any error messages from email sending attempts.
+
+
 
     public function __construct() {
         $this->config = require __DIR__ . '/../../config/email.php';
         $this->mailer = new PHPMailer(true);
+        $this->lastError = null;
         
         // Server settings
         $this->mailer->isSMTP();
@@ -24,8 +28,24 @@ class Email {
         $this->mailer->setFrom($this->config['smtp']['from_email'], $this->config['smtp']['from_name']);
     }
 
+    // Get the last error message
+    public function getLastError() {
+        return $this->lastError;
+    }
+
+    // Clear email settings for next send This prevents leftover settings (like previous recipient or attachments) from affecting the next email.
+    private function resetMailer() {
+        $this->mailer->clearAddresses();
+        $this->mailer->clearAttachments();
+        $this->mailer->clearCCs();
+        $this->mailer->clearBCCs();
+        $this->mailer->clearReplyTos();
+        $this->lastError = null;
+    }
+
     public function sendRegistrationEmail($to, $username) {
         try {
+            $this->resetMailer();
             $this->mailer->addAddress($to);
             $this->mailer->isHTML(true);
             $this->mailer->Subject = 'Welcome to Student Forum';
@@ -50,6 +70,7 @@ class Email {
             $this->mailer->send();
             return true;
         } catch (Exception $e) {
+            $this->lastError = $this->mailer->ErrorInfo;
             error_log("Email could not be sent. Mailer Error: {$this->mailer->ErrorInfo}");
             return false;
         }
@@ -74,4 +95,6 @@ class Email {
             return false;
         }
     }
+
+    
 } 
