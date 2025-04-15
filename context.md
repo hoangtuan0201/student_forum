@@ -120,9 +120,7 @@ CREATE TABLE messages (
 
 ## Future Enhancements
 - **Search Functionality:** Allow users to search for posts by keyword.
-- **Upvote/Downvote System:** Enable users to vote on posts and comments.
 - **Email Notifications:** Notify users when someone comments on their post.
-- **Real-Time Chat:** Implement WebSockets for real-time discussions.
 
 ## Conclusion
 This document provides a detailed breakdown of the forum website, covering authentication, CRUD operations, database structure, and potential future improvements. Developers should follow this guide to implement and enhance the system efficiently.
