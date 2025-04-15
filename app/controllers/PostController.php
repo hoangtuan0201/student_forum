@@ -191,6 +191,9 @@ class PostController {
         return $this->postModel->countAllPostsByUser($user_id);
     }
 
+    public function searchPosts($search) {
+        return $this->postModel->searchPosts($search);
+    }
 
 }
 

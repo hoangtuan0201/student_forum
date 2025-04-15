@@ -84,7 +84,23 @@
                 </span>
 
                 <span class="input-icon input-icon-sm ml-auto w-auto">
-                    <input type="text" class="form-control form-control-sm bg-gray-200 border-gray-200 shadow-none mb-4 mt-4" placeholder="Search forum" />
+                    <form method="GET" action="index.php" class="form-inline">
+                        <div class="input-group">
+                            <!-- Search input field - keeps the search term after submitting -->
+                            <input type="text" name="search" class="form-control" placeholder="Search post" value="<?php 
+                                    // If search parameter exists, display it (safely escaped)
+                                    if(isset($_GET['search'])) {
+                                        echo htmlspecialchars($_GET['search']);
+                                    } else {
+                                        echo '';
+                                    }
+                                ?>"
+                            >
+                            <div class="input-group-append">
+                                <button type="submit" class="btn btn-sm btn-primary">Search</button>
+                            </div>
+                        </div>
+                    </form>
                 </span>
             </div>
             <!-- /Inner main header -->
@@ -110,8 +126,32 @@
                     require_once __DIR__ . '/../app/controllers/PostController.php';
                     $postController = new PostController();
                 }
-                $posts = $postController->getAllPosts();
 
+                // Get search term from URL parameter (if exists)
+                $searchTerm = '';
+                if(isset($_GET['search'])) {
+                    $searchTerm = trim($_GET['search']);
+                }
+                
+                // Check if user is searching
+                if (!empty($searchTerm)) {
+                    // Get filtered posts matching the search term
+                    $postResults = $postController->searchPosts($searchTerm);
+                    
+                    // Show search results information
+                    echo '<div class="mb-3 p-2 bg-light rounded">';
+                    echo '<strong>Search Results:</strong> ' . count($postResults) . ' post(s) found for "' . htmlspecialchars($searchTerm) . '"';
+                    echo ' <a href="index.php" class="btn btn-sm btn-outline-secondary ml-2">Clear Search</a>';
+                    echo '</div>';
+                    
+                    // Use the search results for display
+                    $posts = $postResults;
+                } else {
+                    // No search, get all posts
+                    $posts = $postController->getAllPosts();
+                }
+
+                // Display posts
                 if (!empty($posts)) {
                     foreach ($posts as $post) {
                         include '../app/views/post/post_item.php';
