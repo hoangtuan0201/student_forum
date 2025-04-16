@@ -1,182 +1,163 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="../public/assets/css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css" integrity="sha256-46r060N2LrChLLb5zowXQ72/iKKNiw/lAmygmHExk/o=" crossorigin="anonymous">
 
-    
-</head>
-
-
-<!-- nav bar -->
+<!-- Navigation bar -->
 <?php include '../app/views/includes/header.php'; ?>
     
-
-<!-- question modal after clicked new discussion -->
+<!-- New discussion modal -->
 <?php include '../app/views/post/new_post.php' ?>
     
 <div class="container">
-<div class="main-body p-0"> 
-    <div class="inner-wrapper">
-        <!-- Inner sidebar -->
-        <div class="inner-sidebar">
-            <!-- Inner sidebar header -->
-            <div class="inner-sidebar-header justify-content-center">
-                <button class="btn btn-primary has-icon btn-block" type="button" data-toggle="modal" data-target="#questionModal">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-2">
-                        <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                    </svg>
-                    NEW DISCUSSION
-                </button>
-            </div>
-            <!-- /Inner sidebar header -->
+    <div class="main-body p-0"> 
+        <div class="inner-wrapper">
+            <!-- Inner sidebar -->
+            <div class="inner-sidebar">
+                <!-- Inner sidebar header -->
+                <div class="inner-sidebar-header justify-content-center">
+                    <button class="btn btn-primary has-icon btn-block" type="button" data-toggle="modal" data-target="#questionModal">
+                        <i class="fas fa-plus-circle mr-2"></i>
+                        NEW DISCUSSION
+                    </button>
+                </div>
+                <!-- /Inner sidebar header -->
 
-            <!-- Inner sidebar body -->
-            <div class="inner-sidebar-body p-0">
-                <div class="p-3 h-100" data-simplebar="init">
-                    <div class="simplebar-wrapper" style="margin: -16px;">
-                        <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div>
-                        <div class="simplebar-mask">
-                            <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
-                                <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
-                                    <div class="simplebar-content" style="padding: 16px;">
-                                        <nav class="nav nav-pills nav-gap-y-1 flex-column">
-                                            <a href="index.php" class="nav-link nav-link-faded has-icon active">All questions</a>
-                                            <a href="/student_forum/public/my_question.php" class="nav-link nav-link-faded has-icon">My question</a>
-                                        </nav>
+                <!-- Inner sidebar body -->
+                <div class="inner-sidebar-body p-0">
+                    <div class="p-3">
+                        <nav class="nav nav-pills nav-gap-y-1 flex-column">
+                            <a href="index.php" class="nav-link nav-link-faded has-icon active">
+                                <i class="fas fa-home mr-2"></i>All Discussions
+                            </a>
+                            <?php if (isset($_SESSION['user_id'])): ?>
+                            <a href="/student_forum/public/my_question.php" class="nav-link nav-link-faded has-icon">
+                                <i class="fas fa-user-edit mr-2"></i>My Discussions
+                            </a>
+                            <?php endif; ?>
+                        </nav>
+                    </div>
+                </div>
+                <!-- /Inner sidebar body -->
+            </div>
+            <!-- /Inner sidebar -->
+            
+            <!-- Inner main -->
+            <div class="inner-main">
+                <!-- Inner main header -->
+                <div class="inner-main-header">
+                    <div class="header-flex-container">
+                        <!-- Left side: Post count -->
+                        <div class="discussion-counter">
+                            <?php 
+                                if (!isset($postController)) {
+                                    require_once __DIR__ . '/../app/controllers/PostController.php';
+                                    $postController = new PostController();
+                                }
+                                $postCount = $postController->countAllPosts();
+                            ?>
+                            <i class="fas fa-clipboard-list text-primary mr-2"></i>
+                            <span class="font-weight-bold mr-2"><?= $postCount ?></span> discussions
+                        </div>
+                        
+                        <!-- Right side: Search box -->
+                        <div class="search-wrapper">
+                            <form method="GET" action="index.php">
+                                <div class="input-group">
+                                    <input type="text" name="search" class="form-control" 
+                                           placeholder="Search discussions"
+                                           value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
+                                    >
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-primary">
+                                            <i class="fas fa-search"></i>
+                                        </button>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                        <div class="simplebar-placeholder" style="width: 234px; height: 292px;"></div>
                     </div>
-                    <div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div>
-                    <div class="simplebar-track simplebar-vertical" style="visibility: visible;"><div class="simplebar-scrollbar" style="height: 151px; display: block; transform: translate3d(0px, 0px, 0px);"></div></div>
-                </div>
-            </div>
-            <!-- /Inner sidebar body -->
-        </div>
-        <!-- /Inner sidebar -->
-        <!-- Inner main -->
-        <div class="inner-main">
-            
-            <!-- Inner main header -->
-            <div class="inner-main-header">
-                <a class="nav-link nav-icon rounded-circle nav-link-faded mr-3 d-md-none" href="#" data-toggle="inner-sidebar"><i class="material-icons">arrow_forward_ios</i></a>
-                <select class="custom-select custom-select-sm w-auto mr-1">
-                    <option selected="">Latest</option>
-                  
-                </select>
-
-                <span class="post-count ml-3"> 
-                    <?php 
-                        if (!isset($postController)) {
-                            require_once __DIR__ . '/../app/controllers/PostController.php';
-                            $postController = new PostController();
-                        }
-                        $posts = $postController->countAllPosts();
-                        echo "$posts posts" 
-                    ?>
-                </span>
-
-                <span class="input-icon input-icon-sm ml-auto w-auto">
-                    <form method="GET" action="index.php" class="form-inline">
-                        <div class="input-group">
-                            <!-- Search input field - keeps the search term after submitting -->
-                            <input type="text" name="search" class="form-control" placeholder="Search post" value="<?php 
-                                    // If search parameter exists, display it (safely escaped)
-                                    if(isset($_GET['search'])) {
-                                        echo htmlspecialchars($_GET['search']);
-                                    } else {
-                                        echo '';
-                                    }
-                                ?>"
-                            >
-                            <div class="input-group-append">
-                                <button type="submit" class="btn btn-sm btn-primary">Search</button>
-                            </div>
-                        </div>
-                    </form>
-                </span>
-            </div>
-            <!-- /Inner main header -->
-
-            <!-- Error Display Section -->
-            <?php if (isset($_SESSION['post_error'])): ?>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?php echo $_SESSION['post_error']; unset($_SESSION['post_error']); ?>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            <?php endif; ?>
-
-            <!-- Success Display Section -->
-            <?php if (isset($_SESSION['register_success'])): ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?php echo $_SESSION['register_success']; unset($_SESSION['register_success']); ?>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            <?php endif; ?>
-
-            <!-- Inner main body -->
-
-            <!-- Forum List -->
-            
-            
-            <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
-                <?php
-                if (!isset($postController)) {
-                    require_once __DIR__ . '/../app/controllers/PostController.php';
-                    $postController = new PostController();
-                }
-
-                // Get search term from URL parameter (if exists)
-                $searchTerm = '';
-                if(isset($_GET['search'])) {
-                    $searchTerm = trim($_GET['search']);
-                }
                 
-                // Check if user is searching
-                if (!empty($searchTerm)) {
-                    // Get filtered posts matching the search term
-                    $postResults = $postController->searchPosts($searchTerm);
                     
-                    // Show search results information
-                    echo '<div class="mb-3 p-2 bg-light rounded">';
-                    echo '<strong>Search Results:</strong> ' . count($postResults) . ' post(s) found for "' . htmlspecialchars($searchTerm) . '"';
-                    echo ' <a href="index.php" class="btn btn-sm btn-outline-secondary ml-2">Clear Search</a>';
-                    echo '</div>';
-                    
-                    // Use the search results for display
-                    $posts = $postResults;
-                } else {
-                    // No search, get all posts
-                    $posts = $postController->getAllPosts();
-                }
+                </div>
+                <!-- /Inner main header -->
 
-                // Display posts
-                if (!empty($posts)) {
-                    foreach ($posts as $post) {
-                        include '../app/views/post/post_item.php';
+                <!-- Alert sections -->
+                <div class="px-3">
+                    <!-- Error Display Section -->
+                    <?php if (isset($_SESSION['post_error'])): ?>
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <?php echo $_SESSION['post_error']; unset($_SESSION['post_error']); ?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <?php endif; ?>
+
+                    <!-- Success Display Section -->
+                    <?php if (isset($_SESSION['register_success'])): ?>
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            <?php echo $_SESSION['register_success']; unset($_SESSION['register_success']); ?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                    <?php endif; ?>
+                </div>
+
+                <!-- Inner main body -->
+                <div class="inner-main-body p-2 p-sm-3 forum-content fade-in">
+                    <?php
+                    if (!isset($postController)) {
+                        require_once __DIR__ . '/../app/controllers/PostController.php';
+                        $postController = new PostController();
                     }
-                } else {
-                    echo '<div class="alert alert-info text-center">No posts available.</div>';
-                }
-                ?>
+
+                    // Get search term from URL parameter (if exists)
+                    $searchTerm = '';
+                    if(isset($_GET['search'])) {
+                        $searchTerm = trim($_GET['search']);
+                    }
+                    
+                    // Check if user is searching
+                    if (!empty($searchTerm)) {
+                        // Get filtered posts matching the search term
+                        $postResults = $postController->searchPosts($searchTerm);
+                        
+                        // Show search results information
+                        echo '<div class="mb-3 p-3 bg-light rounded">';
+                        echo '<strong><i class="fas fa-search mr-1"></i> Search Results:</strong> ' . 
+                             count($postResults) . ' discussion(s) found for "' . htmlspecialchars($searchTerm) . '"';
+                        echo ' <a href="index.php" class="btn btn-sm btn-outline-secondary ml-2">
+                                <i class="fas fa-times mr-1"></i>Clear
+                               </a>';
+                        echo '</div>';
+                        
+                        // Use the search results for display
+                        $posts = $postResults;
+                    } else {
+                        // No search, get all posts
+                        $posts = $postController->getAllPosts();
+                    }
+
+                    // Display posts
+                    if (!empty($posts)) {
+                        foreach ($posts as $post) {
+                            include '../app/views/post/post_item.php';
+                        }
+                    } else {
+                        echo '<div class="text-center p-5 bg-white rounded shadow-sm">
+                                <i class="fas fa-comments fa-3x text-muted mb-3"></i>
+                                <h5>No discussions found</h5>
+                                <p class="text-muted">Be the first to start a discussion!</p>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#questionModal">
+                                    <i class="fas fa-plus-circle mr-1"></i> Create Discussion
+                                </button>
+                              </div>';
+                    }
+                    ?>
+                </div>
+                <!-- /Inner main body -->
             </div>
-            <!-- /Forum List -->
-
-            <!-- /Inner main body -->
+            <!-- /Inner main -->
         </div>
-        <!-- /Inner main -->
-         
     </div>
+</div>
 
-    <?php include '../app/views/includes/footer.php'; ?>
+<?php include '../app/views/includes/footer.php'; ?>
