@@ -100,15 +100,7 @@ CREATE TABLE comments (
 );
 ```
 
-### 5. messages Table
-```sql
-CREATE TABLE messages (
-    id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL,
-    message TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
+
 ```
 
 ## Technologies Used
@@ -117,8 +109,6 @@ CREATE TABLE messages (
 - **Database:** MySQL
 - **Authentication:** PHP session management
 - **UI Framework (Optional):** Bootstrap for styling
-
-## Future Enhancements
 - **Search Functionality:** Allow users to search for posts by keyword.
 - **Email Notifications:** Notify users when someone comments on their post.
 

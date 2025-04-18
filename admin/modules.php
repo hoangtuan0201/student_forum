@@ -110,7 +110,7 @@ if (isset($_SESSION['error'])) {
                                             <button type="button" class="btn btn-sm btn-danger" 
                                                     data-toggle="modal" 
                                                     data-target="#deleteModuleModal<?= $module['module_id']; ?>"
-                                                    <?= $post_count > 0 ? 'disabled' : ''; ?>>
+                                                    >
                                                 <i class="fas fa-trash"></i> Delete
                                             </button>
                                             
@@ -142,7 +142,7 @@ if (isset($_SESSION['error'])) {
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                                             <form action="/student_forum/app/controllers/AdminController.php?action=deleteModule" method="post">
                                                                 <input type="hidden" name="module_id" value="<?= $module['module_id']; ?>">
-                                                                <button type="submit" class="btn btn-danger" <?= $post_count > 0 ? 'disabled' : ''; ?>>
+                                                                <button type="submit" class="btn btn-danger" >
                                                                     Delete Module
                                                                 </button>
                                                             </form>

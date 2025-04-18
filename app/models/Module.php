@@ -32,15 +32,6 @@ class Module {
     }
     
     public function deleteModule($module_id) {
-        // First, check if there are any posts in this module
-        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM posts WHERE module_id = ?");
-        $stmt->execute([$module_id]);
-        $count = $stmt->fetchColumn();
-        
-        if ($count > 0) {
-            return false; // Cannot delete module with existing posts
-        }
-        
         $stmt = $this->pdo->prepare("DELETE FROM modules WHERE module_id = ?");
         return $stmt->execute([$module_id]);
     }

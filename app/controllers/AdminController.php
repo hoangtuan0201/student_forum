@@ -176,11 +176,7 @@ class AdminController {
             $module_id = $_POST["module_id"];
             
             // Check if there are posts in this module
-            if ($this->getPostCountByModule($module_id) > 0) {
-                $_SESSION["error"] = "Cannot delete module with existing posts. Please delete or reassign posts first.";
-                header("Location: /student_forum/admin/modules.php");
-                exit;
-            }
+            // NO NEED THIS FEATURE
             
             if ($this->moduleModel->deleteModule($module_id)) {
                 $_SESSION["success"] = "Module deleted successfully.";

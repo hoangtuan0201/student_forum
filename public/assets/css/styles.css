@@ -31,14 +31,10 @@ h1, h2, h3, h4, h5, h6 {
     border: none;
     border-radius: var(--radius);
     box-shadow: var(--shadow-sm);
-    transition: all 0.2s ease-in-out;
     margin-bottom: 1.5rem;
     background-color: var(--white);
 }
 
-.card:hover {
-    box-shadow: var(--shadow);
-}
 
 .card-header {
     background-color: var(--white);
@@ -198,14 +194,10 @@ h1, h2, h3, h4, h5, h6 {
 .forum-card {
     border: none;
     border-radius: var(--radius);
-    transition: all 0.2s;
     margin-bottom: 1rem;
 }
 
-.forum-card:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--shadow);
-}
+
 
 /* Form elements improvements */
 .form-control {
