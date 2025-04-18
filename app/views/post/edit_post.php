@@ -33,7 +33,7 @@ if (!$post || $post['user_id'] != $_SESSION['user_id']) {
 }
 
 // Include header
-include '../includes/header.php';
+include '../components/header.php';
 ?>
 
 <div class="container mt-4">
@@ -117,4 +117,4 @@ include '../includes/header.php';
     </div>
 </div>
 
-<?php include '../includes/footer.php'; ?> 
+<?php include '../components/footer.php'; ?> 

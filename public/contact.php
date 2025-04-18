@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
-<?php include '../app/views/includes/header.php'; ?>
+<?php include '../app/views/components/header.php'; ?>
 
 <div class="container">
     <div class="main-body p-0">
@@ -101,5 +101,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </div>
 
-<?php include '../app/views/includes/footer.php'; ?>
+<?php include '../app/views/components/footer.php'; ?>
 

@@ -17,7 +17,7 @@ if (!empty($search)) {
 ?>
 
 
-    <?php include '../app/views/includes/header.php'; ?>
+    <?php include '../app/views/components/header.php'; ?>
     
     <div class="container">
         <h1 class="h2 mb-4 mt-3">Manage Posts</h1>
@@ -146,4 +146,4 @@ if (!empty($search)) {
         <?php include "includes/quick_action.php"?>
     </div>
     
-    <?php include '../app/views/includes/footer.php'; ?>
+    <?php include '../app/views/components/footer.php'; ?>

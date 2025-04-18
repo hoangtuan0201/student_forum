@@ -23,7 +23,7 @@ $commentController = new CommentController();
 $comments = $commentController->getCommentsByPostId($post_id);
 
 // Include header
-include '../includes/header.php';
+include '../components/header.php';
 ?>
 
 <style>
@@ -224,5 +224,5 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 
-<?php include '../includes/footer.php'; ?>
+<?php include '../components/footer.php'; ?>
 

@@ -10,82 +10,22 @@
     
 ?>
 
-<!-- nav bar -->
-<?php include '../app/views/includes/header.php'; ?>
-<!-- question modal after clicked new discussion -->
+<!-- Navigation bar -->
+<?php include '../app/views/components/header.php'; ?>
+
+<!-- New discussion modal -->
 <?php include '../app/views/post/new_post.php' ?>
 
 <div class="container">
     <div class="main-body p-0">
         <div class="inner-wrapper">
-            <!-- Inner sidebar -->
-            <div class="inner-sidebar">
-                <!-- Inner sidebar header -->
-                <div class="inner-sidebar-header justify-content-center">
-                    <button class="btn btn-primary has-icon btn-block" type="button" data-toggle="modal" data-target="#questionModal">
-                        <i class="fas fa-plus-circle mr-2"></i>
-                        NEW DISCUSSION
-                    </button>
-                </div>
-                <!-- /Inner sidebar header -->
-
-                <!-- Inner sidebar body -->
-                <div class="inner-sidebar-body p-0">
-                    <div class="p-3">
-                        <nav class="nav nav-pills nav-gap-y-1 flex-column">
-                            <a href="/student_forum/public/index.php" class="nav-link nav-link-faded has-icon">
-                                <i class="fas fa-home mr-2"></i>All Discussions
-                            </a>
-                            <a href="/student_forum/public/my_question.php" class="nav-link nav-link-faded has-icon active">
-                                <i class="fas fa-user-edit mr-2"></i>My Discussions
-                            </a>
-                        </nav>
-                    </div>
-                </div>
-                <!-- /Inner sidebar body -->
-            </div>
-            <!-- /Inner sidebar -->
+            <!-- Include sidebar component -->
+            <?php include '../app/views/components/sidebar.php'; ?>
             
             <!-- Inner main -->
             <div class="inner-main">
-                <!-- Inner main header -->
-                <div class="inner-main-header">
-                    <div class="header-flex-container">
-                        <!-- Left side: Post count -->
-                        <div class="discussion-counter">
-                            <?php 
-                                if (!isset($postController)) {
-                                    require_once __DIR__ . '/../app/controllers/PostController.php';
-                                    $postController = new PostController();
-                                }
-                                $postCount = $postController->countAllPostsByUser($_SESSION['user_id']);
-                            ?>
-                            <i class="fas fa-clipboard-list text-primary mr-2"></i>
-                            <span class="font-weight-bold mr-2"><?= $postCount ?></span> discussions
-                        </div>
-                        
-                        <!-- Right side: Search box -->
-                        <div class="search-wrapper">
-                            <form method="GET" action="my_question.php">
-                                <div class="input-group">
-                                    <input type="text" name="search" class="form-control" 
-                                           placeholder="Search my discussions"
-                                           value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
-                                    >
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-primary">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                
-                    
-                   
-                </div>
-                <!-- /Inner main header -->
+                <!-- Include main header component -->
+                <?php include '../app/views/components/main_header.php'; ?>
 
                 <!-- Inner main body -->
                 <div class="inner-main-body p-2 p-sm-3 forum-content fade-in">
@@ -151,4 +91,4 @@
     </div>
 </div>
 
-<?php include '../app/views/includes/footer.php'; ?> 
+<?php include '../app/views/components/footer.php'; ?> 

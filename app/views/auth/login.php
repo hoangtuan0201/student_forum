@@ -2,7 +2,7 @@
 session_start();
 ?>
 
-<?php include '../includes/header.php'; ?>
+<?php include '../components/header.php'; ?>
 
     <style>
         .password-container {
@@ -79,4 +79,4 @@ session_start();
             }
         }
     </script>
-    <?php include '../includes/footer.php'; ?>
+    <?php include '../components/footer.php'; ?>

@@ -9,7 +9,7 @@ student_forum/
 │   │   ├── Post.php          # Post model (CRUD operations)
 │   │   ├── Comment.php       # Comment model (CRUD operations)
 │   ├── views/                # HTML templates for rendering
-│   │   ├── includes/         # Reusable components (header, footer, navbar)
+│   │   ├── components/         # Reusable components (header, footer, navbar)
 │   │   │   ├── header.php    
 │   │   │   ├── footer.php    
 │   │   │   ├── navbar.php    

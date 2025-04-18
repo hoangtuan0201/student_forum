@@ -4,9 +4,8 @@ $adminController = new AdminController();
 $stats = $adminController->getDashboardStats();
 ?>
 
-<?php include '../app/views/includes/header.php'; ?>
+<?php include '../app/views/components/header.php'; ?>
 
-<body>
     
     <div class="container">
         <h1 class="h2 mb-4 mt-3">Admin Dashboard</h1>
@@ -73,9 +72,5 @@ $stats = $adminController->getDashboardStats();
         </div>
         
        <?php include 'includes/quick_action.php' ?>
-    
-    
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+
+       <?php include '../app/views/components/footer.php'; ?>
