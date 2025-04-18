@@ -71,6 +71,5 @@ $stats = $adminController->getDashboardStats();
             </div>
         </div>
         
-       <?php include 'includes/quick_action.php' ?>
 
        <?php include '../app/views/components/footer.php'; ?>

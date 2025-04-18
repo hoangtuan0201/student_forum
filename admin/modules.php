@@ -164,7 +164,6 @@ if (isset($_SESSION['error'])) {
             </div>
         </div>
         
-        <?php include "includes/quick_action.php"?>
     </div>
     <?php include '../app/views/components/footer.php'; ?>
 

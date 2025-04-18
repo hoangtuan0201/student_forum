@@ -143,7 +143,6 @@ if (!empty($search)) {
             </div>
         </div>
         
-        <?php include "includes/quick_action.php"?>
     </div>
     
     <?php include '../app/views/components/footer.php'; ?>
