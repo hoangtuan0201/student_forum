@@ -45,9 +45,9 @@ class AdminController {
             $post_id = $_POST["post_id"];
             
             if ($this->postModel->deletePostFromAdmin($post_id)) {
-                $_SESSION["success"] = "Post deleted successfully.";
+                $_SESSION["admin_success"] = "Post deleted successfully.";
             } else {
-                $_SESSION["error"] = "Failed to delete post.";
+                $_SESSION["admin_error"] = "Failed to delete post.";
             }
             
             header("Location: /student_forum/admin/posts.php");
@@ -61,15 +61,15 @@ class AdminController {
             
             // Don't allow deleting yourself
             if ($user_id == $_SESSION["user_id"]) {
-                $_SESSION["error"] = "You cannot delete your own account.";
+                $_SESSION["admin_error"] = "You cannot delete your own account.";
                 header("Location: /student_forum/admin/users.php");
                 exit;
             }
             
             if ($this->userModel->deleteUser($user_id)) {
-                $_SESSION["success"] = "User deleted successfully.";
+                $_SESSION["admin_success"] = "User deleted successfully.";
             } else {    
-                $_SESSION["error"] = "Failed to delete user.";
+                $_SESSION["admin_error"] = "Failed to delete user.";
             }
             
             header("Location: /student_forum/admin/users.php");
@@ -84,22 +84,22 @@ class AdminController {
             
             // Don't allow changing your own role
             if ($user_id == $_SESSION["user_id"]) {
-                $_SESSION["error"] = "You cannot change your own role.";
+                $_SESSION["admin_error"] = "You cannot change your own role.";
                 header("Location: /student_forum/admin/users.php");
                 exit;
             }
             
             // Validate role
             if (!in_array($role, ['student', 'admin'])) {
-                $_SESSION["error"] = "Invalid role specified.";
+                $_SESSION["admin_error"] = "Invalid role specified.";
                 header("Location: /student_forum/admin/users.php");
                 exit;
             }
             
             if ($this->userModel->updateUserRole($user_id, $role)) {
-                $_SESSION["success"] = "User role updated successfully.";
+                $_SESSION["admin_success"] = "User role updated successfully.";
             } else {
-                $_SESSION["error"] = "Failed to update user role.";
+                $_SESSION["admin_error"] = "Failed to update user role.";
             }
             
             header("Location: /student_forum/admin/users.php");
@@ -133,15 +133,15 @@ class AdminController {
             $module_name = trim($_POST["module_name"]);
             
             if (empty($module_name)) {
-                $_SESSION["error"] = "Module name cannot be empty.";
+                $_SESSION["admin_error"] = "Module name cannot be empty.";
                 header("Location: /student_forum/admin/modules.php");
                 exit;
             }
             
             if ($this->moduleModel->createModule($module_name)) {
-                $_SESSION["success"] = "Module created successfully.";
+                $_SESSION["admin_success"] = "Module created successfully.";
             } else {
-                $_SESSION["error"] = "Failed to create module.";
+                $_SESSION["admin_error"] = "Failed to create module.";
             }
             
             header("Location: /student_forum/admin/modules.php");
@@ -155,15 +155,15 @@ class AdminController {
             $module_name = trim($_POST["module_name"]);
             
             if (empty($module_name)) {
-                $_SESSION["error"] = "Module name cannot be empty.";
+                $_SESSION["admin_error"] = "Module name cannot be empty.";
                 header("Location: /student_forum/admin/modules.php");
                 exit;
             }
             
             if ($this->moduleModel->updateModule($module_id, $module_name)) {
-                $_SESSION["success"] = "Module updated successfully.";
+                $_SESSION["admin_success"] = "Module updated successfully.";
             } else {
-                $_SESSION["error"] = "Failed to update module.";
+                $_SESSION["admin_error"] = "Failed to update module.";
             }
             
             header("Location: /student_forum/admin/modules.php");
@@ -179,9 +179,9 @@ class AdminController {
             // NO NEED THIS FEATURE
             
             if ($this->moduleModel->deleteModule($module_id)) {
-                $_SESSION["success"] = "Module deleted successfully.";
+                $_SESSION["admin_success"] = "Module deleted successfully.";
             } else {
-                $_SESSION["error"] = "Failed to delete module.";
+                $_SESSION["admin_error"] = "Failed to delete module.";
             }
             
             header("Location: /student_forum/admin/modules.php");

@@ -35,44 +35,15 @@
                         $postController = new PostController();
                     }
                     
-                    // Handle search
-                    $searchTerm = '';
-                    if (isset($_GET['search'])) {
-                        $searchTerm = trim($_GET['search']);
-                    }
-                    
-                    // Get user posts
-                    $userPosts = $postController->getUserPost();
-                    
-                    // Filter posts if search term exists
-                    if (!empty($searchTerm)) {
-                        $filteredPosts = [];
-                        foreach ($userPosts as $post) {
-                            if (stripos($post['title'], $searchTerm) !== false || 
-                                stripos($post['content'], $searchTerm) !== false) {
-                                $filteredPosts[] = $post;
-                            }
-                        }
-                        
-                        // Show search results
-                        echo '<div class="mb-3 p-3 bg-light rounded">';
-                        echo '<strong><i class="fas fa-search mr-1"></i> Search Results:</strong> ' . 
-                             count($filteredPosts) . ' discussion(s) found for "' . htmlspecialchars($searchTerm) . '"';
-                        echo ' <a href="my_question.php" class="btn btn-sm btn-outline-secondary ml-2">
-                                <i class="fas fa-times mr-1"></i>Clear
-                               </a>';
-                        echo '</div>';
-                        
-                        $posts = $filteredPosts;
-                    } else {
-                        $posts = $userPosts;
-                    }
+                    // Always get the posts belonging to the current user
+                    $posts = $postController->getUserPost();
 
+                    // Display posts
                     if (!empty($posts)) {
                         foreach ($posts as $post) {
                             include '../app/views/post/post_item.php';
                         }
-                    } else {
+                    } else { // User has no posts
                         echo '<div class="text-center p-5 bg-white rounded shadow-sm">
                                 <i class="fas fa-comments fa-3x text-muted mb-3"></i>
                                 <h5>No discussions found</h5>

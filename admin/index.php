@@ -10,19 +10,8 @@ $stats = $adminController->getDashboardStats();
     <div class="container">
         <h1 class="h2 mb-4 mt-3">Admin Dashboard</h1>
         
-        <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success">
-                <?= $_SESSION['success']; ?>
-                <?php unset($_SESSION['success']); ?>
-            </div>
-        <?php endif; ?>
-        
-        <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger">
-                <?= $_SESSION['error']; ?>
-                <?php unset($_SESSION['error']); ?>
-            </div>
-        <?php endif; ?>
+        <!-- Include alerts component -->
+        <?php include '../app/views/components/alerts.php'; ?> 
         
         <div class="row">
             <div class="col-md-4">
@@ -71,5 +60,4 @@ $stats = $adminController->getDashboardStats();
             </div>
         </div>
         
-
        <?php include '../app/views/components/footer.php'; ?>

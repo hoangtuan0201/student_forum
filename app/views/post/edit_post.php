@@ -44,15 +44,10 @@ include '../components/header.php';
                     <h5 class="card-title mb-0">Edit Discussion</h5>
                 </div>
                 <div class="card-body">
-                    <?php if (isset($_SESSION["post_error"])): ?>
-                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                            <?php echo $_SESSION['post_error']; unset($_SESSION['post_error']); ?>
-                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                    <?php endif; ?>
-                    
+                    <!-- Display alerts -->
+                    <?php include '../components/alerts.php'; ?> 
+                     <!-- Display alerts -->
+
                     <form action="/student_forum/app/controllers/PostController.php?action=update_post" method="POST" enctype="multipart/form-data">
                         <input type="hidden" name="post_id" value="<?= $post_id ?>">
                         

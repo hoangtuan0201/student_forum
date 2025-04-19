@@ -21,8 +21,7 @@ class User {
         return $stmt->fetch();
     }
 
-    public function createUser($username, $email, $password, $role = 'student') {
-        $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+    public function createUser($username, $email, $hashed_password, $role = 'student') {
         $stmt = $this->pdo->prepare("INSERT INTO users (username, email, password, role, created_at) VALUES (?, ?, ?, ?, NOW())");
         return $stmt->execute([$username, $email, $hashed_password, $role]);
     }

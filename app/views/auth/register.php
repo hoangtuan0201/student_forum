@@ -1,15 +1,8 @@
 <?php
 session_start();
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="stylesheet" href="/student_forum/public/assets/css/styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<?php include '../components/header.php'; ?>
+
     <style>
         .password-container {
             position: relative;
@@ -22,13 +15,7 @@ session_start();
             z-index: 10;
         }
     </style>
-</head>
-<body>
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <a class="navbar-brand" href="/student_forum/public/index.php">Student Forum</a>
-    </div>
-</nav>
+
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
@@ -54,15 +41,8 @@ session_start();
                     <button type="submit" class="btn btn-primary btn-block">Register</button>
                 </form>
 
-                <!-- Display registration errors -->
-                <?php if (isset($_SESSION['register_error'])): ?>
-                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                        <?php echo $_SESSION['register_error']; unset($_SESSION['register_error']); ?>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                <?php endif; ?>
+                <!-- Display alerts -->
+                <?php include '../components/alerts.php'; ?>
 
                 <p class="mt-3 text-center">Already have an account? <a href="login.php">Login here</a></p>
             </div>
@@ -85,5 +65,4 @@ session_start();
             }
         }
     </script>
-</body>
-</html>
+<?php include '../components/footer.php'; ?>

@@ -6,12 +6,10 @@ if (!isset($postController)) {
 
 $current_page = basename($_SERVER['PHP_SELF']);
 $postCount = ($current_page === 'my_question.php') 
-    ? $postController->countAllPostsByUser($_SESSION['user_id'])
+    ? $postController->countAllPostsByUser($_SESSION['user_id']) // if current page is my_question.php, count all posts by user else count all posts .
     : $postController->countAllPosts();
 
-$searchPlaceholder = ($current_page === 'my_question.php') 
-    ? "Search my discussions"
-    : "Search discussions";
+
 ?>
 
 <div class="inner-main-header">
@@ -22,12 +20,13 @@ $searchPlaceholder = ($current_page === 'my_question.php')
             <span class="font-weight-bold mr-2"><?= $postCount ?></span> discussions
         </div>
         
-        <!-- Right side: Search box -->
+        <!-- Right side: Search box (only if not on my_question.php) -->
+        <?php if ($current_page !== 'my_question.php'): ?>
         <div class="search-wrapper">
             <form method="GET" action="<?php echo $current_page; ?>">
                 <div class="input-group">
                     <input type="text" name="search" class="form-control" 
-                           placeholder="<?php echo $searchPlaceholder; ?>"
+                           placeholder="Search discussions"
                            value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>"
                     >
                     <div class="input-group-append">
@@ -38,5 +37,6 @@ $searchPlaceholder = ($current_page === 'my_question.php')
                 </div>
             </form>
         </div>
+        <?php endif; ?>
     </div>
 </div> 

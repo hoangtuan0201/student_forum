@@ -6,19 +6,6 @@ $adminController = new AdminController();
 $moduleModel = new Module();
 $modules = $moduleModel->getAllModules();
 
-// Check for messages
-$success_message = '';
-$error_message = '';
-
-if (isset($_SESSION['success'])) {
-    $success_message = $_SESSION['success'];
-    unset($_SESSION['success']);
-}
-
-if (isset($_SESSION['error'])) {
-    $error_message = $_SESSION['error'];
-    unset($_SESSION['error']);
-}
 ?>
 
 
@@ -27,20 +14,8 @@ if (isset($_SESSION['error'])) {
     <div class="container">
         <h1 class="h2 mb-4 mt-3">Manage Modules</h1>
         
-        <?php if (!empty($success_message)): ?>
-            <div class="alert alert-success">
-                <?= $success_message; ?>
-            </div>
-        <?php endif; ?>
-        
-        <?php if (!empty($error_message)): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?php echo $error_message; unset($_SESSION['error']); ?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        <?php endif; ?>
+        <!-- Include alerts component -->
+        <?php include '../app/views/components/alerts.php'; ?> 
         
         <!-- Add New Module -->
         <div class="card mb-4">

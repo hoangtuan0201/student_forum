@@ -36,37 +36,8 @@ include '../components/header.php';
 </style>
 
 <div class="container mt-4">
-    <!-- Session Error Display Section -->
-    <?php if (isset($_SESSION['error']) && !empty($_SESSION['error'])): ?>
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?= $_SESSION['error']; ?>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <?php unset($_SESSION['error']); ?>
-    <?php endif; ?>
-    
-    <!-- Session Success Display Section -->
-    <?php if (isset($_SESSION['success']) && !empty($_SESSION['success'])): ?>
-        <div class="row">
-            <div class="col-md-8 offset-md-2">
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?= $_SESSION['success']; ?>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <?php unset($_SESSION['success']); ?>
-    <?php endif; ?>
-
-
+    <!-- Include alerts component -->
+    <?php include '../components/alerts.php'; ?> 
 
     <div class="row">
         <div class="col-md-8 offset-md-2">

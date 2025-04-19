@@ -9,4 +9,5 @@ return [
         'from_email' => 'no-reply@studentforum.com',
         'from_name' => 'Student Forum'
     ]
-]; 
+];
+?>

@@ -64,7 +64,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         foreach ($posts as $post) {
                             include '../app/views/post/post_item.php';
                         }
-                    } else {
+                    } elseif (empty($searchTerm)) { // Only show "No discussions" if not searching
                         echo '<div class="text-center p-5 bg-white rounded shadow-sm">
                                 <i class="fas fa-comments fa-3x text-muted mb-3"></i>
                                 <h5>No discussions found</h5>

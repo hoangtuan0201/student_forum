@@ -38,25 +38,8 @@ session_start();
                     <button type="submit" class="btn btn-primary btn-block">Login</button>
                 </form>
 
-                <!-- Display login errors -->
-                <?php if (isset($_SESSION['login_error'])): ?>
-                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                        <?php echo $_SESSION['login_error']; unset($_SESSION['login_error']); ?>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                <?php endif; ?>
-                
-                <?php if (isset($_SESSION['post_error'])): ?>
-                    <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                        <?php echo $_SESSION['post_error']; unset($_SESSION['post_error']); ?>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                <?php endif; ?>
-
+                <!-- Display alerts -->
+                <?php include '../components/alerts.php'; ?>
 
                 <p class="mt-3 text-center">Don't have an account? <a href="register.php">Register here</a></p>
             </div>

@@ -192,7 +192,9 @@ class PostController {
     }
 
     public function searchPosts($search) {
-        return $this->postModel->searchPosts($search);
+        // Strip HTML tags from the search term before passing to the model
+        $plainSearch = strip_tags($search);
+        return $this->postModel->searchPosts($plainSearch);
     }
 
 }

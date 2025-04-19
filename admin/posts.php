@@ -22,21 +22,8 @@ if (!empty($search)) {
     <div class="container">
         <h1 class="h2 mb-4 mt-3">Manage Posts</h1>
         
-        <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success">
-                <?= $_SESSION['success']; ?>
-                <?php unset($_SESSION['success']); ?>
-            </div> 
-        <?php endif; ?>
-        
-        <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                <?php echo $_SESSION['error']; unset($_SESSION['error']); ?>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-        <?php endif; ?>
+        <!-- Include alerts component -->
+        <?php include '../app/views/components/alerts.php'; ?> 
         
         <!-- Search Controls -->
         <div class="card mb-4">
