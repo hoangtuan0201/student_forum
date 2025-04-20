@@ -1,12 +1,14 @@
 <?php
+use PHPMailer\PHPMailer\PHPMailer;
+
 return [
     'smtp' => [
-        'host' => 'smtp.gmail.com', // Change this to your SMTP host
+        'host' => 'smtp.gmail.com', // Your SMTP host
         'port' => 587,
-        'username' => 'tuanthhgcs230462@fpt.edu.vn', // Change this to your email
-        'password' => '', // Change this to your app password
-        'encryption' => 'tls',
-        'from_email' => 'no-reply@studentforum.com',
+        'username' => $_ENV['EMAIL'] ?? null,
+        'password' => $_ENV['EMAIL_APP_PASSWORD'] ?? null,
+        'encryption' => PHPMailer::ENCRYPTION_STARTTLS,
+        'from_email' => $_ENV['EMAIL'] ?? null, // Use the same email as username
         'from_name' => 'Student Forum'
     ]
 ];

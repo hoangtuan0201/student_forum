@@ -2,38 +2,55 @@
 require_once __DIR__ . '/../../vendor/autoload.php';
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
 class Email {
     private $mailer;
-    private $config; // $config: Stores SMTP configuration (loaded from a separate email.php config file).
-    private $lastError; //$lastError: Stores any error messages from email sending attempts.
-
-
+    private $config;
+    private $lastError;
 
     public function __construct() {
         $this->config = require __DIR__ . '/../../config/email.php';
+        if (empty($this->config['smtp']['username']) || empty($this->config['smtp']['password'])) {
+            throw new Exception('SMTP username or password is not configured.');
+        }
+        
         $this->mailer = new PHPMailer(true);
         $this->lastError = null;
-        
-        // Server settings
-        $this->mailer->isSMTP();
-        $this->mailer->Host = $this->config['smtp']['host'];
-        $this->mailer->SMTPAuth = true;
-        $this->mailer->Username = $this->config['smtp']['username'];
-        $this->mailer->Password = $this->config['smtp']['password'];
-        $this->mailer->SMTPSecure = $this->config['smtp']['encryption'];
-        $this->mailer->Port = $this->config['smtp']['port'];
-        
-        // Sender info
-        $this->mailer->setFrom($this->config['smtp']['from_email'], $this->config['smtp']['from_name']);
+
+        try {
+            // Server settings
+            // $this->mailer->SMTPDebug = SMTP::DEBUG_SERVER; // Uncomment for detailed debugging
+            $this->mailer->isSMTP();
+            $this->mailer->Host = $this->config['smtp']['host'];
+            $this->mailer->SMTPAuth = true;
+            $this->mailer->Username = $this->config['smtp']['username'];
+            $this->mailer->Password = $this->config['smtp']['password'];
+            $this->mailer->SMTPSecure = $this->config['smtp']['encryption'];
+            $this->mailer->Port = $this->config['smtp']['port'];
+            
+            // Additional settings for Gmail (if needed)
+            $this->mailer->SMTPOptions = array(
+                'ssl' => array(
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                )
+            );
+            
+            // Sender info
+            $this->mailer->setFrom($this->config['smtp']['from_email'], $this->config['smtp']['from_name']);
+        } catch (Exception $e) {
+            $this->lastError = "Mailer initialization failed: " . $e->getMessage();
+            error_log($this->lastError);
+            throw $e; // Re-throw exception after logging
+        }
     }
 
-    // Get the last error message
     public function getLastError() {
         return $this->lastError;
     }
 
-    // Clear email settings for next send This prevents leftover settings (like previous recipient or attachments) from affecting the next email.
     private function resetMailer() {
         $this->mailer->clearAddresses();
         $this->mailer->clearAttachments();
@@ -78,6 +95,8 @@ class Email {
 
     public function sendContactEmail($to, $subject, $message, $fromEmail, $fromName) {
         try {
+            $this->resetMailer();
+            
             $this->mailer->addAddress($to);
             $this->mailer->isHTML(true);
             $this->mailer->Subject = $subject;
@@ -91,10 +110,9 @@ class Email {
             $this->mailer->send();
             return true;
         } catch (Exception $e) {
-            error_log("Email could not be sent. Mailer Error: {$this->mailer->ErrorInfo}");
+            $this->lastError = "Email sending failed: " . $this->mailer->ErrorInfo;
+            error_log("Email could not be sent. Mailer Error: " . $this->mailer->ErrorInfo); 
             return false;
         }
     }
-
-    
 } 
