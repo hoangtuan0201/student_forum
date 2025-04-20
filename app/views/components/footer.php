@@ -29,7 +29,7 @@
             // Auto-dismiss alerts after 5 seconds
             setTimeout(() => {
                 $(alert).alert('close');
-            }, 5000);
+            }, 10000);
         });
         
         // Activate tooltips

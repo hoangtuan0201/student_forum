@@ -51,6 +51,16 @@ if (session_status() === PHP_SESSION_NONE) {
                 </li>
                 
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
+                    <li class="nav-item">
+                    <a class="nav-link" href="/student_forum/public/assign_user.php">
+                        <i class="fas fa-question-circle mr-1"></i> Assign Post
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/student_forum/public/add_post.php">
+                        <i class="fas fa-question-circle mr-1"></i> Add Post
+                    </a>
+                </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <i class="fas fa-tools mr-1"></i> Admin
