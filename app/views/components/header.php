@@ -30,11 +30,7 @@ if (session_status() === PHP_SESSION_NONE) {
         
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/student_forum/public/index.php">
-                        <i class="fas fa-home mr-1"></i> Home
-                    </a>
-                </li>
+               
                 
                 <?php if (isset($_SESSION['user_id'])): ?>
                 <li class="nav-item">
