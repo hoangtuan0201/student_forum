@@ -35,12 +35,13 @@ $modules = $moduleModel->getAllModules();
             </nav>
             
             <!-- Filter Section -->
+            <?php if ($current_page == 'index.php'): ?>
             <div class="mt-4">
                 <h6 class="font-weight-bold mb-3">
                     <i class="fas fa-filter mr-2"></i>Filter by Module
                 </h6>
                 
-                <form action="index.php" method="GET" id="filterForm">
+                <form action="/student_forum/public/index.php" method="GET" id="filterForm">
                     <?php if(isset($_GET['search'])): ?>
                         <input type="hidden" name="search" value="<?php echo htmlspecialchars($_GET['search']); ?>">
                     <?php endif; ?>
@@ -64,6 +65,7 @@ $modules = $moduleModel->getAllModules();
                     <?php endif; ?>
                 </form>
             </div>
+            <?php endif; ?>
             <!-- /Filter Section -->
         </div>
     </div>

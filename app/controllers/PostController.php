@@ -169,14 +169,6 @@ class PostController {
         }
     }
     
-    public function deletePostFromAdmin($post_id) {
-        // Check if user is admin
-        if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
-            return false;
-        }
-        
-        return $this->postModel->deletePostFromAdmin($post_id);
-    }
 
     public function getAllPosts() {
         return $this->postModel->getAllPosts();
@@ -188,7 +180,6 @@ class PostController {
 
     public function getUserPost() {
         return $this->postModel->getUserPost($_SESSION["user_id"]);
-        
     }
     
 
@@ -199,6 +190,10 @@ class PostController {
         return $this->postModel->countAllPostsByUser($user_id);
     }
 
+    public function countPostsByModule($module_id) {
+        return $this->postModel->countPostsByModule($module_id);
+    }
+
     public function searchPosts($search) {
         // Strip HTML tags from the search term before passing to the model
         $plainSearch = strip_tags($search);
@@ -206,6 +201,11 @@ class PostController {
     }
 
     public function getFilteredPosts($searchTerm = '', $module_id = '') {
+        // If we have a module_id and no search term, use the direct DB filter
+        if (!empty($module_id) && empty($searchTerm)) {
+            return $this->postModel->getPostsByModule($module_id);
+        }
+        
         // Get initial set of posts (either searched or all)
         $posts = !empty($searchTerm) 
             ? $this->searchPosts($searchTerm) 
