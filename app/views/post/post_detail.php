@@ -1,7 +1,6 @@
 <?php
-require_once __DIR__ . '/../../controllers/PostController.php';
-require_once __DIR__ . '/../../controllers/CommentController.php';
-
+use App\Controllers\PostController;
+use App\Controllers\CommentController;
 // Kiểm tra ID bài viết
 if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header('Location: /student_forum/public/my_question.php');  

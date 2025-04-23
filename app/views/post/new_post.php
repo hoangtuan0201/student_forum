@@ -1,5 +1,6 @@
 <?php
 include_once __DIR__ . '/../../../config/database.php'; 
+use App\Config\Database;
 
 $database = new Database();
 $pdo = $database->connect();

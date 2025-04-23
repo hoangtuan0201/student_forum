@@ -1,9 +1,13 @@
 <?php
+namespace App\Controllers;
+
+use App\Models\Post;
+use App\Models\User;
+use App\Models\Module;
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
-require_once __DIR__ . '/../models/Post.php';
-require_once __DIR__ . '/../models/User.php';
 
 class PostController {
     private $postModel;

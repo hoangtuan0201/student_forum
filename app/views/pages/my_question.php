@@ -8,6 +8,11 @@
         exit;
     }
     
+    // Load bootstrap if not already loaded
+    require_once __DIR__ . '/../../bootstrap.php';
+    
+    // Import the PostController class
+    use App\Controllers\PostController;
 ?>
 
 <!-- Navigation bar -->
@@ -31,7 +36,6 @@
                 <div class="inner-main-body p-2 p-sm-3 forum-content fade-in">
                     <?php
                     if (!isset($postController)) {
-                        require_once __DIR__ . '/../../controllers/PostController.php';
                         $postController = new PostController();
                     }
                     
@@ -62,4 +66,4 @@
     </div>
 </div>
 
-<?php include '../components/footer.php'; ?>
+<?php include '../components/footer.php'; ?> 

@@ -39,7 +39,7 @@
                     
                     <?php
                     // Get comment count
-                    require_once __DIR__ . '/../../controllers/CommentController.php';
+                    use App\Controllers\CommentController;
                     $commentController = new CommentController();
                     $commentCount = $commentController->countCommentsByPostId($post['post_id']);
                     ?>

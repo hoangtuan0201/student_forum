@@ -1,11 +1,11 @@
 <?php
 $current_page = basename($_SERVER['PHP_SELF']);
+use App\Models\Module;
 
 // Get module filter param if set
 $module_id = isset($_GET['module_id']) ? $_GET['module_id'] : '';
 
 // Get all modules from database
-require_once __DIR__ . '/../../models/Module.php';
 $moduleModel = new Module();
 $modules = $moduleModel->getAllModules();
 ?>

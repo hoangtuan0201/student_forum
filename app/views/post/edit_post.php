@@ -11,6 +11,8 @@ if (!isset($_SESSION['user_id'])) {
 
 require_once __DIR__ . '/../../../config/database.php';
 require_once __DIR__ . '/../../controllers/PostController.php';
+use App\Config\Database;
+use App\Controllers\PostController;
 
 $database = new Database();
 $pdo = $database->connect();

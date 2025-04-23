@@ -9,9 +9,9 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== "admin") {
     exit;
 }
 
-require_once __DIR__ . '/../../models/Post.php';
-require_once __DIR__ . '/../../models/User.php';
-require_once __DIR__ . '/../../models/Module.php';
+use App\Models\Post;
+use App\Models\User;
+use App\Models\Module;
 
 $postModel = new Post();
 $userModel = new User();

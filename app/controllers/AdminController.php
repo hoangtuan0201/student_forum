@@ -1,8 +1,10 @@
 <?php
+namespace App\Controllers;
 session_start();
-require_once __DIR__ . '/../models/User.php';
-require_once __DIR__ . '/../models/Post.php';
-require_once __DIR__ . '/../models/Module.php';
+
+use App\Models\User;
+use App\Models\Post;
+use App\Models\Module;
 
 class AdminController {
     private $userModel;

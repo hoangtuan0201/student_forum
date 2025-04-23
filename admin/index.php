@@ -1,5 +1,7 @@
 <?php
 require_once '../app/controllers/AdminController.php';
+use App\Controllers\AdminController;
+
 $adminController = new AdminController();
 $stats = $adminController->getDashboardStats();
 ?>

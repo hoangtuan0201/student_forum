@@ -1,5 +1,9 @@
 <?php
-require_once '../app/controllers/AdminController.php';
+// Load the initialization file
+require_once '../app/init.php';
+
+use App\Controllers\AdminController;
+
 $adminController = new AdminController();
 $users = $adminController->getAllUsers();
 ?>

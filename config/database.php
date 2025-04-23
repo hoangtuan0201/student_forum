@@ -1,4 +1,10 @@
 <?php
+namespace App\Config;
+
+use PDO;
+use PDOException;
+use Exception;
+
 class Database {
     private $host = "localhost";  // Change if needed
     private $db_name = "student_forum";  // Your database name
@@ -27,5 +33,13 @@ class Database {
             throw new Exception("An error occurred. Please try again later.");
         }
     }
+}
+
+// Tạo instance của Database và kết nối toàn cục
+try {
+    $database = new Database();
+    $db = $database->connect();
+} catch (Exception $e) {
+    die("Database connection failed: " . $e->getMessage());
 }
 ?>

@@ -1,6 +1,8 @@
 <?php
 require_once '../app/controllers/AdminController.php';
 require_once '../app/controllers/PostController.php';
+use App\Controllers\AdminController;
+use App\Controllers\PostController;
 
 $adminController = new AdminController();
 $postController = new PostController();

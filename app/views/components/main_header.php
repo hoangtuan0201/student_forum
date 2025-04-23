@@ -1,6 +1,7 @@
 <?php
+use App\Controllers\PostController;
+
 if (!isset($postController)) {
-    require_once __DIR__ . '/../../controllers/PostController.php';
     $postController = new PostController();
 }
 

@@ -1,12 +1,25 @@
 <?php
-require_once __DIR__ . '/../../config/database.php';
+namespace App\Models;
+
+use App\Config\Database;
+use PDO;
 
 class Comment {
     private $pdo;
     
     public function __construct() {
-        $database = new Database();
-        $this->pdo = $database->connect();
+        // Đảm bảo database được kết nối
+        require_once __DIR__ . '/../../config/database.php';
+        
+        // Sử dụng biến global $db từ file database.php
+        global $db;
+        if (!$db) {
+            // Nếu chưa có kết nối, tạo một kết nối mới
+            $database = new Database();
+            $db = $database->connect();
+        }
+        
+        $this->pdo = $db;
     }
     
     public function getCommentsByPostId($post_id) {

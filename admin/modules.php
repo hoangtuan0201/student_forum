@@ -1,6 +1,8 @@
 <?php
 require_once '../app/controllers/AdminController.php';
 require_once '../app/models/Module.php';
+use App\Controllers\AdminController;
+use App\Models\Module;
 
 $adminController = new AdminController();
 $moduleModel = new Module();
