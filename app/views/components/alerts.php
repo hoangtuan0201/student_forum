@@ -7,7 +7,9 @@ $has_alert = isset($_SESSION['post_error']) ||
              isset($_SESSION['error']) || 
              isset($_SESSION['success']) ||
              isset($_SESSION['admin_error']) ||
-             isset($_SESSION['admin_success']);
+             isset($_SESSION['admin_success']) ||
+             isset($_SESSION['email_success']) ||
+             isset($_SESSION['email_send_error']);
 
 if ($has_alert): ?>
 <div class="py-1">
@@ -85,6 +87,34 @@ if ($has_alert): ?>
     <?php if (isset($_SESSION['admin_success'])): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <?php echo $_SESSION['admin_success']; unset($_SESSION['admin_success']); ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php endif; ?>
+
+    <!-- Email Success Display -->
+    <?php  if (isset($_SESSION['email_success'])):
+    ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <?php 
+            echo $_SESSION['email_success']; 
+            unset($_SESSION['email_success']); // Unset after displaying
+            ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php endif; ?>
+
+    <!-- Email Error Display -->
+    <?php if (isset($_SESSION['email_send_error'])):
+    ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <?php 
+            echo $_SESSION['email_send_error']; 
+            unset($_SESSION['email_send_error']); // Unset after displaying
+            ?>
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>

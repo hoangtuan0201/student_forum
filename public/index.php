@@ -38,24 +38,51 @@ if (session_status() === PHP_SESSION_NONE) {
                         $searchTerm = trim($_GET['search']);
                     }
                     
-                    // Check if user is searching
-                    if (!empty($searchTerm)) {
-                        // Get filtered posts matching the search term
-                        $postResults = $postController->searchPosts($searchTerm);
+                    // Get module filter parameter
+                    $moduleFilter = isset($_GET['module_id']) ? $_GET['module_id'] : '';
+                    
+                    // Determine if any filters are active
+                    $isFiltering = !empty($searchTerm) || !empty($moduleFilter);
+                    
+                    $posts = [];
+                    
+                    // Check if user is searching or filtering
+                    if ($isFiltering) {
+                        // Get filtered posts
+                        $posts = $postController->getFilteredPosts($searchTerm, $moduleFilter);
                         
-                        // Show search results information
-                        echo '<div class="mb-3 p-3 bg-light rounded">';
-                        echo '<strong><i class="fas fa-search mr-1"></i> Search Results:</strong> ' . 
-                             count($postResults) . ' discussion(s) found for "' . htmlspecialchars($searchTerm) . '"';
-                        echo ' <a href="index.php" class="btn btn-sm btn-outline-secondary ml-2">
-                                <i class="fas fa-times mr-1"></i>Clear
-                               </a>';
+                        // Show filter information bar
+                        echo '<div class="mb-3 p-3 bg-light rounded d-flex justify-content-between align-items-center">';
+                        
+                        // Left side - filter summary
+                        echo '<div><strong><i class="fas fa-filter mr-1"></i> Showing:</strong> ';
+                        
+                        $filterLabels = [];
+                        if (!empty($searchTerm)) {
+                            $filterLabels[] = 'Search for "' . htmlspecialchars($searchTerm) . '"';
+                        }
+                        if (!empty($moduleFilter)) {
+                            // Get module name
+                            require_once __DIR__ . '/../app/models/Module.php';
+                            $moduleModel = new Module();
+                            $module = $moduleModel->getModuleById($moduleFilter);
+                            if ($module) {
+                                $filterLabels[] = 'Module: ' . htmlspecialchars($module['module_name']);
+                            }
+                        }
+                        
+                        echo implode(' | ', $filterLabels);
+                        echo ' (' . count($posts) . ' results)';
                         echo '</div>';
                         
-                        // Use the search results for display
-                        $posts = $postResults;
+                        // Right side - clear button
+                        echo '<a href="index.php" class="btn btn-sm btn-outline-secondary">
+                               <i class="fas fa-times mr-1"></i>Clear All
+                              </a>';
+                        
+                        echo '</div>';
                     } else {
-                        // No search, get all posts
+                        // No search or filters, get all posts
                         $posts = $postController->getAllPosts();
                     }
 
@@ -64,7 +91,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         foreach ($posts as $post) {
                             include '../app/views/post/post_item.php';
                         }
-                    } elseif (empty($searchTerm)) { // Only show "No discussions" if not searching
+                    } elseif (!$isFiltering) { // Only show "No discussions" if not filtering
                         echo '<div class="text-center p-5 bg-white rounded shadow-sm">
                                 <i class="fas fa-comments fa-3x text-muted mb-3"></i>
                                 <h5>No discussions found</h5>
@@ -72,6 +99,13 @@ if (session_status() === PHP_SESSION_NONE) {
                                 <button class="btn btn-primary" data-toggle="modal" data-target="#questionModal">
                                     <i class="fas fa-plus-circle mr-1"></i> Create Discussion
                                 </button>
+                              </div>';
+                    } else {
+                        // Show no results for search/filter
+                        echo '<div class="text-center p-5 bg-white rounded shadow-sm">
+                                <i class="fas fa-search fa-3x text-muted mb-3"></i>
+                                <h5>No matching discussions found</h5>
+                                <p class="text-muted">Try adjusting your search or filter criteria</p>
                               </div>';
                     }
                     ?>

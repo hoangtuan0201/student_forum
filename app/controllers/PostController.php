@@ -94,7 +94,7 @@ class PostController {
             // Validate that the post belongs to this user
             if (!$current_post || $current_post["user_id"] != $user_id) {
                 $_SESSION["post_error"] = "You can only edit your own posts.";
-                header("Location: /student_forum/public/my_question.php");
+                header("Location: /student_forum/app/views/pages/my_question.php");
                 exit;
             }
             
@@ -161,7 +161,7 @@ class PostController {
             $user_id = $_SESSION["user_id"];
     
             if ($this->postModel->deletePost($post_id, $user_id)) {
-                header("Location: /student_forum/public/my_question.php");
+                header("Location: /student_forum/app/views/pages/my_question.php");
                 exit;
             } else {
                 echo "Error deleting post.";
@@ -169,6 +169,14 @@ class PostController {
         }
     }
     
+    public function deletePostFromAdmin($post_id) {
+        // Check if user is admin
+        if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
+            return false;
+        }
+        
+        return $this->postModel->deletePostFromAdmin($post_id);
+    }
 
     public function getAllPosts() {
         return $this->postModel->getAllPosts();
@@ -195,6 +203,27 @@ class PostController {
         // Strip HTML tags from the search term before passing to the model
         $plainSearch = strip_tags($search);
         return $this->postModel->searchPosts($plainSearch);
+    }
+
+    public function getFilteredPosts($searchTerm = '', $module_id = '') {
+        // Get initial set of posts (either searched or all)
+        $posts = !empty($searchTerm) 
+            ? $this->searchPosts($searchTerm) 
+            : $this->getAllPosts();
+        
+        if (empty($posts)) {
+            return [];
+        }
+        
+        // Apply module filter if specified
+        if (!empty($module_id)) {
+            $posts = array_filter($posts, function($post) use ($module_id) {
+                return isset($post['module_id']) && $post['module_id'] == $module_id;
+            });
+        }
+        
+        // Return the filtered posts (already sorted by recent in the model)
+        return $posts;
     }
 
 }

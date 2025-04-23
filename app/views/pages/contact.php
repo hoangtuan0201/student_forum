@@ -4,12 +4,12 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // Load environment variables first
-require_once __DIR__ . '/../vendor/autoload.php';
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+require_once __DIR__ . '/../../../vendor/autoload.php';
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../../..');
 $dotenv->load();
 
 // Then load the Email model
-require_once '../app/models/Email.php';
+require_once __DIR__ . '/../../models/Email.php';
 
 if(!isset($_SESSION['user_id'])){
     $_SESSION["login_error"] = "You have to login to send email.";
@@ -39,17 +39,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['email_send_error'] = "Failed to send email: " . ($error ? $error : "Unknown error occurred");
             error_log("Contact form email error: " . ($error ? $error : "Unknown error"));
         }
-        header("Location: contact.php");
+        header("Location: /student_forum/app/views/pages/contact.php");
         exit;
     } catch (Exception $e) {
         $_SESSION['email_send_error'] = "Configuration error preventing email sending.";
         error_log("Failed to initialize Emailer: " . $e->getMessage());
-        header("Location: contact.php");
+        header("Location: /student_forum/app/views/pages/contact.php");
         exit;
     }
 }
 
-include '../app/views/components/header.php';
+include '../components/header.php';
 ?>
 
 <div class="container">
@@ -57,41 +57,14 @@ include '../app/views/components/header.php';
         <div class="inner-wrapper">
             <div class="inner-main">
                 <div class="inner-main-body">
+                    <!-- Include alerts here, right after opening the main body -->
+                    <?php include '../components/alerts.php'; ?> 
+
                     <div class="card">
                         <div class="card-body">
                             <h1 class="h2 mb-4">Contact Us</h1>
 
-                            <?php 
-                            // Display success message if exists
-                            if (isset($_SESSION['email_success'])): 
-                            ?>
-                                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                                    <?php 
-                                    echo $_SESSION['email_success']; 
-                                    unset($_SESSION['email_success']); // Only unset after displaying
-                                    ?>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            <?php endif; ?>
-
-                            <?php 
-                            // Display error message if exists
-                            if (isset($_SESSION['email_send_error'])): 
-                            ?>
-                                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                                    <?php 
-                                    echo $_SESSION['email_send_error']; 
-                                    unset($_SESSION['email_send_error']); // Only unset after displaying
-                                    ?>
-                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            <?php endif; ?>
-
-                            <form method="POST" action="contact.php">
+                            <form method="POST" action="">
                                 <div class="form-group">
                                     <label for="name">Your Name</label>
                                     <input type="text" class="form-control" id="name" name="name" required>
@@ -124,5 +97,4 @@ include '../app/views/components/header.php';
     </div>
 </div>
 
-<?php include '../app/views/components/footer.php'; ?>
-
+<?php include '../components/footer.php'; ?> 

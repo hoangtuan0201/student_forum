@@ -9,9 +9,9 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== "admin") {
     exit;
 }
 
-require_once __DIR__ . '/../app/models/Post.php';
-require_once __DIR__ . '/../app/models/User.php';
-require_once __DIR__ . '/../app/models/Module.php';
+require_once __DIR__ . '/../../models/Post.php';
+require_once __DIR__ . '/../../models/User.php';
+require_once __DIR__ . '/../../models/Module.php';
 
 $postModel = new Post();
 $userModel = new User();
@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create_post"])) {
             if (!in_array($file_type, $allowed_types)) {
                 $_SESSION["error_message"] = "Only JPG, JPEG, and PNG files are allowed.";
             } else {
-                $target_dir = "uploads/";
+                $target_dir = __DIR__ . "/../../../public/uploads/";
                 if (!file_exists($target_dir)) {
                     mkdir($target_dir, 0777, true);
                 }
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create_post"])) {
         if (!isset($_SESSION["error_message"])) {
             if ($postModel->createPost($user_id, $module_id, $title, $content, $image_path)) {
                 $_SESSION["success_message"] = "Post created successfully! You can assign it to a user and module later.";
-                header("Location: /student_forum/public/assign_user.php");
+                header("Location: /student_forum/app/views/pages/assign_user.php");
                 exit;
             } else {
                 $_SESSION["error_message"] = "Failed to create post.";
@@ -73,7 +73,7 @@ $users = $userModel->getAllUsers();
 $modules = $moduleModel->getAllModules();
 
 // Include header
-include_once __DIR__ . '/../app/views/components/header.php';
+include_once __DIR__ . '/../components/header.php';
 ?>
 
 <div class="container mt-4">
@@ -144,10 +144,10 @@ include_once __DIR__ . '/../app/views/components/header.php';
                 </div>
                 
                 <button type="submit" name="create_post" class="btn btn-primary">Create Post</button>
-                <a href="/student_forum/public/assign_user.php" class="btn btn-secondary">Go to Assign Page</a>
+                <a href="/student_forum/app/views/pages/assign_user.php" class="btn btn-secondary">Go to Assign Page</a>
             </form>
         </div>
     </div>
 </div>
 
-<?php include_once __DIR__ . '/../app/views/components/footer.php'; ?> 
+<?php include_once __DIR__ . '/../components/footer.php'; ?> 

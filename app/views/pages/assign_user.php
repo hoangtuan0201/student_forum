@@ -9,9 +9,9 @@ if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== "admin") {
     exit;
 }
 
-require_once __DIR__ . '/../app/models/Post.php';
-require_once __DIR__ . '/../app/models/User.php';
-require_once __DIR__ . '/../app/models/Module.php';
+require_once __DIR__ . '/../../models/Post.php';
+require_once __DIR__ . '/../../models/User.php';
+require_once __DIR__ . '/../../models/Module.php';
 
 $postModel = new Post();
 $userModel = new User();
@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["assign_post"])) {
         $_SESSION["error_message"] = "Failed to assign post.";
     }
     
-    header("Location: /student_forum/public/assign_user.php");
+    header("Location: /student_forum/app/views/pages/assign_user.php");
     exit;
 }
 
@@ -41,7 +41,7 @@ $users = $userModel->getAllUsers();
 $modules = $moduleModel->getAllModules();
 
 // Include header
-include_once __DIR__ . '/../app/views/components/header.php';
+include_once __DIR__ . '/../components/header.php';
 ?>
 
 <div class="container mt-4">
@@ -122,4 +122,4 @@ include_once __DIR__ . '/../app/views/components/header.php';
     
 </div>
 
-<?php include_once __DIR__ . '/../app/views/components/footer.php'; ?>
+<?php include_once __DIR__ . '/../components/footer.php'; ?> 

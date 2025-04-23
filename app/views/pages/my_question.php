@@ -11,27 +11,27 @@
 ?>
 
 <!-- Navigation bar -->
-<?php include '../app/views/components/header.php'; ?>
+<?php include '../components/header.php'; ?>
 
 <!-- New discussion modal -->
-<?php include '../app/views/post/new_post.php' ?>
+<?php include '../post/new_post.php' ?>
 
 <div class="container">
     <div class="main-body p-0">
         <div class="inner-wrapper">
             <!-- Include sidebar component -->
-            <?php include '../app/views/components/sidebar.php'; ?>
+            <?php include '../components/sidebar.php'; ?>
             
             <!-- Inner main -->
             <div class="inner-main">
                 <!-- Include main header component -->
-                <?php include '../app/views/components/main_header.php'; ?>
+                <?php include '../components/main_header.php'; ?>
 
                 <!-- Inner main body -->
                 <div class="inner-main-body p-2 p-sm-3 forum-content fade-in">
                     <?php
                     if (!isset($postController)) {
-                        require_once __DIR__ . '/../app/controllers/PostController.php';
+                        require_once __DIR__ . '/../../controllers/PostController.php';
                         $postController = new PostController();
                     }
                     
@@ -41,7 +41,7 @@
                     // Display posts
                     if (!empty($posts)) {
                         foreach ($posts as $post) {
-                            include '../app/views/post/post_item.php';
+                            include '../post/post_item.php';
                         }
                     } else { // User has no posts
                         echo '<div class="text-center p-5 bg-white rounded shadow-sm">
@@ -62,4 +62,4 @@
     </div>
 </div>
 
-<?php include '../app/views/components/footer.php'; ?> 
+<?php include '../components/footer.php'; ?> 

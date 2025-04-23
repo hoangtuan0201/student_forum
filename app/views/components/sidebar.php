@@ -28,7 +28,7 @@ $modules = $moduleModel->getAllModules();
                     <i class="fas fa-home mr-2"></i>All Discussions
                 </a>
                 <?php if (isset($_SESSION['user_id'])): ?>
-                <a href="/student_forum/public/my_question.php" class="nav-link nav-link-faded has-icon <?php echo ($current_page === 'my_question.php') ? 'active' : ''; ?>">
+                <a href="/student_forum/app/views/pages/my_question.php" class="nav-link nav-link-faded has-icon <?php echo ($current_page === 'my_question.php') ? 'active' : ''; ?>">
                     <i class="fas fa-user-edit mr-2"></i>My Discussions
                 </a>
                 <?php endif; ?>

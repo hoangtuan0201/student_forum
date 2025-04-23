@@ -34,26 +34,26 @@ if (session_status() === PHP_SESSION_NONE) {
                 
                 <?php if (isset($_SESSION['user_id'])): ?>
                 <li class="nav-item">
-                    <a class="nav-link" href="/student_forum/public/my_question.php">
+                    <a class="nav-link" href="/student_forum/app/views/pages/my_question.php">
                         <i class="fas fa-list-alt mr-1"></i> My Posts
                     </a>
                 </li>
                 <?php endif; ?>
                 
                 <li class="nav-item">
-                    <a class="nav-link" href="/student_forum/public/contact.php">
+                    <a class="nav-link" href="/student_forum/app/views/pages/contact.php">
                         <i class="fas fa-question-circle mr-1"></i> Contact Admin
                     </a>
                 </li>
                 
                 <?php if (isset($_SESSION['role']) && $_SESSION['role'] === 'admin'): ?>
                     <li class="nav-item">
-                    <a class="nav-link" href="/student_forum/public/assign_user.php">
+                    <a class="nav-link" href="/student_forum/app/views/pages/assign_user.php">
                         <i class="fas fa-question-circle mr-1"></i> Assign Post
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/student_forum/public/add_post.php">
+                    <a class="nav-link" href="/student_forum/app/views/pages/add_post.php">
                         <i class="fas fa-question-circle mr-1"></i> Add Post
                     </a>
                 </li>
@@ -91,7 +91,7 @@ if (session_status() === PHP_SESSION_NONE) {
                         <?php endif; ?>
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-                        <a class="dropdown-item" href="/student_forum/public/my_question.php">
+                        <a class="dropdown-item" href="/student_forum/app/views/pages/my_question.php">
                             <i class="fas fa-list-alt mr-1"></i> My Posts
                         </a>
                         <div class="dropdown-divider"></div>
