@@ -1,4 +1,9 @@
 <?php
+// Load autoloader if not loaded
+if (!class_exists('App\Models\Module')) {
+    require_once __DIR__ . '/../../../vendor/autoload.php';
+}
+
 $current_page = basename($_SERVER['PHP_SELF']);
 use App\Models\Module;
 

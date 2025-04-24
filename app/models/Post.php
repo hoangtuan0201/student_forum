@@ -128,19 +128,7 @@ class Post {
         return $stmt->fetchAll();
     }
 
-    // Get unassigned posts (posts that need to be assigned to users and modules)
-    public function getUnassignedPosts() {
-        $stmt = $this->pdo->prepare("SELECT * FROM posts 
-                                    WHERE user_id IS NULL OR module_id IS NULL
-                                    ORDER BY created_at DESC");
-        $stmt->execute();
-        return $stmt->fetchAll();
-    }
     
-    // Assign a post to a user and module
-    public function assignPost($post_id, $user_id, $module_id) {
-        $stmt = $this->pdo->prepare("UPDATE posts SET user_id = ?, module_id = ? WHERE post_id = ?");
-        return $stmt->execute([$user_id, $module_id, $post_id]);
-    }
+   
 }
 ?>

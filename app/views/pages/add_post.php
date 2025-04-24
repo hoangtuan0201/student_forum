@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 // Load autoloader
 require_once __DIR__ . '/../../../vendor/autoload.php';
-
+require_once __DIR__ . '/../../bootstrap.php';
 // Check if user is admin
 if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== "admin") {
     header("Location: /student_forum/public/index.php");
@@ -22,16 +22,16 @@ $moduleModel = new Module();
 
 // Handle post creation
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create_post"])) {
-    // User and module are now optional
-    $user_id = !empty($_POST["user_id"]) ? $_POST["user_id"] : null;
-    $module_id = !empty($_POST["module_id"]) ? $_POST["module_id"] : null;
+    // User and module are required for admin
+    $user_id = $_POST["user_id"] ?? null;
+    $module_id = $_POST["module_id"] ?? null;
     $title = htmlspecialchars(trim($_POST["title"]));
     $content = htmlspecialchars(trim($_POST["content"]));
     $image_path = null;
     
-    // Validate title and content, but user_id and module_id are optional
-    if (empty($title) || empty($content)) {
-        $_SESSION["error_message"] = "Title and content are required.";
+    // Validate all fields
+    if (empty($title) || empty($content) || empty($user_id) || empty($module_id)) {
+        $_SESSION["error_message"] = "All fields are required.";
     } else {
         // Handle image upload if present
         if (!empty($_FILES["image"]["name"])) {
@@ -42,16 +42,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create_post"])) {
             if (!in_array($file_type, $allowed_types)) {
                 $_SESSION["error_message"] = "Only JPG, JPEG, and PNG files are allowed.";
             } else {
-                $target_dir = __DIR__ . "/../../../public/uploads/";
-                if (!file_exists($target_dir)) {
-                    mkdir($target_dir, 0777, true);
+                if (!file_exists(UPLOAD_PATH)) {
+                    mkdir(UPLOAD_PATH, 0777, true);
                 }
                 
                 $image_name = time() . "_" . basename($_FILES["image"]["name"]);
-                $target_file = $target_dir . $image_name;
+                $target_file = UPLOAD_PATH . $image_name;
 
                 if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                    $image_path = "public/uploads/" . $image_name;
+                    $image_path = UPLOAD_URL . $image_name;
                 } else {
                     $_SESSION["error_message"] = "Failed to upload image.";
                 }
@@ -61,8 +60,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST["create_post"])) {
         // If no error so far, create the post
         if (!isset($_SESSION["error_message"])) {
             if ($postModel->createPost($user_id, $module_id, $title, $content, $image_path)) {
-                $_SESSION["success_message"] = "Post created successfully! You can assign it to a user and module later.";
-                header("Location: /student_forum/app/views/pages/assign_user.php");
+                $_SESSION["success_message"] = "Post created and assigned successfully!";
+                header("Location: /student_forum/admin/posts.php");
                 exit;
             } else {
                 $_SESSION["error_message"] = "Failed to create post.";
@@ -80,26 +79,11 @@ include_once __DIR__ . '/../components/header.php';
 ?>
 
 <div class="container mt-4">
-    <h2>Add New Post (Unassigned)</h2>
-    <p class="text-muted">Create a post without assigning a user or module. You can assign it later from the assignment page.</p>
+    <h2>Create New Post</h2>
+    <p class="text-muted">Create a post and assign it to a user and module.</p>
     
-    <?php if (isset($_SESSION["success_message"])): ?>
-        <div class="alert alert-success">
-            <?php 
-                echo $_SESSION["success_message"]; 
-                unset($_SESSION["success_message"]);
-            ?>
-        </div>
-    <?php endif; ?>
-    
-    <?php if (isset($_SESSION["error_message"])): ?>
-        <div class="alert alert-danger">
-            <?php 
-                echo $_SESSION["error_message"]; 
-                unset($_SESSION["error_message"]);
-            ?>
-        </div>
-    <?php endif; ?>
+    <!-- Include alerts component -->
+    <?php include_once __DIR__  . '/../components/alerts.php'; ?>
     
     <div class="card">
         <div class="card-body">
@@ -115,29 +99,27 @@ include_once __DIR__ . '/../components/header.php';
                 </div>
                 
                 <div class="form-group mb-3">
-                    <label for="user_id">Assign to User (Optional):</label>
-                    <select name="user_id" id="user_id" class="form-control">
-                        <option value="">Leave Unassigned</option>
+                    <label for="user_id">Assign to User:</label>
+                    <select name="user_id" id="user_id" class="form-control" required>
+                        <option value="">Select User</option>
                         <?php foreach ($users as $user): ?>
                             <option value="<?php echo $user["user_id"]; ?>">
                                 <?php echo htmlspecialchars($user["username"]); ?> (<?php echo $user["email"]; ?>)
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <small class="text-muted">You can leave this unassigned and set it later.</small>
                 </div>
                 
                 <div class="form-group mb-3">
-                    <label for="module_id">Assign to Module (Optional):</label>
-                    <select name="module_id" id="module_id" class="form-control">
-                        <option value="">Leave Unassigned</option>
+                    <label for="module_id">Assign to Module:</label>
+                    <select name="module_id" id="module_id" class="form-control" required>
+                        <option value="">Select Module</option>
                         <?php foreach ($modules as $module): ?>
                             <option value="<?php echo $module["module_id"]; ?>">
                                 <?php echo htmlspecialchars($module["module_name"]); ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
-                    <small class="text-muted">You can leave this unassigned and set it later.</small>
                 </div>
                 
                 <div class="form-group mb-3">
@@ -147,7 +129,6 @@ include_once __DIR__ . '/../components/header.php';
                 </div>
                 
                 <button type="submit" name="create_post" class="btn btn-primary">Create Post</button>
-                <a href="/student_forum/app/views/pages/assign_user.php" class="btn btn-secondary">Go to Assign Page</a>
             </form>
         </div>
     </div>

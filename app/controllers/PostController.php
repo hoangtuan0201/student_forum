@@ -57,17 +57,26 @@ class PostController {
                     exit;
                 }
                 
-                $target_dir = "../../public/uploads/";
+                // Use UPLOAD_PATH constant
+                if (!file_exists(UPLOAD_PATH)) {
+                    mkdir(UPLOAD_PATH, 0777, true);
+                }
+                
                 $image_name = time() . "_" . basename($_FILES["image"]["name"]);
-                $target_file = $target_dir . $image_name;
+                $target_file = UPLOAD_PATH . $image_name;
 
                 if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                    $image_path = "public/uploads/" . $image_name;
+                    $image_path = UPLOAD_URL . $image_name;
+                } else {
+                    $_SESSION["post_error"] = "Failed to upload image.";
+                    header("Location: /student_forum/public/index.php");
+                    exit;
                 }
             }
 
             // Call the model to create post
             if ($this->postModel->createPost($user_id, $module_id, $title, $content, $image_path)) {
+                $_SESSION["success"] = "Post created successfully!";
                 header("Location: /student_forum/public/index.php");
                 exit;
             } else {
@@ -115,8 +124,8 @@ class PostController {
             // Check if remove image is checked
             if (isset($_POST["remove_image"]) && $_POST["remove_image"] == 1) {
                 // If physical file exists, delete it
-                if (!empty($image_path) && file_exists("../../" . $image_path)) {
-                    unlink("../../" . $image_path);
+                if (!empty($image_path) && file_exists(ROOT_PATH . '/' . $image_path)) {
+                    unlink(ROOT_PATH . '/' . $image_path);
                 }
                 $image_path = null;
             }
@@ -133,22 +142,31 @@ class PostController {
                     exit;
                 }
                 
-                $target_dir = "../../public/uploads/";
+                // Use UPLOAD_PATH constant
+                if (!file_exists(UPLOAD_PATH)) {
+                    mkdir(UPLOAD_PATH, 0777, true);
+                }
+                
                 $image_name = time() . "_" . basename($_FILES["image"]["name"]);
-                $target_file = $target_dir . $image_name;
+                $target_file = UPLOAD_PATH . $image_name;
 
                 // If there's already an image and we're uploading a new one, delete the old one
-                if (!empty($current_post["image"]) && file_exists("../../" . $current_post["image"])) {
-                    unlink("../../" . $current_post["image"]);
+                if (!empty($current_post["image"]) && file_exists(ROOT_PATH . '/' . $current_post["image"])) {
+                    unlink(ROOT_PATH . '/' . $current_post["image"]);
                 }
 
                 if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                    $image_path = "public/uploads/" . $image_name;
+                    $image_path = UPLOAD_URL . $image_name;
+                } else {
+                    $_SESSION["post_error"] = "Failed to upload image.";
+                    header("Location: /student_forum/app/views/post/edit_post.php?id=" . $post_id);
+                    exit;
                 }
             }
 
             // Call model to update the post
             if ($this->postModel->updatePost($post_id, $title, $content, $module_id, $image_path, $user_id)) {
+                $_SESSION["success"] = "Post updated successfully!";
                 header("Location: /student_forum/app/views/post/post_detail.php?id=" . $post_id);
                 exit;
             } else {

@@ -4,6 +4,7 @@ require_once __DIR__ . '/../app/bootstrap.php';
 
 // Load controllers
 use App\Controllers\PostController;
+
 ?>
 
 <!-- Navigation bar -->
@@ -32,8 +33,12 @@ use App\Controllers\PostController;
                     // Create PostController instance
                     $postController = new PostController();
                     
-                    // Get posts for main page display
-                    $posts = $postController->getAllPosts();
+                    // Get search terms and module filter if any
+                    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+                    $module_id = isset($_GET['module_id']) ? $_GET['module_id'] : '';
+                    
+                    // Get filtered posts based on search and module_id
+                    $posts = $postController->getFilteredPosts($search, $module_id);
                     
                     // Display posts directly here
                     if (!empty($posts)) {
@@ -43,12 +48,19 @@ use App\Controllers\PostController;
                     } else {
                         echo '<div class="text-center p-5 bg-white rounded shadow-sm">
                                 <i class="fas fa-comments fa-3x text-muted mb-3"></i>
-                                <h5>No discussions found</h5>
-                                <p class="text-muted">Be the first to start a discussion!</p>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#questionModal">
-                                    <i class="fas fa-plus-circle mr-1"></i> Create Discussion
-                                </button>
-                              </div>';
+                                <h5>No discussions found</h5>';
+                        
+                        if (!empty($search) || !empty($module_id)) {
+                            echo '<p class="text-muted">No results match your search criteria.</p>
+                                  <a href="index.php" class="btn btn-outline-secondary">Clear filters</a>';
+                        } else {
+                            echo '<p class="text-muted">Be the first to start a discussion!</p>
+                                  <button class="btn btn-primary" data-toggle="modal" data-target="#questionModal">
+                                     <i class="fas fa-plus-circle mr-1"></i> Create Discussion
+                                  </button>';
+                        }
+                                
+                        echo '</div>';
                     }
                     ?>
                 </div>

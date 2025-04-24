@@ -1,4 +1,9 @@
 <?php
+// Load autoloader if not loaded
+if (!class_exists('App\Controllers\PostController')) {
+    require_once __DIR__ . '/../../../vendor/autoload.php';
+}
+
 use App\Controllers\PostController;
 
 if (!isset($postController)) {
