@@ -35,11 +35,5 @@ class Database {
     }
 }
 
-// Tạo instance của Database và kết nối toàn cục
-try {
-    $database = new Database();
-    $db = $database->connect();
-} catch (Exception $e) {
-    die("Database connection failed: " . $e->getMessage());
-}
+
 ?>

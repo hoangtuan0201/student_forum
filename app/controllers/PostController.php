@@ -1,13 +1,13 @@
 <?php
 namespace App\Controllers;
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Module;
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
-}
+}   
 
 class PostController {
     private $postModel;

@@ -1,5 +1,6 @@
 <?php
 namespace App\Controllers;
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 use App\Models\User;
 
@@ -8,9 +9,8 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Make sure User class is properly loaded
-require_once __DIR__ . '/../../vendor/autoload.php';
-require_once __DIR__ . '/../models/User.php';
+
+
 
 class AuthController {
     private $userModel;

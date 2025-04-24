@@ -1,6 +1,7 @@
 <?php
-require_once '../app/controllers/AdminController.php';
-require_once '../app/controllers/PostController.php';
+// Load autoloader
+require_once __DIR__ . '/../vendor/autoload.php';
+
 use App\Controllers\AdminController;
 use App\Controllers\PostController;
 

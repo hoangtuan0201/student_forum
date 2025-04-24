@@ -10,7 +10,6 @@ $dotenv->load();
 
 // Then load the Email model
 use App\Models\Email;
-use Exception;
 
 if(!isset($_SESSION['user_id'])){
     $_SESSION["login_error"] = "You have to login to send email.";

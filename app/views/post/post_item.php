@@ -1,3 +1,9 @@
+<?php
+// Load autoloader if not loaded
+if (!class_exists('App\Controllers\CommentController')) {
+    require_once __DIR__ . '/../../../vendor/autoload.php';
+}
+?>
 <div class="card forum-card mb-3">
     <div class="card-body p-3">
         <div class="d-flex flex-column">

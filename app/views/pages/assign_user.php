@@ -2,6 +2,10 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+
+// Load autoloader
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Module;

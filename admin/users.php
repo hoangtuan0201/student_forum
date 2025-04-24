@@ -1,6 +1,6 @@
 <?php
-// Load the initialization file
-require_once '../app/init.php';
+// Load autoloader
+require_once __DIR__ . '/../vendor/autoload.php';
 
 use App\Controllers\AdminController;
 

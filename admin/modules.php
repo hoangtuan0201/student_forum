@@ -1,6 +1,7 @@
 <?php
-require_once '../app/controllers/AdminController.php';
-require_once '../app/models/Module.php';
+// Load autoloader
+require_once __DIR__ . '/../vendor/autoload.php';
+
 use App\Controllers\AdminController;
 use App\Models\Module;
 

@@ -1,4 +1,7 @@
 <?php
+// Load autoloader
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
 use App\Controllers\PostController;
 use App\Controllers\CommentController;
 // Kiểm tra ID bài viết

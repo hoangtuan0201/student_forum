@@ -8,8 +8,8 @@
         exit;
     }
     
-    // Load bootstrap if not already loaded
-    require_once __DIR__ . '/../../bootstrap.php';
+    // Load autoloader
+    require_once __DIR__ . '/../../../vendor/autoload.php';
     
     // Import the PostController class
     use App\Controllers\PostController;

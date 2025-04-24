@@ -1,5 +1,7 @@
 <?php
-require_once '../app/controllers/AdminController.php';
+// Load autoloader
+require_once __DIR__ . '/../vendor/autoload.php';
+
 use App\Controllers\AdminController;
 
 $adminController = new AdminController();

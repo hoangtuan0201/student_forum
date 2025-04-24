@@ -8,18 +8,8 @@ class Module {
     private $pdo;
     
     public function __construct() {
-        // Đảm bảo database được kết nối
-        require_once __DIR__ . '/../../config/database.php';
-        
-        // Sử dụng biến global $db từ file database.php
-        global $db;
-        if (!$db) {
-            // Nếu chưa có kết nối, tạo một kết nối mới
-            $database = new Database();
-            $db = $database->connect();
-        }
-        
-        $this->pdo = $db;
+        $database = new Database();
+        $this->pdo = $database->connect();
     }
     
     public function getAllModules() {

@@ -3,6 +3,9 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// Load autoloader
+require_once __DIR__ . '/../../../vendor/autoload.php';
+
 // Check if user is admin
 if (!isset($_SESSION["user_id"]) || $_SESSION["role"] !== "admin") {
     header("Location: /student_forum/public/index.php");
