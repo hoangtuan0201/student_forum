@@ -1,6 +1,8 @@
 <?php
 namespace App\Controllers;
 require_once __DIR__ . '/../../vendor/autoload.php';
+// Include bootstrap file to access constants
+require_once __DIR__ . '/../bootstrap.php';
 
 use App\Models\Post;
 use App\Models\User;

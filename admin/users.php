@@ -12,7 +12,12 @@ $users = $adminController->getAllUsers();
     <?php include '../app/views/components/header.php'; ?>
     
     <div class="container">
-        <h1 class="h2 mb-4 mt-3">Manage Users</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4 mt-3">
+            <h1 class="h2 mb-0">Manage Users</h1>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addUserModal">
+                <i class="fas fa-user-plus"></i> Add New User
+            </button>
+        </div>
         
         <!-- Include alerts component -->
         <?php include '../app/views/components/alerts.php'; ?> 
@@ -90,6 +95,48 @@ $users = $adminController->getAllUsers();
                         </tbody>
                     </table>
                 </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add User Modal -->
+    <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="addUserModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <form action="/student_forum/app/controllers/AdminController.php?action=addUser" method="post">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addUserModalLabel">Add New User</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="username">Username <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address <span class="text-danger">*</span></label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password <span class="text-danger">*</span></label>
+                            <input type="password" class="form-control" id="password" name="password" required>
+                            <small class="form-text text-muted">Password must be at least 6 characters long.</small>
+                        </div>
+                        <div class="form-group">
+                            <label for="role">Role <span class="text-danger">*</span></label>
+                            <select class="form-control" id="role" name="role" required>
+                                <option value="student">Student</option>
+                                <option value="admin">Admin</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Create User</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

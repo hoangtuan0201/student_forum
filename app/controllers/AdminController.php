@@ -33,6 +33,62 @@ class AdminController {
         return $this->userModel->getAllUsers();
     }
     
+    // Add new user method
+    public function addUser() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $username = htmlspecialchars(trim($_POST["username"]));
+            $email = htmlspecialchars(trim($_POST["email"]));
+            $password = trim($_POST["password"]);
+            $role = $_POST["role"];
+            
+            // Validate inputs
+            if (empty($username) || empty($email) || empty($password) || empty($role)) {
+                $_SESSION["admin_error"] = "All fields are required.";
+                header("Location: /student_forum/admin/users.php");
+                exit;
+            }
+            
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $_SESSION["admin_error"] = "Invalid email format.";
+                header("Location: /student_forum/admin/users.php");
+                exit;
+            }
+            
+            if (strlen($password) < 6) {
+                $_SESSION["admin_error"] = "Password must be at least 6 characters.";
+                header("Location: /student_forum/admin/users.php");
+                exit;
+            }
+            
+            // Validate role
+            if (!in_array($role, ['student', 'admin'])) {
+                $_SESSION["admin_error"] = "Invalid role specified.";
+                header("Location: /student_forum/admin/users.php");
+                exit;
+            }
+            
+            // Check if the username or email already exists
+            if ($this->userModel->findByUsernameOrEmail($username, $email)) {
+                $_SESSION["admin_error"] = "Username or email already exists.";
+                header("Location: /student_forum/admin/users.php");
+                exit;
+            }
+            
+            // Securely hash the password
+            $hashed_password = password_hash($password, PASSWORD_BCRYPT);
+            
+            // Insert new user
+            if ($this->userModel->createUser($username, $email, $hashed_password, $role)) {
+                $_SESSION["admin_success"] = "User created successfully.";
+            } else {
+                $_SESSION["admin_error"] = "Failed to create user.";
+            }
+            
+            header("Location: /student_forum/admin/users.php");
+            exit;
+        }
+    }
+    
     // Post Management Methods
     public function getAllPosts() {
         return $this->postModel->getAllPosts(); 
@@ -218,6 +274,9 @@ if (isset($_GET['action'])) {
             break;
         case 'deleteModule':
             $adminController->deleteModule();
+            break;
+        case 'addUser':
+            $adminController->addUser();
             break;
         default:
             header("Location: /student_forum/admin/index.php");
