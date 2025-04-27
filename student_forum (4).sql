@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 18, 2025 at 04:16 PM
+-- Generation Time: Apr 24, 2025 at 12:15 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,8 +40,8 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`comment_id`, `post_id`, `user_id`, `content`, `created_at`) VALUES
-(11, 20, 26, '&lt;h1&gt; no injection &lt;/h1&gt;', '2025-04-06 09:00:52'),
-(12, 21, 26, '&lt;h1&gt;con cac\r\n &lt;/h1&gt;', '2025-04-12 15:51:02');
+(16, 37, 26, 'Here are some of the main differences between SQL versus NoSQL databases:\r\n\r\n1. Structure\r\nSQL databases are table based, while NoSQL databases can be document-oriented, key-value pairs, or graph structures. In a NoSQL database, a document can contain key value pairs, which can then be ordered and nested.\r\n\r\n2. Scalability\r\nSQL databases scale vertically, usually on a single server, and require users to increase physical hardware to increase their storage capacities. In effect, while cloud-storage options are available, SQL databases can be prohibitively expensive for businesses when dealing with vast amounts of big data.\r\n\r\nNoSQL databases offer horizontal scalability, meaning that more servers simply need to be added to increase their data load. This means that NoSQL databases are better for modern cloud-based infrastructures, which offer distributed resources.', '2025-04-20 15:32:00'),
+(17, 38, 26, 'Here are some of the main differences between SQL versus NoSQL databases:\r\n\r\n1. Structure\r\nSQL databases are table based, while NoSQL databases can be document-oriented, key-value pairs, or graph structures. In a NoSQL database, a document can contain key value pairs, which can then be ordered and nested.\r\n\r\n2. Scalability\r\nSQL databases scale vertically, usually on a single server, and require users to increase physical hardware to increase their storage capacities. In effect, while cloud-storage options are available, SQL databases can be prohibitively expensive for businesses when dealing with vast amounts of big data.\r\n\r\nNoSQL databases offer horizontal scalability, meaning that more servers simply need to be added to increase their data load. This means that NoSQL databases are better for modern cloud-based infrastructures, which offer distributed resources.', '2025-04-20 15:32:21');
 
 -- --------------------------------------------------------
 
@@ -60,8 +60,12 @@ CREATE TABLE `modules` (
 --
 
 INSERT INTO `modules` (`module_id`, `module_name`, `created_at`) VALUES
-(1, 'COMP1841', '2025-02-26 09:17:34'),
-(2, 'COMP1772', '2025-04-06 09:33:54');
+(11, 'Programming Fundamentals', '2025-04-20 11:59:45'),
+(12, 'Web Development', '2025-04-20 11:59:45'),
+(13, 'Database Management', '2025-04-20 11:59:45'),
+(14, 'Mobile Development', '2025-04-20 11:59:45'),
+(15, 'Software Engineering', '2025-04-20 11:59:45'),
+(16, 'Artificial Intelligence', '2025-04-20 11:59:45');
 
 -- --------------------------------------------------------
 
@@ -71,7 +75,7 @@ INSERT INTO `modules` (`module_id`, `module_name`, `created_at`) VALUES
 
 CREATE TABLE `posts` (
   `post_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `module_id` int(11) DEFAULT NULL,
   `title` varchar(255) NOT NULL,
   `content` text NOT NULL,
@@ -84,12 +88,11 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`post_id`, `user_id`, `module_id`, `title`, `content`, `image`, `created_at`) VALUES
-(20, 26, 1, '&lt;h1&gt; no injection &lt;/h1&gt;', 'LOREM ISPSUMMMMMM &lt;h1&gt; no injection &lt;/h1&gt;', 'public/uploads/1743929682_Screenshot (160).png', '2025-03-31 15:57:07'),
-(21, 26, NULL, 'con chim non', 'aaaaa', NULL, '2025-04-06 09:37:55'),
-(26, 26, 1, 'tung tung tung sahur', 'tung tung tung sahur', 'public/uploads/1744701717_tungtungtungsahur.png', '2025-04-15 07:21:57'),
-(27, 26, NULL, '&lt;button&gt; hacked &lt;/button&gt;', '&lt;button&gt; hacked &lt;/button&gt;', NULL, '2025-04-16 06:06:07'),
-(28, 26, NULL, 'a', 'aaaaa', 'public/uploads/1744983451_RobloxScreenShot20250414_203325210.png', '2025-04-16 06:07:19'),
-(29, 26, NULL, 'aaa', 'aaaa', NULL, '2025-04-18 13:45:31');
+(36, 33, 12, 'Best practices for responsive web design', 'I&#039;m working on my first responsive website and want to make sure I&#039;m following best practices. What are some essential techniques and common pitfalls to avoid? Should I use a framework like Bootstrap or build from scratch?', NULL, '2025-04-20 12:06:26'),
+(37, 33, 13, 'Differences between SQL and NoSQL databases', 'I&#039;m starting a new project and need to choose a database solution. What are the key differences between SQL and NoSQL databases? When would you recommend one over the other? Specific examples would be helpful.', 'public/uploads/1745150835_su-khac-nhau-giua-sql-va-nosql.jpg', '2025-04-20 12:07:15'),
+(38, 33, 14, 'Flutter vs React Native for mobile app development', 'I&#039;m planning to develop a cross-platform mobile app. Should I go with Flutter or React Native? I have some experience with JavaScript but none with Dart. What are the pros and cons of each for a medium-sized app?', NULL, '2025-04-20 12:07:48'),
+(39, 33, 16, 'aa', 'aa', NULL, '2025-04-23 12:37:49'),
+(45, 26, 16, 'helloworldhelloworldhelloworldhelloworldhelloworld', 'helloworldhelloworldhelloworldhelloworldhelloworld\r\n\r\nhelloworldhelloworldhelloworldhelloworldhelloworld', 'public/uploads/1745480872_482961656_1359717228514638_7879724346744272958_n.jpg', '2025-04-24 07:47:52');
 
 -- --------------------------------------------------------
 
@@ -111,11 +114,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `username`, `email`, `password`, `role`, `created_at`) VALUES
-(11, 'dadada', 'hoangtuan079699106a@gmail.com', '$2y$10$Mzk9eI4pfE3SedZntuK9QeNOodBZiTBCeSSd1pkRIlAH5X355Axiq', 'student', '2025-02-24 14:28:43'),
-(14, 'accclnone', 'hoangtuan0796991061aa@gmail.com', '$2y$10$e8SxloUAr.guzXBum2Q9rONKpjNbpU5M2mbU3MrQLiAmo0Y30oV4m', 'student', '2025-03-04 12:32:56'),
 (26, 'TuanAdmin', 'hoangtuan0796991061@gmail.com', '$2y$10$gNgUBp8JhsDL6W9HNKds2OAqPRkci3AElxzHtQ5MGHDEdubXpDohi', 'admin', '2025-03-31 15:52:57'),
-(28, 'User1', 'tuanthhgcs230462@fpt.edu.vn', '$2y$10$v/s0hjQcKq0zGy/CqUi23ex5Pno7gJLsoQC3lgyxHHpgd3/3OOrgG', 'student', '2025-04-15 17:30:22'),
-(29, 'aaa', 'hoangtuan0796991061@aa.com', '$2y$10$nQmrIbqXoSKJpLBNz/Hf6eVOqywxv0qDt8fGAodQrAamDZQnILfm6', 'student', '2025-04-15 17:38:02');
+(33, 'tuanthhgcs230462@fpt.edu.vn', 'tuanthhgcs230462@fpt.edu.vn', '$2y$10$sZnNp5ZFkVzGxwlraeW9DODm7r9vkK/V8e9lyMpWqxTi7gudymHUu', 'student', '2025-04-19 18:49:53');
 
 --
 -- Indexes for dumped tables
@@ -148,9 +148,7 @@ ALTER TABLE `posts`
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`user_id`),
-  ADD UNIQUE KEY `username` (`username`),
-  ADD UNIQUE KEY `email` (`email`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -160,25 +158,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `comment_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `modules`
 --
 ALTER TABLE `modules`
-  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `module_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `post_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 
 --
 -- Constraints for dumped tables

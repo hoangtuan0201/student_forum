@@ -21,4 +21,3 @@ define('UPLOAD_URL', 'public/uploads/');
 // Error handling
 error_reporting(E_ALL);
 ini_set('display_errors', $_ENV['DEBUG'] ?? false);
-

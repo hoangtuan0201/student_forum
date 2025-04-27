@@ -59,10 +59,7 @@ class PostController {
                     exit;
                 }
                 
-                // Use UPLOAD_PATH constant
-                if (!file_exists(UPLOAD_PATH)) {
-                    mkdir(UPLOAD_PATH, 0777, true);
-                }
+              
                 
                 $image_name = time() . "_" . basename($_FILES["image"]["name"]);
                 $target_file = UPLOAD_PATH . $image_name;
