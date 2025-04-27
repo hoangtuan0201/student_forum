@@ -12,7 +12,6 @@ student_forum/
 │   ├── users.php             # User management
 │   ├── posts.php             # Post management
 │   ├── modules.php           # Module management
-│   └── styles.css            # Admin-specific styles
 ├── app/                      # Application core
 │   ├── bootstrap.php         # Application initialization
 │   ├── controllers/          # Handle user requests
