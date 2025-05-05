@@ -82,7 +82,7 @@ class CommentController {
     
     public function editComment() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            // Kiểm tra người dùng đã đăng nhập
+            // check if user logined
             if (!isset($_SESSION["user_id"])) {
                 $_SESSION["error"] = "You must be logged in to edit a comment.";
                 header("Location: /student_forum/app/views/pages/login.php");

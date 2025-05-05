@@ -2,7 +2,6 @@
 namespace App\Models;
 
 use App\Config\Database;
-use PDO;
 
 class Comment {
     private $pdo;
@@ -45,13 +44,5 @@ class Comment {
     }
 
     
-    //The query SELECT COUNT(*) returns a single value (the count)
-    // fetchColumn() retrieves that single value directly
-    // It's more efficient than using fetch() or fetchAll() when you only need one value
-    // Some key points about fetchColumn():
-    // It returns the first column from the next row of the result set
-    // It's zero-indexed, so fetchColumn(0) gets the first column, fetchColumn(1) gets the second, etc.
-    // It automatically moves the cursor to the next row
-    // It returns false if there are no more rows
-    // It's perfect for aggregate functions like COUNT(), SUM(), MAX(), etc.
+
 }
