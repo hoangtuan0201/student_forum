@@ -24,7 +24,7 @@ class CommentController {
             // check if user login already
             if (!isset($_SESSION["user_id"])) {
                 $_SESSION["error"] = "You must be logged in to comment.";
-                header("Location: /student_forum/app/views/auth/login.php");
+                header("Location: /student_forum/app/views/pages/login.php");
                 exit;
             }
             
@@ -56,7 +56,7 @@ class CommentController {
             // check if user logined
             if (!isset($_SESSION["user_id"])) {
                 $_SESSION["error"] = "You must be logged in to delete a comment.";
-                header("Location: /student_forum/app/views/auth/login.php");
+                header("Location: /student_forum/app/views/pages/login.php");
                 exit;
             }
             
@@ -85,7 +85,7 @@ class CommentController {
             // Kiểm tra người dùng đã đăng nhập
             if (!isset($_SESSION["user_id"])) {
                 $_SESSION["error"] = "You must be logged in to edit a comment.";
-                header("Location: /student_forum/app/views/auth/login.php");
+                header("Location: /student_forum/app/views/pages/login.php");
                 exit;
             }
             

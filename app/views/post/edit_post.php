@@ -5,7 +5,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 if (!isset($_SESSION['user_id'])) {
     $_SESSION["post_error"] = "You have to login to edit your question.";       
-    header('Location: /student_forum/app/views/auth/login.php');
+    header('Location: /student_forum/app/views/pages/login.php');
     exit;
 }
 

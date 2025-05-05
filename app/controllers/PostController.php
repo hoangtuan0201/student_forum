@@ -22,7 +22,7 @@ class PostController {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!isset($_SESSION["user_id"])) {
                 $_SESSION["login_error"] = "You have to login first to post a question.";
-                header("Location: /student_forum/app/views/auth/login.php");
+                header("Location: /student_forum/app/views/pages/login.php");
                 exit;
             }
 
@@ -36,7 +36,7 @@ class PostController {
             $userModel = new User();
             if (!$userModel->getUserById($user_id)) {
                 $_SESSION["post_error"] = "User not found. Please login again.";
-                header("Location: /student_forum/app/views/auth/login.php");
+                header("Location: /student_forum/app/views/pages/login.php");
                 exit;
             }
 
@@ -90,7 +90,7 @@ class PostController {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if (!isset($_SESSION["user_id"])) {
                 $_SESSION["login_error"] = "You have to login first to edit a post.";
-                header("Location: /student_forum/app/views/auth/login.php");
+                header("Location: /student_forum/app/views/pages/login.php");
                 exit;
             }
 

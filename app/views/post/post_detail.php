@@ -155,7 +155,7 @@ include '../components/header.php';
                             </div>
                         <?php else: ?>
                             <div class="alert alert-info mt-4">
-                                Please <a href="/student_forum/app/views/auth/login.php">login</a> to comment.
+                                Please <a href="/student_forum/app/views/pages/login.php">login</a> to comment.
                             </div>
                         <?php endif; ?>
                     </div>
