@@ -31,14 +31,6 @@ class Email {
             $this->mailer->SMTPSecure = $this->config['smtp']['encryption'];
             $this->mailer->Port = $this->config['smtp']['port'];
             
-            // Additional settings for Gmail (if needed)
-            $this->mailer->SMTPOptions = array(
-                'ssl' => array(
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true
-                )
-            );
             
             // Sender info
             $this->mailer->setFrom($this->config['smtp']['from_email'], $this->config['smtp']['from_name']);
@@ -55,7 +47,6 @@ class Email {
 
     private function resetMailer() {
         $this->mailer->clearAddresses();
-        $this->mailer->clearAttachments();
         $this->mailer->clearCCs();
         $this->mailer->clearBCCs();
         $this->mailer->clearReplyTos();
