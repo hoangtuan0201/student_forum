@@ -26,8 +26,8 @@ $postCount = ($current_page === 'my_question.php')
             <span class="font-weight-bold mr-2"><?= $postCount ?></span> discussions
         </div>
         
-        <!-- Right side: Search box (only if not on my_question.php) -->
-        <?php if ($current_page !== 'my_question.php'): ?>
+        <!-- Right side: Search box (only if not on my_question.php and no module filter) -->
+        <?php if ($current_page !== 'my_question.php' && empty($_GET['module_id'])): ?>
         <div class="search-wrapper">
             <form method="GET" action="<?php echo $current_page; ?>">
                 <div class="input-group">

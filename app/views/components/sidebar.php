@@ -40,7 +40,7 @@ $modules = $moduleModel->getAllModules();
             </nav>
             
             <!-- Filter Section -->
-            <?php if ($current_page == 'index.php'): ?>
+            <?php if ($current_page == 'index.php' && empty($_GET['search'])): ?>
             <div class="mt-4">
                 <h6 class="font-weight-bold mb-3">
                     <i class="fas fa-filter mr-2"></i>Filter by Module

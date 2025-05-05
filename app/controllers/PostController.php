@@ -216,35 +216,23 @@ class PostController {
     }
 
     public function searchPosts($search) {
-        // Strip HTML tags from the search term before passing to the model
         $plainSearch = strip_tags($search);
         return $this->postModel->searchPosts($plainSearch);
     }
 
     public function getFilteredPosts($searchTerm = '', $module_id = '') {
-        // If we have a module_id and no search term, use the direct DB filter
-        if (!empty($module_id) && empty($searchTerm)) {
+        // If we have a search term, only search by term
+        if (!empty($searchTerm)) {
+            return $this->searchPosts($searchTerm);
+        }
+        
+        // If we have a module_id, filter by module
+        if (!empty($module_id)) {
             return $this->postModel->getPostsByModule($module_id);
         }
         
-        // Get initial set of posts (either searched or all)
-        $posts = !empty($searchTerm) 
-            ? $this->searchPosts($searchTerm) 
-            : $this->getAllPosts();
-        
-        if (empty($posts)) {
-            return [];
-        }
-        
-        // Apply module filter if specified
-        if (!empty($module_id)) {
-            $posts = array_filter($posts, function($post) use ($module_id) {
-                return isset($post['module_id']) && $post['module_id'] == $module_id;
-            });
-        }
-        
-        // Return the filtered posts (already sorted by recent in the model)
-        return $posts;
+        // If no filters, return all posts
+        return $this->getAllPosts();
     }
 
 }

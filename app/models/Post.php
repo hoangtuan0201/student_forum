@@ -92,22 +92,17 @@ class Post {
     // THIS IS FOR admin Crud
     public function deletePostFromAdmin($post_id) {
         try {
-            // Start transaction
             $this->pdo->beginTransaction();
 
-            // First delete all comments associated with this post
             $stmt = $this->pdo->prepare("DELETE FROM comments WHERE post_id = ?");
             $stmt->execute([$post_id]);
 
-            // Then delete the post
             $stmt = $this->pdo->prepare("DELETE FROM posts WHERE post_id = ?");
             $result = $stmt->execute([$post_id]);
 
-            // If everything is successful, commit the transaction
             $this->pdo->commit();
             return $result;
         } catch (Exception $e) {
-            // If there's an error, rollback the changes
             $this->pdo->rollBack();
             error_log("Error deleting post: " . $e->getMessage());
             return false;

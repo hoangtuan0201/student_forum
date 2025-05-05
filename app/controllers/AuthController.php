@@ -102,18 +102,7 @@ class AuthController {
         header("Location: /student_forum/public/index.php");
         exit;
     }
-    // check ì user is admin
-    public function isAdmin() {
-        return isset($_SESSION["role"]) && $_SESSION['role'] === 'admin';
-    }
-    // Admin authentication middleware
-    public function requireAdmin() {
-        if (!$this->isAdmin()) {
-            $_SESSION["error"] = "You don't have permission to access this page.";
-            header("Location: /student_forum/public/index.php");
-            exit;
-        }
-    }
+   
 
 
 }
