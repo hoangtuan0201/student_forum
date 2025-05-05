@@ -8,9 +8,7 @@ config/email.php
 # Dependencies
 /vendor/
 
-# Uploaded files
-public/uploads/*
-!public/uploads/.gitkeep
+
 
 # Cache and logs
 /logs/*
